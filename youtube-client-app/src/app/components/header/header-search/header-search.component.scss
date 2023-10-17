@@ -1,4 +1,6 @@
-@import 'variables' .search {
+@import 'src/scss/variables';
+
+.search {
   display: flex;
   align-items: center;
   width: 100%;
