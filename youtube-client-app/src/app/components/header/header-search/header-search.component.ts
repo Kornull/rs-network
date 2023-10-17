@@ -13,7 +13,11 @@ export class HeaderSearchComponent {
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'logoIcon',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/logo/logo.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/logo.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'settings',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/settings.svg')
     );
   }
 }

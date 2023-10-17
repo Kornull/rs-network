@@ -1,8 +1,8 @@
-.search {
+@import 'variables' .search {
   display: flex;
   align-items: center;
-  max-width: 800px;
   width: 100%;
+  max-width: 800px;
   justify-content: space-between;
 
   &__form {
@@ -19,11 +19,11 @@
       margin: 0;
       border: none;
       padding: 0 6px;
-      background-color: #ffffff;
+      background-color: $white;
 
       &:focus {
         outline: none;
-        border: 1px solid #3176f5 !important;
+        border: 1px solid $default-blue !important;
       }
     }
 
@@ -34,39 +34,39 @@
       margin-right: 10px;
     }
 
-    &-button {
+    &-btn {
       width: 80px;
       height: 24px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      background: #3176f5 !important;
+      background: $default-blue !important;
       transition: background 0.3s linear;
 
       &:hover {
-        background: #0104a7 !important;
+        background: $blue !important;
       }
     }
   }
+}
 
-  &__button {
-    display: flex;
-    width: 24px;
-    height: 24px;
-    padding: 2px;
-    border-radius: 5px;
-    align-items: center;
-    background: #3176f5 !important;
-    transition: background 0.3s linear;
+.settings {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  border-radius: 5px;
+  align-items: center;
+  background: $default-blue !important;
+  transition: background 0.3s linear;
 
-    &:hover {
-      background: #0104a7 !important;
-    }
+  &:hover {
+    background: $blue !important;
+  }
 
-    &-icon {
-      width: 15px;
-      height: 15px;
-      margin: 0 !important;
-    }
+  &-icon {
+    width: 15px;
+    height: 15px;
+    margin: 0 !important;
   }
 }
 
@@ -74,6 +74,6 @@
   width: 60px;
   padding: 0;
   height: 50px;
-  fill: #3176f5;
+  fill: $default-blue;
   transition: fill 0.3s linear;
 }
