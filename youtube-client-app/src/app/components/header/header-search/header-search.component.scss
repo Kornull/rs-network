@@ -1,4 +1,5 @@
 @import 'src/scss/variables';
+@import 'src/scss/mixins';
 
 .search {
   display: flex;
@@ -39,12 +40,8 @@
 }
 
 .settings__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-    width: 16px !important;
-    height: 16px !important;
-    margin: 0 !important;
+  @include style-icon;
+  width: 16px !important;
 }
 
 .header__logo {

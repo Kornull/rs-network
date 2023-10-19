@@ -15,6 +15,7 @@ import { SearchResultsComponent } from './components/search/search-results/searc
 import { SearchItemComponent } from './components/search/search-item/search-item.component';
 import { HeaderSearchComponent } from './components/header/header-search/header-search.component';
 import { CustomButtonComponent } from './components/UI/custom-button/custom-button.component';
+import { HeaderUserLoginComponent } from './components/header/header-user-login/header-user-login.component';
 
 import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
 
@@ -27,6 +28,7 @@ import { CustomButtonStyleDirective } from './directive/custom-button-style.dire
     HeaderSearchComponent,
     CustomButtonComponent,
     CustomButtonStyleDirective,
+    HeaderUserLoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,4 +3,5 @@ export enum DefaultDataCustomBtn {
   SEARCH = 'search',
   FILTER = 'filter',
   SETTINGS = 'settings',
+  USER = 'user',
 }
