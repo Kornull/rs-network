@@ -1,6 +1,5 @@
 import { SearchResponse } from '../model/search-response.model';
 
-
 export const SearchMockData: SearchResponse = {
   kind: 'youtube#videoListResponse',
   etag: '"Fznwjl6JEQdo1MGvHOGaz_YanRU/Cmodw7c5XPTM8Yg3kMXelihxek4"',
