@@ -21,10 +21,8 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-explicit-any": "error",
         "no-console": [
-          "warm",
-          {
-            "allow": ["error"]
-          }
+          "warn",
+          { "allow": ["error"] }
         ],
         "@angular-eslint/directive-selector": [
           "error",
