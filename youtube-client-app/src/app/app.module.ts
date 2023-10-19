@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { SearchResultsComponent } from './components/search/search-results/search-results.component';
 import { SearchItemComponent } from './components/search/search-item/search-item.component';
 import { HeaderSearchComponent } from './components/header/header-search/header-search.component';
+import { CustomButtonComponent } from './components/UI/custom-button/custom-button.component';
+
+import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,8 @@ import { HeaderSearchComponent } from './components/header/header-search/header-
     SearchResultsComponent,
     SearchItemComponent,
     HeaderSearchComponent,
+    CustomButtonComponent,
+    CustomButtonStyleDirective,
   ],
   imports: [
     BrowserModule,

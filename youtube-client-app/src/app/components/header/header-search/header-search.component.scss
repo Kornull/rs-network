@@ -51,25 +51,13 @@
   }
 }
 
-.settings {
+.settings__icon {
   display: flex;
-  width: 24px;
-  height: 24px;
-  padding: 2px;
-  border-radius: 5px;
   align-items: center;
-  background: $default-blue !important;
-  transition: background 0.3s linear;
-
-  &:hover {
-    background: $blue !important;
-  }
-
-  &-icon {
-    width: 15px;
-    height: 15px;
+  justify-content: center;
+    width: 16px !important;
+    height: 16px !important;
     margin: 0 !important;
-  }
 }
 
 .header__logo {

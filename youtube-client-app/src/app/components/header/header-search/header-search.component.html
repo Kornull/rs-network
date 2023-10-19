@@ -10,16 +10,11 @@
         name="value"
         autocomplete="off" />
     </form>
-    <button mat-raised-button color="primary" class="search__form-btn">
+    <app-custom-button [buttonStyle]="searchBtnStyle">
       search
-    </button>
+    </app-custom-button>
   </div>
-
-  <button
-    mat-fab
-    extended
-    color="primary"
-    class="search__settings-btn settings">
-    <mat-icon svgIcon="settings" class="settings-icon"></mat-icon>
-  </button>
+  <app-custom-button [buttonStyle]="settingsBtnStyle">
+    <mat-icon svgIcon="settings" class="settings__icon"></mat-icon>
+  </app-custom-button>
 </div>
