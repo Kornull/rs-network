@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { DefaultDataCustomBtn } from 'src/app/model/default-data-custom-btn.model';
+import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.model';
 
 @Component({
   selector: 'app-custom-button',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DefaultDataCustomBtn } from 'src/app/model/default-data-custom-btn.model';
+import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.model';
 
 @Component({
   selector: 'app-header-user-login',
