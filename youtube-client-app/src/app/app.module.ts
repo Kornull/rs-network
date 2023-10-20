@@ -18,6 +18,8 @@ import { CustomButtonComponent } from './components/UI/custom-button/custom-butt
 import { HeaderUserLoginComponent } from './components/header/header-user-login/header-user-login.component';
 
 import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
+import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
+import { FilterListComponent } from './components/filter-cards/filter-list/filter-list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { CustomButtonStyleDirective } from './directive/custom-button-style.dire
     CustomButtonComponent,
     CustomButtonStyleDirective,
     HeaderUserLoginComponent,
+    FilterCardsComponent,
+    FilterListComponent,
   ],
   imports: [
     BrowserModule,

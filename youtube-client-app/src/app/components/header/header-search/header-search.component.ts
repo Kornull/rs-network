@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -10,6 +10,10 @@ import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.mod
   styleUrls: ['./header-search.component.scss'],
 })
 export class HeaderSearchComponent {
+  @Output() isOpeFilter = new EventEmitter<boolean>();
+
+  isViewFilter: boolean = false;
+
   searchBtnStyle: string = DefaultDataCustomBtn.SEARCH;
 
   settingsBtnStyle: string = DefaultDataCustomBtn.SETTINGS;
@@ -25,5 +29,10 @@ export class HeaderSearchComponent {
       'settings',
       sanitizer.bypassSecurityTrustResourceUrl('assets/settings.svg')
     );
+  }
+
+  onViewFilter() {
+    this.isViewFilter = !this.isViewFilter;
+    this.isOpeFilter.emit(this.isViewFilter);
   }
 }

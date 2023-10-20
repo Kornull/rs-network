@@ -14,7 +14,7 @@
       search
     </app-custom-button>
   </div>
-  <app-custom-button [buttonStyle]="settingsBtnStyle">
+  <app-custom-button [buttonStyle]="settingsBtnStyle" (click)="onViewFilter()">
     <mat-icon svgIcon="settings" class="settings__icon"></mat-icon>
   </app-custom-button>
 </div>
