@@ -43,7 +43,7 @@ export class CustomButtonStyleDirective implements OnChanges {
         this.render.setStyle(
           this.elementRef.nativeElement,
           'padding',
-          '6px 16px'
+          '18px 34px'
         );
     }
   }

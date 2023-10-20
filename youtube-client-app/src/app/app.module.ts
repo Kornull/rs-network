@@ -7,7 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -20,12 +22,12 @@ import { HeaderUserLoginComponent } from './components/header/header-user-login/
 import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
 import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
 import { FilterListComponent } from './components/filter-cards/filter-list/filter-list.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SearchResultsComponent,
     SearchItemComponent,
     HeaderSearchComponent,
     CustomButtonComponent,
@@ -33,20 +35,24 @@ import { FilterListComponent } from './components/filter-cards/filter-list/filte
     HeaderUserLoginComponent,
     FilterCardsComponent,
     FilterListComponent,
+    CardComponent,
   ],
+  providers: [],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    CommonModule,
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
+    MatCardModule,
     BrowserAnimationsModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SearchResultsComponent,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

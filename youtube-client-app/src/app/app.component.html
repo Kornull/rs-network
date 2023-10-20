@@ -1,3 +1,4 @@
 <app-header></app-header>
-<app-search-item></app-search-item>
-<app-search-results></app-search-results>
+<app-search-results>
+  <app-card *ngFor="let card of searchItem" [card]="card"></app-card>
+</app-search-results>
