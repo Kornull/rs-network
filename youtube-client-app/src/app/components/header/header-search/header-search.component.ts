@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SearchMockData } from 'src/app/mock/mock-response';
 
 import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.model';
+import { SearchItem } from 'src/app/models/search-item.model';
 
 @Component({
   selector: 'app-header-search',
@@ -10,11 +12,15 @@ import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.mod
   styleUrls: ['./header-search.component.scss'],
 })
 export class HeaderSearchComponent {
-  @Output() isOpeFilter = new EventEmitter<boolean>();
+  @Output() isOpenFilter = new EventEmitter<boolean>();
 
   @Output() isViewSearchResults = new EventEmitter<boolean>();
 
+  @Output() resultItemList = new EventEmitter<SearchItem[]>();
+
   isViewFilter: boolean = false;
+
+  resultSearch: SearchItem[] = [...SearchMockData.items];
 
   searchBtnStyle: string = DefaultDataCustomBtn.SEARCH;
 
@@ -35,12 +41,13 @@ export class HeaderSearchComponent {
 
   onViewFilter() {
     this.isViewFilter = !this.isViewFilter;
-    this.isOpeFilter.emit(this.isViewFilter);
+    this.isOpenFilter.emit(this.isViewFilter);
   }
 
   onSearch() {
     if (this.inputValue.trim().length) {
       this.isViewSearchResults.emit(true);
+      this.resultItemList.emit(this.resultSearch);
     }
   }
 }

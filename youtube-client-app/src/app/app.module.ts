@@ -23,6 +23,9 @@ import { CardComponent } from './components/card/card.component';
 
 import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
 import { DefaultColorCardDirective } from './directive/default-color-card.directive';
+import { FilterCardsPipe } from './pipes/filter-cards.pipe';
+import { SortDatePipe } from './pipes/sort-date.pipe';
+import { SortViewPipe } from './pipes/sort-view.pipe';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,9 @@ import { DefaultColorCardDirective } from './directive/default-color-card.direct
     FilterListComponent,
     CardComponent,
     DefaultColorCardDirective,
+    FilterCardsPipe,
+    SortDatePipe,
+    SortViewPipe,
   ],
   providers: [],
   bootstrap: [AppComponent],

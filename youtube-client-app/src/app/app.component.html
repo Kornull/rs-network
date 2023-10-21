@@ -1,4 +1,8 @@
-<app-header (isViewSearchResults)="isViewResult = $event" ></app-header>
+<app-header
+  (isViewSearchResults)="isViewResult = $event"
+  (searchItemResults)="onUpdateSearch($event)"
+  (isOpenFilter)="isOpenedFilter = $event"></app-header>
+<app-filter-cards *ngIf="isOpenedFilter"></app-filter-cards>
 <app-search-results>
-  <app-card *ngFor="let card of searchItem" [card]="card"></app-card>
+  <app-card *ngFor="let card of searchItems" [card]="card"></app-card>
 </app-search-results>

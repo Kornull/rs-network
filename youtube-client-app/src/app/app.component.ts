@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SearchMockData } from './mock/mock-response';
 import { SearchItem } from './models/search-item.model';
 
 @Component({
@@ -10,7 +9,13 @@ import { SearchItem } from './models/search-item.model';
 export class AppComponent {
   title: string = 'youtube-client-app';
 
-  searchItem: SearchItem[] = SearchMockData.items;
+  searchItems!: SearchItem[];
+
+  isOpenedFilter: boolean = false;
 
   isViewResult: boolean = false;
+
+  onUpdateSearch(searchResult: SearchItem[]) {
+    this.searchItems = [...searchResult];
+  }
 }

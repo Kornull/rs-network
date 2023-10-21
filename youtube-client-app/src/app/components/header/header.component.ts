@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+import { SearchItem } from 'src/app/models/search-item.model';
 
 @Component({
   selector: 'app-header',
@@ -6,11 +8,21 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Input() isViewFilter!: boolean;
-
   @Output() isViewSearchResults = new EventEmitter<boolean>();
+
+  @Output() isOpenFilter = new EventEmitter<boolean>();
+
+  @Output() searchItemResults = new EventEmitter<SearchItem[]>();
+
+  onShowFilter(ev: boolean): void {
+    this.isOpenFilter.emit(ev);
+  }
 
   onViewResults(ev: boolean) {
     this.isViewSearchResults.emit(ev);
+  }
+
+  onSearchItemResult(ev: SearchItem[]) {
+    this.searchItemResults.emit(ev);
   }
 }
