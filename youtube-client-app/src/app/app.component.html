@@ -1,4 +1,4 @@
 <app-header (isViewSearchResults)="isViewResult = $event" ></app-header>
-<app-search-results *ngIf="isViewResult">
+<app-search-results>
   <app-card *ngFor="let card of searchItem" [card]="card"></app-card>
 </app-search-results>

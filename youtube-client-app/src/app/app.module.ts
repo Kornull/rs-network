@@ -22,6 +22,7 @@ import { FilterListComponent } from './components/filter-cards/filter-list/filte
 import { CardComponent } from './components/card/card.component';
 
 import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
+import { DefaultColorCardDirective } from './directive/default-color-card.directive';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CustomButtonStyleDirective } from './directive/custom-button-style.dire
     FilterCardsComponent,
     FilterListComponent,
     CardComponent,
+    DefaultColorCardDirective,
   ],
   providers: [],
   bootstrap: [AppComponent],
