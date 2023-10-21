@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { SearchItem } from './models/search-item.model';
 
 @Component({
@@ -9,7 +10,13 @@ import { SearchItem } from './models/search-item.model';
 export class AppComponent {
   title: string = 'youtube-client-app';
 
-  searchItems!: SearchItem[];
+  dateSort: string;
+
+  viewCountSort: string;
+
+  titleSort: string;
+
+  searchItems: SearchItem[];
 
   isOpenedFilter: boolean = false;
 
@@ -17,5 +24,8 @@ export class AppComponent {
 
   onUpdateSearch(searchResult: SearchItem[]) {
     this.searchItems = [...searchResult];
+    this.viewCountSort = '';
+    this.dateSort = '';
+    this.titleSort = '';
   }
 }

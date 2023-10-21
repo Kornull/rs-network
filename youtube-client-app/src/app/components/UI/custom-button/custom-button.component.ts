@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.model';
+import { DefaultDataCustomBtn } from 'src/app/models/types';
 
 @Component({
   selector: 'app-custom-button',
@@ -9,4 +9,6 @@ import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.mod
 })
 export class CustomButtonComponent {
   @Input() buttonStyle: string = DefaultDataCustomBtn.DEFAULT;
+
+  @Input() disabled: boolean = false;
 }

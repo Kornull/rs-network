@@ -1,11 +1,6 @@
 <ul class="list">
   <li class="list__item" [ngSwitch]="dateSortDirection">
-    <button
-      class="list__button "
-      mat-button
-      (click)="onSortDate()">
-      date
-    </button>
+    <button class="list__button" mat-button (click)="onSortDate()">date</button>
 
     <mat-icon class="list__icon" *ngSwitchCase="'up'"
       >keyboard_arrow_up</mat-icon
@@ -29,7 +24,7 @@
   </li>
 
   <li class="list__item list__search">
-    <span class="list__text-search"> by word sentance </span>
+    <span class="list__text-search"> by word sentence </span>
 
     <form class="list__search-form" appearance="outline">
       <input
@@ -37,6 +32,7 @@
         type="text"
         name="parameterValue"
         [(ngModel)]="filterByTitle"
+        (keyup)="onTitleSort()"
         autocomplete="off" />
     </form>
   </li>

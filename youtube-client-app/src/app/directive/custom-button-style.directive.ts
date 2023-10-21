@@ -6,7 +6,7 @@ import {
   Renderer2,
 } from '@angular/core';
 
-import { DefaultDataCustomBtn } from '../models/default-data-custom-btn.model';
+import { DefaultDataCustomBtn } from '../models/types';
 
 @Directive({
   selector: '[appCustomButtonStyle]',

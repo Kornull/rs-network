@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { FilterCommand } from 'src/app/models/types';
 
@@ -8,13 +8,22 @@ import { FilterCommand } from 'src/app/models/types';
   styleUrls: ['./filter-list.component.scss'],
 })
 export class FilterListComponent {
-  filterByTitle!: string;
+  @Input() filterByTitle: string;
 
-  dateSortDirection: string = '';
+  @Input() dateSortDirection: string = '';
 
-  viewCountSortDirection: string = '';
+  @Input() viewCountSortDirection: string = '';
 
-  @Input() isUpdateSearch!: boolean;
+  @Output() dateCardsSort = new EventEmitter<string>();
+
+  @Output() viewCardsSort = new EventEmitter<string>();
+
+  @Output() titleCardsSort = new EventEmitter<string>();
+
+  private updateSort() {
+    this.dateCardsSort.emit(this.dateSortDirection);
+    this.viewCardsSort.emit(this.viewCountSortDirection);
+  }
 
   onSortDate(): void {
     if (this.viewCountSortDirection.length) this.viewCountSortDirection = '';
@@ -25,6 +34,7 @@ export class FilterListComponent {
     } else {
       this.dateSortDirection = FilterCommand.UP;
     }
+    this.updateSort();
   }
 
   onSortView(): void {
@@ -36,5 +46,18 @@ export class FilterListComponent {
     } else {
       this.viewCountSortDirection = FilterCommand.UP;
     }
+    this.updateSort();
+  }
+
+  onTitleSort() {
+    this.dateSortDirection = '';
+    this.viewCountSortDirection = '';
+    if (this.filterByTitle.trim()) {
+      this.titleCardsSort.emit(this.filterByTitle);
+    } else {
+      this.titleCardsSort.emit('');
+    }
+
+    this.updateSort();
   }
 }
