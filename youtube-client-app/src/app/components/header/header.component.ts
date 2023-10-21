@@ -18,11 +18,11 @@ export class HeaderComponent {
     this.isOpenFilter.emit(ev);
   }
 
-  onViewResults(ev: boolean) {
+  onViewResults(ev: boolean): void {
     this.isViewSearchResults.emit(ev);
   }
 
-  onSearchItemResult(ev: SearchItem[]) {
+  onSearchItemResult(ev: SearchItem[]): void {
     this.searchItemResults.emit(ev);
   }
 }

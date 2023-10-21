@@ -22,7 +22,7 @@ export class AppComponent {
 
   isViewResult: boolean = false;
 
-  onUpdateSearch(searchResult: SearchItem[]) {
+  onUpdateSearch(searchResult: SearchItem[]): void {
     this.searchItems = [...searchResult];
     this.viewCountSort = '';
     this.dateSort = '';

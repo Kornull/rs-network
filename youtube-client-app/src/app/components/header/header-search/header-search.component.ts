@@ -41,14 +41,14 @@ export class HeaderSearchComponent {
     );
   }
 
-  onViewFilter() {
+  onViewFilter(): void {
     if (!this.isSearchNotDone) {
       this.isViewFilter = !this.isViewFilter;
       this.isOpenFilter.emit(this.isViewFilter);
     }
   }
 
-  onSearch() {
+  onSearch(): void {
     if (this.inputValue.trim().length) {
       this.isSearchNotDone = false;
       this.isViewSearchResults.emit(true);

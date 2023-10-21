@@ -20,7 +20,7 @@ export class FilterListComponent {
 
   @Output() titleCardsSort = new EventEmitter<string>();
 
-  private updateSort() {
+  private updateSort(): void {
     this.dateCardsSort.emit(this.dateSortDirection);
     this.viewCardsSort.emit(this.viewCountSortDirection);
   }
@@ -49,7 +49,7 @@ export class FilterListComponent {
     this.updateSort();
   }
 
-  onTitleSort() {
+  onTitleSort(): void {
     this.dateSortDirection = '';
     this.viewCountSortDirection = '';
     if (this.filterByTitle.trim()) {

@@ -18,15 +18,15 @@ export class FilterCardsComponent {
 
   @Output() updateTitleSort = new EventEmitter<string>();
 
-  onUpdateDateSort(date: string) {
+  onUpdateDateSort(date: string): void {
     this.updateDateSort.emit(date);
   }
 
-  onUpdateViewSort(view: string) {
+  onUpdateViewSort(view: string): void {
     this.updateViewSort.emit(view);
   }
 
-  onUpdateTitleSort(title: string) {
+  onUpdateTitleSort(title: string): void {
     this.updateTitleSort.emit(title);
   }
 }
