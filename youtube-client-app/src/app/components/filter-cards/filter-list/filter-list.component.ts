@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { FilterCommand } from 'src/app/models/types';
 
@@ -14,7 +14,9 @@ export class FilterListComponent {
 
   viewCountSortDirection: string = '';
 
-  onSortDate() {
+  @Input() isUpdateSearch!: boolean;
+
+  onSortDate(): void {
     if (this.viewCountSortDirection.length) this.viewCountSortDirection = '';
     if (!this.dateSortDirection.length) {
       this.dateSortDirection = FilterCommand.UP;
@@ -25,7 +27,7 @@ export class FilterListComponent {
     }
   }
 
-  onSortView() {
+  onSortView(): void {
     if (this.dateSortDirection.length) this.dateSortDirection = '';
     if (!this.viewCountSortDirection.length) {
       this.viewCountSortDirection = FilterCommand.UP;

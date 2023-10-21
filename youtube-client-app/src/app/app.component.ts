@@ -11,4 +11,6 @@ export class AppComponent {
   title: string = 'youtube-client-app';
 
   searchItem: SearchItem[] = SearchMockData.items;
+
+  isViewResult: boolean = false;
 }

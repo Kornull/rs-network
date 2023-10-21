@@ -10,7 +10,7 @@
         name="value"
         autocomplete="off" />
     </form>
-    <app-custom-button [buttonStyle]="searchBtnStyle">
+    <app-custom-button [buttonStyle]="searchBtnStyle" (click)="onSearch()">
       search
     </app-custom-button>
   </div>

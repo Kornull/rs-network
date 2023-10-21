@@ -14,21 +14,19 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SearchResultsComponent } from './components/search/search-results/search-results.component';
-import { SearchItemComponent } from './components/search/search-item/search-item.component';
 import { HeaderSearchComponent } from './components/header/header-search/header-search.component';
 import { CustomButtonComponent } from './components/UI/custom-button/custom-button.component';
 import { HeaderUserLoginComponent } from './components/header/header-user-login/header-user-login.component';
-
-import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
 import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
 import { FilterListComponent } from './components/filter-cards/filter-list/filter-list.component';
 import { CardComponent } from './components/card/card.component';
+
+import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SearchItemComponent,
     HeaderSearchComponent,
     CustomButtonComponent,
     CustomButtonStyleDirective,

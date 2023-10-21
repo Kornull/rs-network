@@ -12,6 +12,8 @@ import { DefaultDataCustomBtn } from 'src/app/models/default-data-custom-btn.mod
 export class HeaderSearchComponent {
   @Output() isOpeFilter = new EventEmitter<boolean>();
 
+  @Output() isViewSearchResults = new EventEmitter<boolean>();
+
   isViewFilter: boolean = false;
 
   searchBtnStyle: string = DefaultDataCustomBtn.SEARCH;
@@ -34,5 +36,11 @@ export class HeaderSearchComponent {
   onViewFilter() {
     this.isViewFilter = !this.isViewFilter;
     this.isOpeFilter.emit(this.isViewFilter);
+  }
+
+  onSearch() {
+    if (this.inputValue.trim().length) {
+      this.isViewSearchResults.emit(true);
+    }
   }
 }
