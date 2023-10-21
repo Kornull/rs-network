@@ -4,5 +4,5 @@
   (isOpenFilter)="isOpenedFilter = $event"></app-header>
 <app-filter-cards *ngIf="isOpenedFilter"></app-filter-cards>
 <app-search-results>
-  <app-card *ngFor="let card of searchItems" [card]="card"></app-card>
+  <app-cards-list [searchCardsResult]="searchItems"></app-cards-list>
 </app-search-results>

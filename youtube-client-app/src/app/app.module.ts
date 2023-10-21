@@ -19,13 +19,14 @@ import { CustomButtonComponent } from './components/UI/custom-button/custom-butt
 import { HeaderUserLoginComponent } from './components/header/header-user-login/header-user-login.component';
 import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
 import { FilterListComponent } from './components/filter-cards/filter-list/filter-list.component';
-import { CardComponent } from './components/card/card.component';
+import { CardComponent } from './components/cards-list/card/card.component';
 
 import { CustomButtonStyleDirective } from './directive/custom-button-style.directive';
 import { DefaultColorCardDirective } from './directive/default-color-card.directive';
 import { FilterCardsPipe } from './pipes/filter-cards.pipe';
 import { SortDatePipe } from './pipes/sort-date.pipe';
 import { SortViewPipe } from './pipes/sort-view.pipe';
+import { CardsListComponent } from './components/cards-list/cards-list.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SortViewPipe } from './pipes/sort-view.pipe';
     FilterCardsPipe,
     SortDatePipe,
     SortViewPipe,
+    CardsListComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
