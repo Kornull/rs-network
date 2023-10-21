@@ -18,7 +18,7 @@ export class HeaderSearchComponent {
 
   @Output() resultItemList = new EventEmitter<SearchItem[]>();
 
-  isSearchDone: boolean = true;
+  isSearchNotDone: boolean = true;
 
   isViewFilter: boolean = false;
 
@@ -42,7 +42,7 @@ export class HeaderSearchComponent {
   }
 
   onViewFilter() {
-    if (!this.isSearchDone) {
+    if (!this.isSearchNotDone) {
       this.isViewFilter = !this.isViewFilter;
       this.isOpenFilter.emit(this.isViewFilter);
     }
@@ -50,9 +50,10 @@ export class HeaderSearchComponent {
 
   onSearch() {
     if (this.inputValue.trim().length) {
-      this.isSearchDone = false;
+      this.isSearchNotDone = false;
       this.isViewSearchResults.emit(true);
       this.resultItemList.emit(this.resultSearch);
+      this.inputValue = '';
     }
   }
 }
