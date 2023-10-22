@@ -1,12 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { SearchItem } from 'src/app/models/search-item.model';
+import { CardComponent } from './card/card.component';
+
+import { SearchItem } from '../../models/search-item.model';
 
 @Component({
   selector: 'app-cards-list',
+  standalone: true,
+  imports: [CommonModule, CardComponent],
   templateUrl: './cards-list.component.html',
   styleUrls: ['./cards-list.component.scss'],
 })
 export class CardsListComponent {
-  @Input() searchCardsResult: SearchItem[];
+  @Input() cardsResult: SearchItem[];
 }

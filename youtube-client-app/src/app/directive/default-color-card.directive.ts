@@ -23,6 +23,7 @@ enum ColorCards {
 
 @Directive({
   selector: '[appDefaultColorCard]',
+  standalone: true,
 })
 export class DefaultColorCardDirective implements OnChanges {
   @Input('appDefaultColorCard') updatedDate!: string;

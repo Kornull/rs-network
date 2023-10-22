@@ -32,18 +32,11 @@ export class CustomButtonStyleDirective implements OnChanges {
           '6px 10px'
         );
         return;
-      case DefaultDataCustomBtn.USER:
-        this.render.setStyle(
-          this.elementRef.nativeElement,
-          'padding',
-          '16px 4px'
-        );
-        return;
       default:
         this.render.setStyle(
           this.elementRef.nativeElement,
           'padding',
-          '18px 34px'
+          '16px 4px'
         );
     }
   }
