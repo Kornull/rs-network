@@ -1,0 +1,12 @@
+<div class="header-filter filter">
+  <div class="filter__container">
+    <span class="filter__text">Sorting by:</span>
+    <app-filter-list
+      [viewCountSortDirection]="viewSort"
+      [dateSortDirection]="dateSort"
+      [filterByTitle]="titleFilter"
+      (dateCardsSort)="onUpdateDateSort($event)"
+      (viewCardsSort)="onUpdateViewSort($event)"
+      (titleCardsSort)="onUpdateTitleSort($event)"></app-filter-list>
+  </div>
+</div>

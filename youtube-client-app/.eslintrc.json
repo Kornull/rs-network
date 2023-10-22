@@ -20,12 +20,7 @@
       "rules": {
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-explicit-any": "error",
-        "no-console": [
-          "warn",
-          {
-            "allow": ["error"]
-          }
-        ],
+        "no-console": ["warn", { "allow": ["error"] }],
         "@angular-eslint/directive-selector": [
           "error",
           {

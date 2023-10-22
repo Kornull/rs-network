@@ -1,0 +1,39 @@
+<ul class="list">
+  <li class="list__item" [ngSwitch]="dateSortDirection">
+    <button class="list__button" mat-button (click)="onSortDate()">date</button>
+
+    <mat-icon class="list__icon" *ngSwitchCase="'up'"
+      >keyboard_arrow_up</mat-icon
+    >
+    <mat-icon class="list__icon" *ngSwitchCase="'down'"
+      >keyboard_arrow_down</mat-icon
+    >
+  </li>
+
+  <li class="list__item" [ngSwitch]="viewCountSortDirection">
+    <button class="list__button" mat-button (click)="onSortView()">
+      count of views
+    </button>
+
+    <mat-icon class="list__icon-view" *ngSwitchCase="'up'"
+      >keyboard_arrow_up</mat-icon
+    >
+    <mat-icon class="list__icon-view" *ngSwitchCase="'down'"
+      >keyboard_arrow_down</mat-icon
+    >
+  </li>
+
+  <li class="list__item list__search">
+    <span class="list__text-search"> by word sentence </span>
+
+    <form class="list__search-form" appearance="outline">
+      <input
+        class="list__search-input"
+        type="text"
+        name="parameterValue"
+        [(ngModel)]="filterByTitle"
+        (keyup)="onTitleSort()"
+        autocomplete="off" />
+    </form>
+  </li>
+</ul>

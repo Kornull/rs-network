@@ -1,0 +1,23 @@
+<div class="header__search search">
+  <mat-icon svgIcon="logoIcon" class="header__logo"></mat-icon>
+  <div class="search__form-block">
+    <form class="search__form">
+      <input
+        type="text"
+        placeholder="What are you want to find out?"
+        class="search__form-input"
+        [(ngModel)]="inputValue"
+        name="value"
+        autocomplete="off" />
+    </form>
+    <app-custom-button [buttonStyle]="searchBtnStyle" (click)="onSearch()">
+      search
+    </app-custom-button>
+  </div>
+  <app-custom-button
+    [buttonStyle]="settingsBtnStyle"
+    [disabled]="isSearchNotDone"
+    (click)="onViewFilter()">
+    <mat-icon svgIcon="settings" class="settings__icon"></mat-icon>
+  </app-custom-button>
+</div>
