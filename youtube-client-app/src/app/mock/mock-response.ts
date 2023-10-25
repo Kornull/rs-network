@@ -1,4 +1,4 @@
-import { SearchResponse } from '../models/search-response.model';
+import { SearchResponse } from '../core/store/models/search-response.model';
 
 export const SearchMockData: SearchResponse = {
   kind: 'youtube#videoListResponse',
@@ -128,7 +128,7 @@ export const SearchMockData: SearchResponse = {
           },
         },
         channelTitle: 'Traversy Media',
-        tags: ['angular', 'angular 7', 'angular tutorial', 'angularjs'],
+        tags: ['angular','angular 7','angular tutorial','angularjs'],
         categoryId: '28',
         liveBroadcastContent: 'none',
         localized: {
