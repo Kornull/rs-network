@@ -9,7 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 
 import {
   CustomButtonComponent,
+  FilterListComponent,
   HeaderComponent,
+  HeaderFilterComponent,
   HeaderSearchComponent,
   HeaderUserLoginComponent,
 } from './components';
@@ -18,10 +20,12 @@ import { SharedModule } from '../shared';
 
 @NgModule({
   declarations: [
+    CustomButtonComponent,
+    FilterListComponent,
     HeaderComponent,
     HeaderSearchComponent,
     HeaderUserLoginComponent,
-    CustomButtonComponent,
+    HeaderFilterComponent,
   ],
   imports: [
     FormsModule,
