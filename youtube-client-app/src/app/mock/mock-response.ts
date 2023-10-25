@@ -128,7 +128,7 @@ export const SearchMockData: SearchResponse = {
           },
         },
         channelTitle: 'Traversy Media',
-        tags: ['angular','angular 7','angular tutorial','angularjs'],
+        tags: ['angular', 'angular 7', 'angular tutorial', 'angularjs'],
         categoryId: '28',
         liveBroadcastContent: 'none',
         localized: {
