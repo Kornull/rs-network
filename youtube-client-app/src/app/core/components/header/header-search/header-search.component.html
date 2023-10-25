@@ -16,8 +16,8 @@
   </div>
   <app-custom-button
     [buttonStyle]="settingsBtnStyle"
-    [disabled]="isSearchNotDone"
-    (click)="onViewFilter()">
+    [disabled]="onBtnDisabled()"
+    (click)="onChangeFilterBtnStatus()">
     <mat-icon svgIcon="settings" class="settings__icon"></mat-icon>
   </app-custom-button>
 </div>

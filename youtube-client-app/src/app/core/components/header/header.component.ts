@@ -1,3 +1,4 @@
+import { FilterOpenedService } from 'src/app/core/services';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 import { SearchItem } from 'src/app/models/search-item.model';
@@ -14,8 +15,10 @@ export class HeaderComponent {
 
   @Output() searchItemResults = new EventEmitter<SearchItem[]>();
 
-  onShowFilter(ev: boolean): void {
-    this.isOpenFilter.emit(ev);
+  constructor(private filterOpen: FilterOpenedService) {}
+
+  onShowFilter(): boolean {
+    return this.filterOpen.getFilterStatus();
   }
 
   onViewResults(ev: boolean): void {

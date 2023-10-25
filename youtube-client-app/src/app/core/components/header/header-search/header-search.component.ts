@@ -5,6 +5,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DefaultDataCustomBtn } from 'src/app/models/types';
 import { SearchItem } from 'src/app/models/search-item.model';
 import { SearchMockData } from 'src/app/mock/mock-response';
+import {
+  FilterActivateService,
+  FilterOpenedService,
+} from 'src/app/core/services';
 
 @Component({
   selector: 'app-header-search',
@@ -18,7 +22,7 @@ export class HeaderSearchComponent {
 
   @Output() resultItemList = new EventEmitter<SearchItem[]>();
 
-  isSearchNotDone: boolean = true;
+  isBtnDisabled: boolean = true;
 
   isViewFilter: boolean = false;
 
@@ -30,7 +34,12 @@ export class HeaderSearchComponent {
 
   inputValue: string = '';
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(
+    private filterActivate: FilterActivateService,
+    private openingFilter: FilterOpenedService,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer
+  ) {
     iconRegistry.addSvgIcon(
       'logoIcon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/logo.svg')
@@ -41,19 +50,16 @@ export class HeaderSearchComponent {
     );
   }
 
-  onViewFilter(): void {
-    if (!this.isSearchNotDone) {
-      this.isViewFilter = !this.isViewFilter;
-      this.isOpenFilter.emit(this.isViewFilter);
-    }
+  onSearch(): void {
+    this.filterActivate.activatedFilter(this.inputValue);
+    this.inputValue = '';
   }
 
-  onSearch(): void {
-    if (this.inputValue.trim().length) {
-      this.isSearchNotDone = false;
-      this.isViewSearchResults.emit(true);
-      this.resultItemList.emit(this.resultSearch);
-      this.inputValue = '';
-    }
+  onBtnDisabled(): boolean {
+    return this.filterActivate.getIsBtnDisabled();
+  }
+
+  onChangeFilterBtnStatus(): boolean {
+    return this.openingFilter.changeFilterStatus();
   }
 }
