@@ -5,9 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { DefaultColorCardDirective } from 'src/app/directive/default-color-card.directive';
 
 import { SearchItem } from 'src/app/models/search-item.model';
+import { DefaultColorCardDirective } from 'src/app/shared/directives/default-color-card.directive';
 
 @Component({
   selector: 'app-card',
