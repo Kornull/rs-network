@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component,EventEmitter,Output } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { DefaultDataCustomBtn } from 'src/app/models/types';
-import { SearchItem } from 'src/app/models/search-item.model';
+import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
+import { SearchItem } from 'src/app/core/store/models/search-item.model';
 import { SearchMockData } from 'src/app/mock/mock-response';
 import {
   FilterActivateService,

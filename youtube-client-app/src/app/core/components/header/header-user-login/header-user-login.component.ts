@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { DefaultDataCustomBtn } from 'src/app/models/types';
+import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
 
 @Component({
   selector: 'app-header-user-login',
@@ -12,7 +12,7 @@ import { DefaultDataCustomBtn } from 'src/app/models/types';
 export class HeaderUserLoginComponent {
   userBtnStyle: string = DefaultDataCustomBtn.USER;
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry,sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'userLogo',
       sanitizer.bypassSecurityTrustResourceUrl('assets/user-logo.svg')

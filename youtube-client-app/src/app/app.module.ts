@@ -12,16 +12,21 @@ import { SortDatePipe } from './pipes/sort-date.pipe';
 import { SortViewPipe } from './pipes/sort-view.pipe';
 import { CoreModule } from './core/core.module';
 
+import { AppRoutingModule } from './app-routing.module';
+import { MainPageModule } from './pages/main';
+
 @NgModule({
   declarations: [AppComponent, FilterCardsPipe, SortDatePipe, SortViewPipe],
   providers: [],
   bootstrap: [AppComponent],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
     CoreModule,
     BrowserAnimationsModule,
+    MainPageModule,
     HttpClientModule,
     SearchResultsComponent,
   ],
