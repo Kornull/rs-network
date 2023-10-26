@@ -7,9 +7,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
   {
     path: 'main',
-    pathMatch: 'full',
     loadChildren: () =>
-      import('./pages/main/main.module').then(mod => mod.MainPageModule),
+      import('./pages/main/main.module').then(m => m.MainPageModule),
   },
   { path: '**', component: NotFoundComponent },
 ];

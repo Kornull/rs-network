@@ -1,4 +1,4 @@
-import { Component,EventEmitter,Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -35,8 +35,8 @@ export class HeaderSearchComponent {
   inputValue: string = '';
 
   constructor(
-    private filterActivate: FilterActivateService,
-    private openingFilter: FilterOpenedService,
+    private filterActivateService: FilterActivateService,
+    private filterOpenedService: FilterOpenedService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
@@ -51,15 +51,15 @@ export class HeaderSearchComponent {
   }
 
   onSearch(): void {
-    this.filterActivate.activatedFilter(this.inputValue);
+    this.filterActivateService.activatedFilter(this.inputValue);
     this.inputValue = '';
   }
 
   onBtnDisabled(): boolean {
-    return this.filterActivate.getIsBtnDisabled();
+    return this.filterActivateService.getIsBtnDisabled();
   }
 
   onChangeFilterBtnStatus(): boolean {
-    return this.openingFilter.changeFilterStatus();
+    return this.filterOpenedService.changeFilterStatus();
   }
 }

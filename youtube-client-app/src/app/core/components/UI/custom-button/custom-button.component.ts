@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
 

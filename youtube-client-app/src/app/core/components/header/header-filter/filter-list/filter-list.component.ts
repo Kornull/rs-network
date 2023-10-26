@@ -1,4 +1,4 @@
-import { Component,EventEmitter,Input,Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { FilterCommand } from 'src/app/core/store/models/types';
 

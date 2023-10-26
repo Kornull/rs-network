@@ -1,11 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 
 import {
   CustomButtonComponent,
@@ -27,24 +21,7 @@ import { SharedModule } from '../shared';
     HeaderUserLoginComponent,
     HeaderFilterComponent,
   ],
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatInputModule,
-    SharedModule,
-  ],
-  exports: [
-    HeaderComponent,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, SharedModule],
+  exports: [HeaderComponent],
 })
 export class CoreModule {}

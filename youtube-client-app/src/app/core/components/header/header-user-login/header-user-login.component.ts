@@ -12,7 +12,7 @@ import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
 export class HeaderUserLoginComponent {
   userBtnStyle: string = DefaultDataCustomBtn.USER;
 
-  constructor(iconRegistry: MatIconRegistry,sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'userLogo',
       sanitizer.bypassSecurityTrustResourceUrl('assets/user-logo.svg')
