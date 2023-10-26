@@ -1,11 +1,11 @@
 <li>
-  <mat-card class="example-card card">
-    <!-- <img
+  <mat-card class="example-card item">
+    <img
       class="item__img"
       mat-card-xl-image
       src="{{ card.snippet.thumbnails.high.url }}"
       alt="{{ card.snippet.localized.title }}" />
-    <mat-card-content class="card__statistic">
+    <mat-card-content class="item__statistic">
       <span class="item__info">
         <mat-icon class="item__info-logo">remove_red_eye</mat-icon>
         {{ card.statistics.viewCount }}
@@ -35,7 +35,7 @@
       <mat-card-subtitle class="item__subtitle"
         >{{ card.snippet.localized.title }}
       </mat-card-subtitle>
-    </mat-card-header> -->
+    </mat-card-header>
 
     <div class="item__button-block">
       <mat-card-actions>
@@ -45,8 +45,8 @@
       </mat-card-actions>
     </div>
 
-    <!-- <div
+    <div
       class="item__color"
-      [appDefaultColorCard]="card.snippet.publishedAt"></div> -->
+      [appDefaultColorCard]="card.snippet.publishedAt"></div>
   </mat-card>
 </li>

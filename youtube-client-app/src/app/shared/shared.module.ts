@@ -34,6 +34,7 @@ import { FilterCardsPipe, SortDatePipe, SortViewPipe } from './pipes';
   ],
   exports: [
     CustomButtonStyleDirective,
+    DefaultColorCardDirective,
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,

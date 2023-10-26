@@ -1,4 +1,5 @@
-<h1>main works!</h1>
 <div class="result__container">
-  <app-result-search></app-result-search>
+  <app-result-search
+    *ngIf="filterActivateService.getIsSearchRun()"
+    [searchResult]="cardsResult"></app-result-search>
 </div>
