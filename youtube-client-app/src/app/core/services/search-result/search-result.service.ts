@@ -13,4 +13,11 @@ export class SearchResultService {
     const cards: Observable<SearchItem[]> = of(resultCards);
     return cards;
   }
+
+  getItem(id: string): SearchItem | null {
+    const result = SearchMockData.items.find(el => el.id === id);
+    if (result) return result;
+
+    return null;
+  }
 }

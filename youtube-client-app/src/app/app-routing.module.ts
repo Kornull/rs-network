@@ -10,6 +10,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/main/main.module').then(m => m.MainPageModule),
   },
+  {
+    path: 'about/:id',
+    loadChildren: () =>
+      import('./pages/about-card/about-card.module').then(
+        m => m.AboutCardModule
+      ),
+  },
   { path: '**', component: NotFoundComponent },
 ];
 

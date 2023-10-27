@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,4 +23,10 @@ import { SharedModule } from 'src/app/shared';
 })
 export class ResultItemComponent {
   @Input() card: SearchItem;
+
+  constructor(private router: Router) {}
+
+  onRunTo() {
+    this.router.navigate([`about/${this.card.id}`]);
+  }
 }
