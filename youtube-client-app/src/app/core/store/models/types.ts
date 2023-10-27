@@ -10,3 +10,9 @@ export enum DefaultDataCustomBtn {
   SETTINGS = 'settings',
   USER = 'user',
 }
+
+export type SortingDataType = {
+  filterByTitle: string;
+  dateSortDirection: string;
+  viewCountSortDirection: string;
+};

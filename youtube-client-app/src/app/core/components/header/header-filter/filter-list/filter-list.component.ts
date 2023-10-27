@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-
-import { FilterCommand } from 'src/app/core/store/models/types';
+import { Component } from '@angular/core';
+import { SortResultService } from 'src/app/core/services/sortResult/sort-result.service';
+import { SortingDataType } from 'src/app/core/store';
 
 @Component({
   selector: 'app-filter-list',
@@ -8,56 +8,29 @@ import { FilterCommand } from 'src/app/core/store/models/types';
   styleUrls: ['./filter-list.component.scss'],
 })
 export class FilterListComponent {
-  @Input() filterByTitle: string;
+  filterByTitle: string = '';
 
-  @Input() dateSortDirection: string = '';
-
-  @Input() viewCountSortDirection: string = '';
-
-  @Output() dateCardsSort = new EventEmitter<string>();
-
-  @Output() viewCardsSort = new EventEmitter<string>();
-
-  @Output() titleCardsSort = new EventEmitter<string>();
-
-  private updateSort(): void {
-    this.dateCardsSort.emit(this.dateSortDirection);
-    this.viewCardsSort.emit(this.viewCountSortDirection);
-  }
+  constructor(private sortResultService: SortResultService) {}
 
   onSortDate(): void {
-    if (this.viewCountSortDirection.length) this.viewCountSortDirection = '';
-    if (!this.dateSortDirection.length) {
-      this.dateSortDirection = FilterCommand.UP;
-    } else if (this.dateSortDirection === FilterCommand.UP) {
-      this.dateSortDirection = FilterCommand.DOWN;
-    } else {
-      this.dateSortDirection = FilterCommand.UP;
-    }
-    this.updateSort();
+    this.sortResultService.setSortDate();
+    if (this.filterByTitle.length) this.clearFilterByTitle();
   }
 
   onSortView(): void {
-    if (this.dateSortDirection.length) this.dateSortDirection = '';
-    if (!this.viewCountSortDirection.length) {
-      this.viewCountSortDirection = FilterCommand.UP;
-    } else if (this.viewCountSortDirection === FilterCommand.UP) {
-      this.viewCountSortDirection = FilterCommand.DOWN;
-    } else {
-      this.viewCountSortDirection = FilterCommand.UP;
-    }
-    this.updateSort();
+    this.sortResultService.setSortView();
+    if (this.filterByTitle.length) this.clearFilterByTitle();
   }
 
   onTitleSort(): void {
-    this.dateSortDirection = '';
-    this.viewCountSortDirection = '';
-    if (this.filterByTitle.trim()) {
-      this.titleCardsSort.emit(this.filterByTitle);
-    } else {
-      this.titleCardsSort.emit('');
-    }
+    this.sortResultService.setTitleSort(this.filterByTitle);
+  }
 
-    this.updateSort();
+  onResultSorting(): SortingDataType {
+    return this.sortResultService.getSortingData();
+  }
+
+  clearFilterByTitle(): void {
+    this.filterByTitle = '';
   }
 }

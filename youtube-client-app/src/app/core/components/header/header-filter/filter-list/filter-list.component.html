@@ -1,5 +1,5 @@
 <ul class="list">
-  <li class="list__item" [ngSwitch]="dateSortDirection">
+  <li class="list__item" [ngSwitch]="onResultSorting().dateSortDirection">
     <button class="list__button" mat-button (click)="onSortDate()">date</button>
 
     <mat-icon class="list__icon" *ngSwitchCase="'up'"
@@ -10,7 +10,7 @@
     >
   </li>
 
-  <li class="list__item" [ngSwitch]="viewCountSortDirection">
+  <li class="list__item" [ngSwitch]="onResultSorting().viewCountSortDirection">
     <button class="list__button" mat-button (click)="onSortView()">
       count of views
     </button>
