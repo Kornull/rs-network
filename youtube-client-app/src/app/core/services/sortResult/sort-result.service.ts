@@ -17,9 +17,6 @@ export class SortResultService {
   }
 
   setSortDate(): void {
-    if (this.sortData.filterByTitle.length) {
-      this.sortData.filterByTitle = '';
-    }
     if (this.sortData.viewCountSortDirection.length) {
       this.sortData.viewCountSortDirection = '';
     }
@@ -33,9 +30,6 @@ export class SortResultService {
   }
 
   setSortView(): void {
-    if (this.sortData.filterByTitle.length) {
-      this.sortData.filterByTitle = '';
-    }
     if (this.sortData.dateSortDirection.length) {
       this.sortData.dateSortDirection = '';
     }

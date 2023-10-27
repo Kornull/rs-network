@@ -14,12 +14,10 @@ export class FilterListComponent {
 
   onSortDate(): void {
     this.sortResultService.setSortDate();
-    if (this.filterByTitle.length) this.clearFilterByTitle();
   }
 
   onSortView(): void {
     this.sortResultService.setSortView();
-    if (this.filterByTitle.length) this.clearFilterByTitle();
   }
 
   onTitleSort(): void {
@@ -28,9 +26,5 @@ export class FilterListComponent {
 
   onResultSorting(): SortingDataType {
     return this.sortResultService.getSortingData();
-  }
-
-  clearFilterByTitle(): void {
-    this.filterByTitle = '';
   }
 }

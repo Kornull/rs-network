@@ -2,8 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import * as dayjs from 'dayjs';
 
-import { SearchItem } from '../../../core/store/models/search-item.model';
-import { FilterCommand } from '../../../core/store/models/types';
+import { FilterCommand, SearchItem } from '../../../core/store';
 
 @Pipe({
   name: 'sortDate',

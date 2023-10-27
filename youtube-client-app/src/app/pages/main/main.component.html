@@ -1,5 +1,10 @@
 <div class="result__container">
   <app-result-search
     *ngIf="filterActivateService.getIsSearchRun()"
-    [searchResult]="cardsResult"></app-result-search>
+    [searchResult]="
+      cardsResult
+        | filterTitleCards: sortResultService.getSortingData().filterByTitle
+        | sortDate: sortResultService.getSortingData().dateSortDirection
+        | sortView: sortResultService.getSortingData().viewCountSortDirection
+    "></app-result-search>
 </div>

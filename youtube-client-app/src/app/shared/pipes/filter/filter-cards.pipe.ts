@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SearchItem } from '../../../core/store/models/search-item.model';
+
+import { SearchItem } from 'src/app/core/store';
 
 @Pipe({
   name: 'filterTitleCards',

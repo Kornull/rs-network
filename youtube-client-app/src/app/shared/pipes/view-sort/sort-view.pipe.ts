@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { SearchItem } from '../../../core/store/models/search-item.model';
-import { FilterCommand } from '../../../core/store/models/types';
+import { FilterCommand, SearchItem } from 'src/app/core/store';
 
 @Pipe({
   name: 'sortView',
