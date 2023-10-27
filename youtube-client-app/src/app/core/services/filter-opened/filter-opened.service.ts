@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FilterActivateService } from '../filterActivate/filter-activate.service';
+import { FilterActivateService } from '../filter-activate/filter-activate.service';
 
 @Injectable({
   providedIn: 'root',

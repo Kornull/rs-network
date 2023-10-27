@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { SortResultService } from 'src/app/core/services/sortResult/sort-result.service';
+
+import { SortResultService } from 'src/app/core/services';
 import { SortingDataType } from 'src/app/core/store';
 
 @Component({
