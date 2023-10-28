@@ -1,4 +1,4 @@
-<div *ngIf="card">
+<div *ngIf="card; else notCard">
   <h4>{{ card.id }}</h4>
   <h4>{{ card.snippet.title }}</h4>
   <h4>{{ card.snippet.channelId }}</h4>
@@ -12,3 +12,6 @@
   <h4>{{ card.statistics.commentCount }}</h4>
   <h4>{{ card.snippet.channelTitle }}</h4>
 </div>
+<ng-template #notCard>
+  <h3>Ooops</h3>
+</ng-template>

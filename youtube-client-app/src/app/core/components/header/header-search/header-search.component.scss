@@ -51,3 +51,10 @@
   fill: $default-blue;
   transition: fill 0.3s linear;
 }
+
+.header__icon-btn {
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  border: none;
+}

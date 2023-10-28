@@ -23,4 +23,4 @@ import { MainPageModule } from './pages/main';
     HttpClientModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

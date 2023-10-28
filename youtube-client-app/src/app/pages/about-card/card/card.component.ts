@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { SearchResultService } from 'src/app/core/services';
 import { SearchItem } from 'src/app/core/store';
@@ -10,8 +10,6 @@ import { SearchItem } from 'src/app/core/store';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
-  idCard: string;
-
   card: SearchItem | null;
 
   constructor(
@@ -20,11 +18,8 @@ export class CardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.idCard = this.route.snapshot.params['id'];
-    this.getCard();
-  }
-
-  getCard() {
-    this.card = this.searchResultService.getItem(this.idCard);
+    this.route.params.subscribe((params: Params) => {
+      this.card = this.searchResultService.getItem(params['id']);
+    });
   }
 }
