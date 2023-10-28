@@ -5,6 +5,7 @@ import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
 import { ResultSearchComponent } from './result-search/result-search.component';
 import { ResultItemComponent } from './result-item/result-item.component';
+import { AboutCardRoutingModule } from '../about-card/about-card.routing.module';
 
 @NgModule({
   declarations: [MainComponent],
@@ -13,6 +14,7 @@ import { ResultItemComponent } from './result-item/result-item.component';
     ResultSearchComponent,
     ResultItemComponent,
     MainRoutingModule,
+    AboutCardRoutingModule,
     SharedModule,
   ],
   exports: [MainComponent],

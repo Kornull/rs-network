@@ -9,6 +9,7 @@ import {
   FilterActivateService,
   FilterOpenedService,
 } from 'src/app/core/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-search',
@@ -35,6 +36,7 @@ export class HeaderSearchComponent {
   inputValue: string = '';
 
   constructor(
+    private router: Router,
     private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
     iconRegistry: MatIconRegistry,
@@ -53,6 +55,7 @@ export class HeaderSearchComponent {
   onSearch(): void {
     this.filterActivateService.activatedFilter(this.inputValue);
     this.inputValue = '';
+    this.onRedirectToHome();
   }
 
   onBtnDisabled(): boolean {
@@ -61,5 +64,9 @@ export class HeaderSearchComponent {
 
   onChangeFilterBtnStatus(): boolean {
     return this.filterOpenedService.changeFilterStatus();
+  }
+
+  onRedirectToHome() {
+    this.router.navigate(['/']);
   }
 }
