@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
+import { LocalStorageService, LoginService } from 'src/app/core/services';
+import { DefaultDataCustomBtn } from 'src/app/core/store';
 
 @Component({
   selector: 'app-header-user-login',
@@ -12,10 +13,19 @@ import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
 export class HeaderUserLoginComponent {
   userBtnStyle: string = DefaultDataCustomBtn.USER;
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(
+    private localStorageService: LocalStorageService,
+    public loginService: LoginService,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer
+  ) {
     iconRegistry.addSvgIcon(
       'userLogo',
       sanitizer.bypassSecurityTrustResourceUrl('assets/user-logo.svg')
     );
+  }
+
+  onLogOut() {
+    this.localStorageService.removeToken();
   }
 }

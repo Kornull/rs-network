@@ -8,6 +8,7 @@ import { SearchMockData } from 'src/app/mock/mock-response';
 import {
   FilterActivateService,
   FilterOpenedService,
+  LoginService,
 } from 'src/app/core/services';
 import { Router } from '@angular/router';
 
@@ -36,6 +37,7 @@ export class HeaderSearchComponent {
   inputValue: string = '';
 
   constructor(
+    public loginService: LoginService,
     private router: Router,
     private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,

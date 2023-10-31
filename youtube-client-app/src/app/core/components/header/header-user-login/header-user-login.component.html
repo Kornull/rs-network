@@ -3,4 +3,8 @@
   <app-custom-button [buttonStyle]="userBtnStyle">
     <mat-icon svgIcon="userLogo" class="settings__icon"></mat-icon>
   </app-custom-button>
+
+  <app-custom-button [buttonStyle]="userBtnStyle" *ngIf="loginService.getLog()" (click)="onLogOut()">
+    Log out
+  </app-custom-button>
 </div>

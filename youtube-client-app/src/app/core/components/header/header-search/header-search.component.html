@@ -10,9 +10,13 @@
         class="search__form-input"
         [(ngModel)]="inputValue"
         name="value"
-        autocomplete="off" />
+        autocomplete="off"
+        [disabled]="!loginService.getLog()" />
     </form>
-    <app-custom-button [buttonStyle]="searchBtnStyle" (click)="onSearch()">
+    <app-custom-button
+      [buttonStyle]="searchBtnStyle"
+      (click)="onSearch()"
+      [disabled]="!loginService.getLog()">
       search
     </app-custom-button>
   </div>

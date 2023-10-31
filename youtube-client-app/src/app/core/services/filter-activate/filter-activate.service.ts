@@ -19,4 +19,8 @@ export class FilterActivateService {
   getIsSearchRun(): boolean {
     return !this.isFilterDisabled;
   }
+
+  setActivateBtn() {
+    this.isFilterDisabled = true;
+  }
 }

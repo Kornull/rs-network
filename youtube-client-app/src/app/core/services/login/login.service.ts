@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from '../localStorage/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  isLogged: boolean = false;
+  constructor(private localStorageService: LocalStorageService) {}
 
   getLog(): boolean {
-    return this.isLogged;
+    if (this.localStorageService.getToken()) {
+      return true;
+    }
+    return false;
   }
 }

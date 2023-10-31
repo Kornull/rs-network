@@ -16,3 +16,8 @@ export type SortingDataType = {
   dateSortDirection: string;
   viewCountSortDirection: string;
 };
+
+export type UserData = {
+  login: string;
+  password: string;
+};
