@@ -1,8 +1,39 @@
-<form>
-  <label>
-    <input type="text" />
-  </label>
-  <label>
-    <input type="text" />
-  </label>
-</form>
+<div class="form__block">
+  <form class="example-form form">
+    <h3 class="form__title">Login</h3>
+    <mat-form-field>
+      <mat-label>Login</mat-label>
+
+      <input
+        matInput
+        class="form__input"
+        [(ngModel)]="loginValue"
+        name="login"
+        autocomplete="none" />
+      <mat-error *ngIf="loginValue.length < 2 && loginValue.length !== 0">
+        Please enter a valid email address
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" autocomplete="none" />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide">
+        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="form__btn"
+      (click)="onValidate()">
+      Login
+    </button>
+  </form>
+</div>

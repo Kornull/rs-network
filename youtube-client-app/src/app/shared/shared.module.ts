@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -28,6 +30,7 @@ import { FilterCardsPipe, SortDatePipe, SortViewPipe } from './pipes';
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
+    MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
     MatCardModule,
@@ -39,6 +42,7 @@ import { FilterCardsPipe, SortDatePipe, SortViewPipe } from './pipes';
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
+    MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
     MatCardModule,
