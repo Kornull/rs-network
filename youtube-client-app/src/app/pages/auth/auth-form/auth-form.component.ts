@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LocalStorageService } from 'src/app/core/services/localStorage/local-storage.service';
+import { LoginService, LocalStorageService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-auth-form',
@@ -13,12 +13,19 @@ export class AuthFormComponent {
 
   passwordValue: string = '';
 
-  constructor(private localStorageServiceService: LocalStorageService) {}
+  constructor(
+    private localStorageServiceService: LocalStorageService,
+    private loginService: LoginService
+  ) {}
 
   onValidate() {}
 
   onLoggingUser() {
     this.localStorageServiceService.addUserLocalStore({
+      login: this.loginValue,
+      password: this.passwordValue,
+    });
+    this.loginService.createUser({
       login: this.loginValue,
       password: this.passwordValue,
     });
