@@ -1,7 +1,6 @@
-import { FilterOpenedService } from 'src/app/core/services';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { SearchItem } from 'src/app/core/store/models/search-item.model';
+import { FilterOpenedService } from '../../services';
 
 @Component({
   selector: 'app-header',
@@ -9,23 +8,9 @@ import { SearchItem } from 'src/app/core/store/models/search-item.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Output() isViewSearchResults = new EventEmitter<boolean>();
-
-  @Output() isOpenFilter = new EventEmitter<boolean>();
-
-  @Output() searchItemResults = new EventEmitter<SearchItem[]>();
-
   constructor(private filterOpenedService: FilterOpenedService) {}
 
   onShowFilter(): boolean {
     return this.filterOpenedService.getFilterStatus();
-  }
-
-  onViewResults(ev: boolean): void {
-    this.isViewSearchResults.emit(ev);
-  }
-
-  onSearchItemResult(ev: SearchItem[]): void {
-    this.searchItemResults.emit(ev);
   }
 }

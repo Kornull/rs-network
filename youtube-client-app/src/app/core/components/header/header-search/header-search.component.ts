@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
-import { SearchItem } from 'src/app/core/store/models/search-item.model';
-import { SearchMockData } from 'src/app/mock/mock-response';
 import {
   FilterActivateService,
   FilterOpenedService,
   LoginService,
 } from 'src/app/core/services';
-import { Router } from '@angular/router';
+
+import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
 
 @Component({
   selector: 'app-header-search',
@@ -18,17 +18,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-search.component.scss'],
 })
 export class HeaderSearchComponent {
-  @Output() isOpenFilter = new EventEmitter<boolean>();
-
-  @Output() isViewSearchResults = new EventEmitter<boolean>();
-
-  @Output() resultItemList = new EventEmitter<SearchItem[]>();
-
   isBtnDisabled: boolean = true;
 
   isViewFilter: boolean = false;
-
-  resultSearch: SearchItem[] = [...SearchMockData.items];
 
   searchBtnStyle: string = DefaultDataCustomBtn.SEARCH;
 
