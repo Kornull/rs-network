@@ -8,7 +8,7 @@
       class="form__input"
       [(ngModel)]="loginValue"
       name="login"
-      autocomplete="none" />
+      autocomplete="off" />
     <mat-error *ngIf="loginValue.length < 2 && loginValue.length !== 0">
       Please enter a valid email address
     </mat-error>
@@ -19,7 +19,7 @@
     <input
       matInput
       [type]="hide ? 'password' : 'text'"
-      autocomplete="none"
+      autocomplete="off"
       [(ngModel)]="passwordValue"
       name="password" />
     <button
