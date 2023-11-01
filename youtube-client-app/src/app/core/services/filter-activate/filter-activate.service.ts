@@ -20,7 +20,11 @@ export class FilterActivateService {
     return !this.isFilterDisabled;
   }
 
-  setActivateBtn() {
+  turnOffBtn() {
     this.isFilterDisabled = true;
+  }
+
+  turnOoBtn() {
+    this.isFilterDisabled = false;
   }
 }
