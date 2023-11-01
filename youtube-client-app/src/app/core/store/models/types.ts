@@ -9,6 +9,7 @@ export enum DefaultDataCustomBtn {
   FILTER = 'filter',
   SETTINGS = 'settings',
   USER = 'user',
+  GO_BACK = 'goBack',
 }
 
 export type SortingDataType = {

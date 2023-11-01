@@ -1,17 +1,57 @@
-<div *ngIf="card; else notCard">
-  <h4>{{ card.id }}</h4>
-  <h4>{{ card.snippet.title }}</h4>
-  <h4>{{ card.snippet.channelId }}</h4>
-  <h4>{{ card.snippet.description}}</h4>
-  <h4>{{ card.snippet.channelTitle }}</h4>
-  <h4>{{ card.snippet.publishedAt }}</h4>
-  <h4>{{ card.statistics.viewCount }}</h4>
-  <h4>{{ card.statistics.likeCount }}</h4>
-  <h4>{{ card.statistics.dislikeCount }}</h4>
-  <h4>{{ card.statistics.favoriteCount }}</h4>
-  <h4>{{ card.statistics.commentCount }}</h4>
-  <h4>{{ card.snippet.channelTitle }}</h4>
-</div>
-<ng-template #notCard>
-  <h3>Ooops</h3>
-</ng-template>
+
+  <div *ngIf="card; else notCard" class="details">
+    <img
+      class="details__image"
+      src="{{ card.snippet.thumbnails.high.url }}"
+      alt="{{ card.snippet.localized.title }}" />
+    <div class="details__block">
+      <div class="details__title-block">
+        <h2>#{{ card.snippet.channelTitle }}</h2>
+        <p class="details__title-date">
+          {{ card.snippet.publishedAt | date : 'EEE-dd-MMM-YYYY' }}
+        </p>
+      </div>
+
+      <div class="details__description">
+        <h4 class="details__description-title">Description:</h4>
+        <p class="details__description-text">
+          {{ card.snippet.localized.title }}
+        </p>
+      </div>
+
+      <mat-card-content class="details__statistics">
+        <span class="details__statistics-info">
+          <mat-icon class="details__statistics-info--logo">remove_red_eye</mat-icon>
+          {{ card.statistics.viewCount }}
+        </span>
+
+        <span class="details__statistics-info">
+          <mat-icon class="details__statistics-info--logo">thumb_up</mat-icon>
+          {{ card.statistics.likeCount }}
+        </span>
+
+        <span class="details__statistics-info">
+          <mat-icon class="details__statistics-info--logo">thumb_down</mat-icon>
+          {{ card.statistics.dislikeCount }}
+        </span>
+
+        <span class="details__statistics-info">
+          <mat-icon class="details__statistics-info--logo">forum</mat-icon>
+          {{ card.statistics.commentCount }}
+        </span>
+      </mat-card-content>
+      <div
+        class="details__color"
+        [appDefaultColorCard]="card.snippet.publishedAt"></div>
+    </div>
+    <app-custom-button
+      [buttonStyle]="goBackBtnStyle"
+      class="details__btn"
+      (click)="goBack()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </app-custom-button>
+  </div>
+  <ng-template #notCard>
+    <h3>Ooops</h3>
+  </ng-template>
+

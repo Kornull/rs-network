@@ -28,7 +28,10 @@ export class LoginService {
   }
 
   getUserLogin() {
-    if (this.getLog()) return this.user.login;
+    if (this.getLog())
+      return this.user.login.length > 8
+        ? `${this.user.login.slice(0, 5)}...`
+        : this.user.login;
     return 'Your Name';
   }
 }

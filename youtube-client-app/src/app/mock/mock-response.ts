@@ -1,4 +1,4 @@
-import { SearchResponse } from '../core/store/models/search-response.model';
+import { SearchResponse } from '../core/store';
 
 export const SearchMockData: SearchResponse = {
   kind: 'youtube#videoListResponse',
@@ -13,7 +13,7 @@ export const SearchMockData: SearchResponse = {
       etag: '"Fznwjl6JEQdo1MGvHOGaz_YanRU/tmmI1yiRrmLWlKikXk1gD3TXsUI"',
       id: 'YN8zNnV0sK8',
       snippet: {
-        publishedAt: '2023-10-20T12:42:19.000Z',
+        publishedAt: '2023-11-02T12:42:19.000Z',
         channelId: 'UCg8ss4xW9jASrqWGP30jXiw',
         title: 'Angular 8 - Быстрый курс за 60 минут',
         description:
@@ -151,7 +151,7 @@ export const SearchMockData: SearchResponse = {
       etag: '"Fznwjl6JEQdo1MGvHOGaz_YanRU/6e0k9ik7TThWpqueHGOhTRIN1-A"',
       id: 'k5E2AVpwsko',
       snippet: {
-        publishedAt: '2017-09-05T16:48:15.000Z',
+        publishedAt: '2023-11-05T16:48:15.000Z',
         channelId: 'UCWv7vMbMWH4-V0ZXdmDpPBA',
         title:
           'Angular Tutorial for Beginners: Learn Angular from Scratch | Mosh',
@@ -703,7 +703,7 @@ export const SearchMockData: SearchResponse = {
       etag: '"Fznwjl6JEQdo1MGvHOGaz_YanRU/KuFm1jGNMzgjE2VlAEsPgRVra4o"',
       id: 'G0bBLvWXBvc',
       snippet: {
-        publishedAt: '2023-10-20T16:53:41.000Z',
+        publishedAt: '2023-11-20T16:53:41.000Z',
         channelId: 'UCsBjURrPoezykLs9EqgamOA',
         title: "Angular for Beginners - Let's build a Tic-Tac-Toe PWA",
         description:

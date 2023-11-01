@@ -35,7 +35,7 @@ export class LocalStorageService {
   }
 
   removeToken() {
-    this.filterActivateService.setActivateBtn();
+    this.filterActivateService.turnOffBtn();
     this.route.navigate(['/auth']);
     localStorage.clear();
   }

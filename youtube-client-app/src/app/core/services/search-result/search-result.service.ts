@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { SearchMockData } from 'src/app/mock/mock-response';
+import { SearchMockData } from '../../../mock/mock-response';
 import { SearchItem } from '../../store';
 
 @Injectable({

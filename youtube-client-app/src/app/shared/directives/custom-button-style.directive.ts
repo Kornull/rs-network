@@ -31,6 +31,14 @@ export class CustomButtonStyleDirective implements OnChanges {
           '6px 10px'
         );
         return;
+      case DefaultDataCustomBtn.GO_BACK:
+        this.render.setStyle(this.elementRef.nativeElement, 'padding', '14px');
+        this.render.setStyle(
+          this.elementRef.nativeElement,
+          'border-radius',
+          '6px 2px 2px 6px'
+        );
+        return;
       default:
         this.render.setStyle(
           this.elementRef.nativeElement,
