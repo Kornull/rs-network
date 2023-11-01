@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { SearchMockData } from '../../../mock/mock-response';
 import { SearchItem } from '../../store';
+import { SearchMockData } from '../../mock/mock-response';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class SearchResultService {
   }
 
   getItem(id: string): SearchItem | null {
-    const result = SearchMockData.items.find(el => el.id === id);
+    const result = SearchMockData.items.find((el: SearchItem) => el.id === id);
     if (result) return result;
 
     return null;

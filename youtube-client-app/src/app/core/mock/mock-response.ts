@@ -1,4 +1,4 @@
-import { SearchResponse } from '../core/store';
+import { SearchResponse } from '../store';
 
 export const SearchMockData: SearchResponse = {
   kind: 'youtube#videoListResponse',
