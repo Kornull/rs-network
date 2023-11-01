@@ -35,6 +35,11 @@
     &:hover {
       background: $blue !important;
     }
+
+    &:disabled {
+      background: #bcbcc9b6 !important;
+    }
   }
 
 }
+

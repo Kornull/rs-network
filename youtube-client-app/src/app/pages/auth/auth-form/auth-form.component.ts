@@ -8,6 +8,7 @@ import { LoginService, LocalStorageService } from 'src/app/core/services';
 })
 export class AuthFormComponent {
   hide: boolean = true;
+  // btnDisabled: boolean = true;
 
   loginValue: string = '';
 
@@ -21,13 +22,20 @@ export class AuthFormComponent {
   onValidate() {}
 
   onLoggingUser() {
-    this.localStorageServiceService.addUserLocalStore({
-      login: this.loginValue,
-      password: this.passwordValue,
-    });
-    this.loginService.createUser({
-      login: this.loginValue,
-      password: this.passwordValue,
-    });
+    if (this.loginValue.trim() && this.passwordValue.trim()) {
+      this.localStorageServiceService.addUserLocalStore({
+        login: this.loginValue,
+        password: this.passwordValue,
+      });
+      this.loginService.createUser({
+        login: this.loginValue,
+        password: this.passwordValue,
+      });
+    }
+  }
+
+  onBtnDisabled(): boolean {
+    if (this.loginValue.trim() && this.passwordValue.trim()) return false;
+    return true;
   }
 }

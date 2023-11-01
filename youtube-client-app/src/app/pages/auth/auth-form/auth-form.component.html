@@ -1,5 +1,5 @@
 <div class="form__block">
-  <form class="example-form form">
+  <form class="example-form form" (submit)="onLoggingUser()">
     <h3 class="form__title">Login</h3>
     <mat-form-field>
       <mat-label>Login</mat-label>
@@ -22,7 +22,7 @@
         [type]="hide ? 'password' : 'text'"
         autocomplete="none"
         [(ngModel)]="passwordValue"
-        name="password"/>
+        name="password" />
       <button
         mat-icon-button
         matSuffix
@@ -37,7 +37,7 @@
       mat-raised-button
       color="primary"
       class="form__btn"
-      (click)="onLoggingUser()">
+      [disabled]="onBtnDisabled()">
       Login
     </button>
   </form>
