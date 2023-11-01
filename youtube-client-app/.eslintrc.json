@@ -20,7 +20,7 @@
       "rules": {
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-explicit-any": "error",
-        "no-console": ["warn", { "allow": ["error"] }],
+        "no-console": ["warn", { "allow": ["error", "warn"] }],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -37,7 +37,7 @@
             "style": "kebab-case"
           }
         ],
-        "no-return-assign":"off",
+        "no-return-assign": "off",
         "import/no-unresolved": "off",
         "import/prefer-default-export": "off",
         "class-methods-use-this": "off",
