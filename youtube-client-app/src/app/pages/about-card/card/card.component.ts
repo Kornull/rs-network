@@ -6,6 +6,7 @@ import {
   FilterActivateService,
   FilterOpenedService,
   SearchResultService,
+  SortResultService,
 } from 'src/app/core/services';
 import { DefaultDataCustomBtn, SearchItem } from 'src/app/core/store';
 
@@ -22,6 +23,7 @@ export class CardComponent implements OnInit {
   constructor(
     private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
+    private sortResultService: SortResultService,
     private route: ActivatedRoute,
     private location: Location,
     private searchResultService: SearchResultService
@@ -30,6 +32,7 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {
     this.filterOpenedService.closeFilter();
     this.filterActivateService.turnOffBtn();
+    this.sortResultService.resetSort();
     this.route.params.subscribe((params: Params) => {
       this.card = this.searchResultService.getItem(params['id']);
     });

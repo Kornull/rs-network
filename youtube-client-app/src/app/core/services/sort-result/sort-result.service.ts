@@ -56,4 +56,12 @@ export class SortResultService {
   getSortingData(): SortingDataType {
     return this.sortData;
   }
+
+  resetSort(): void {
+    this.sortData = {
+      filterByTitle: '',
+      dateSortDirection: '',
+      viewCountSortDirection: '',
+    };
+  }
 }
