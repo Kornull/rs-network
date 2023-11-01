@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import {
   FilterActivateService,
+  FilterOpenedService,
   SearchResultService,
 } from 'src/app/core/services';
 import { DefaultDataCustomBtn, SearchItem } from 'src/app/core/store';
@@ -20,12 +21,14 @@ export class CardComponent implements OnInit {
 
   constructor(
     private filterActivateService: FilterActivateService,
+    private filterOpenedService: FilterOpenedService,
     private route: ActivatedRoute,
     private location: Location,
     private searchResultService: SearchResultService
   ) {}
 
   ngOnInit(): void {
+    this.filterOpenedService.closeFilter();
     this.filterActivateService.turnOffBtn();
     this.route.params.subscribe((params: Params) => {
       this.card = this.searchResultService.getItem(params['id']);

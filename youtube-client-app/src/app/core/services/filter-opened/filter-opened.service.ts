@@ -18,6 +18,10 @@ export class FilterOpenedService {
     return this.isFilterOpened;
   }
 
+  closeFilter() {
+    this.isFilterOpened = false;
+  }
+
   getFilterStatus() {
     return this.isFilterOpened;
   }
