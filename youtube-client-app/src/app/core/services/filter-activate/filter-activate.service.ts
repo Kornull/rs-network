@@ -24,7 +24,7 @@ export class FilterActivateService {
     this.isFilterDisabled = true;
   }
 
-  turnOoBtn() {
+  turnOnBtn() {
     this.isFilterDisabled = false;
   }
 }
