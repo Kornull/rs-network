@@ -1,15 +1,9 @@
+type ThumbnailsDataKeys = 'default' | 'medium' | 'high' | 'standard' | 'maxres';
+
 interface Thumbnail {
   url: string;
   width: number;
   height: number;
-}
-
-interface ThumbnailsData {
-  default: Thumbnail;
-  medium: Thumbnail;
-  high: Thumbnail;
-  standard: Thumbnail;
-  maxres: Thumbnail;
 }
 
 interface Localized {
@@ -22,7 +16,7 @@ interface Snippet {
   channelId: string;
   title: string;
   description: string;
-  thumbnails: ThumbnailsData;
+  thumbnails: { [T in ThumbnailsDataKeys]: Thumbnail };
   channelTitle: string;
   tags: string[];
   categoryId: string;

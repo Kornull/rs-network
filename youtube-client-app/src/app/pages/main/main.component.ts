@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+
 import {
   FilterActivateService,
   SearchResultService,
   SortResultService,
 } from 'src/app/core/services';
+
 import { SearchItem } from 'src/app/core/store';
 
 @Component({

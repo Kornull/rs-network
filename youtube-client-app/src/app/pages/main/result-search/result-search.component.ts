@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+
 import { SearchItem } from 'src/app/core/store';
 import { ResultItemComponent } from '../result-item/result-item.component';
 

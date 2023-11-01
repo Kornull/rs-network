@@ -7,11 +7,11 @@
   min-width: 24px;
   height: 24px;
   border-radius: 5px;
-  background: $default-blue !important;
+  background: $primary-color !important;
   transition: background 0.3s linear;
 
   &:hover {
-    background: $blue !important;
+    background: $btn-hover-color !important;
   }
 }
 

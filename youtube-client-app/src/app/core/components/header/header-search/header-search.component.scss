@@ -26,7 +26,7 @@
 
       &:focus {
         outline: none;
-        border: 1px solid $default-blue !important;
+        border: 1px solid $primary-color !important;
       }
     }
 
@@ -48,7 +48,7 @@
   width: 60px;
   padding: 0;
   height: 50px;
-  fill: $default-blue;
+  fill: $primary-color;
   transition: fill 0.3s linear;
 }
 
