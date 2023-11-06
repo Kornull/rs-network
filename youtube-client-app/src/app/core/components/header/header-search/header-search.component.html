@@ -1,0 +1,29 @@
+<div class="header__search search">
+  <button class="header__icon-btn" (click)="onRedirectToHome()">
+    <mat-icon svgIcon="logoIcon" class="header__logo"></mat-icon>
+  </button>
+  <div class="search__form-block">
+    <form class="search__form">
+      <input
+        type="text"
+        placeholder="What are you want to find out?"
+        class="search__form-input"
+        [(ngModel)]="inputValue"
+        name="value"
+        autocomplete="off"
+        [disabled]="!loginService.getLog()" />
+    </form>
+    <app-custom-button
+      [buttonStyle]="searchBtnStyle"
+      (click)="onSearch()"
+      [disabled]="!loginService.getLog()">
+      search
+    </app-custom-button>
+  </div>
+  <app-custom-button
+    [buttonStyle]="settingsBtnStyle"
+    [disabled]="onBtnDisabled()"
+    (click)="onChangeFilterBtnStatus()">
+    <mat-icon svgIcon="settings" class="settings__icon"></mat-icon>
+  </app-custom-button>
+</div>

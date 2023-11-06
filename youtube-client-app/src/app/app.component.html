@@ -1,20 +1,4 @@
-<app-header
-  (isViewSearchResults)="isViewResult = $event"
-  (searchItemResults)="onUpdateSearch($event)"
-  (isOpenFilter)="isOpenedFilter = $event"></app-header>
-<app-filter-cards
-  *ngIf="isOpenedFilter"
-  [viewSort]="viewCountSort"
-  [dateSort]="dateSort"
-  [titleFilter]="titleSort"
-  (updateViewSort)="viewCountSort = $event"
-  (updateDateSort)="dateSort = $event"
-  (updateTitleSort)="titleSort = $event"></app-filter-cards>
-<app-search-results
-  [searchCardsResult]="
-    searchItems
-      | filterTitleCards: titleSort
-      | sortDate: dateSort
-      | sortView: viewCountSort
-  ">
-</app-search-results>
+<app-header></app-header>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

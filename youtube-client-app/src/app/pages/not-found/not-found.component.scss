@@ -1,0 +1,13 @@
+.mistake {
+  display: flex;
+  align-items: center;
+  width: 220px;
+  height: 80px;
+  gap: 10px;
+  font-size: 18px;
+
+  &__icon{
+    width: 90px;
+    height: 70px;
+  }
+}

@@ -1,31 +1,17 @@
-import { Component } from '@angular/core';
-
-import { SearchItem } from './models/search-item.model';
+import { Component, OnInit } from '@angular/core';
+import { LoggerService } from './core/services/logger/logger.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title: string = 'youtube-client-app';
 
-  dateSort: string;
+  constructor(private loggerService: LoggerService) {}
 
-  viewCountSort: string;
-
-  titleSort: string;
-
-  searchItems: SearchItem[];
-
-  isOpenedFilter: boolean = false;
-
-  isViewResult: boolean = false;
-
-  onUpdateSearch(searchResult: SearchItem[]): void {
-    this.searchItems = [...searchResult];
-    this.viewCountSort = '';
-    this.dateSort = '';
-    this.titleSort = '';
+  ngOnInit(): void {
+    this.loggerService.isWorkspaceRun();
   }
 }
