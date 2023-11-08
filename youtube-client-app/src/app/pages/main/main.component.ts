@@ -6,7 +6,7 @@ import {
   SortResultService,
 } from 'src/app/core/services';
 
-import { SearchItem, SortingDataType } from 'src/app/core/store';
+import { SearchItem, SortingTitle } from 'src/app/core/store';
 
 @Component({
   selector: 'app-main',
@@ -36,21 +36,17 @@ export class MainComponent implements OnInit {
     return this.filterActivateService.getIsSearchRun();
   }
 
-  onFilterByTitle() {
-    const filterData: SortingDataType = this.sortResultService.getSortingData();
-
-    return filterData.filterByTitle;
+  onFilterByTitle(): string {
+    return this.sortResultService.getSortingDirectionResult(
+      SortingTitle.FILTER
+    );
   }
 
-  onSortingByDate() {
-    const filterData: SortingDataType = this.sortResultService.getSortingData();
-
-    return filterData.dateSortDirection;
+  onSortingByDate(): string {
+    return this.sortResultService.getSortingDirectionResult(SortingTitle.DATE);
   }
 
   onSortingByView() {
-    const filterData: SortingDataType = this.sortResultService.getSortingData();
-
-    return filterData.viewCountSortDirection;
+    return this.sortResultService.getSortingDirectionResult(SortingTitle.VIEW);
   }
 }
