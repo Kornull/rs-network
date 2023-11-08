@@ -6,7 +6,7 @@ import {
   SortResultService,
 } from 'src/app/core/services';
 
-import { SearchItem } from 'src/app/core/store';
+import { SearchItem, SortingDataType } from 'src/app/core/store';
 
 @Component({
   selector: 'app-main',
@@ -18,8 +18,8 @@ export class MainComponent implements OnInit {
 
   constructor(
     private searchResultService: SearchResultService,
-    public filterActivateService: FilterActivateService,
-    public sortResultService: SortResultService
+    private filterActivateService: FilterActivateService,
+    private sortResultService: SortResultService
   ) {}
 
   ngOnInit(): void {
@@ -30,5 +30,27 @@ export class MainComponent implements OnInit {
     this.searchResultService
       .getItems()
       .subscribe(cards => (this.cardsResult = cards));
+  }
+
+  onFilterActivated(): boolean {
+    return this.filterActivateService.getIsSearchRun();
+  }
+
+  onFilterByTitle() {
+    const filterData: SortingDataType = this.sortResultService.getSortingData();
+
+    return filterData.filterByTitle;
+  }
+
+  onSortingByDate() {
+    const filterData: SortingDataType = this.sortResultService.getSortingData();
+
+    return filterData.dateSortDirection;
+  }
+
+  onSortingByView() {
+    const filterData: SortingDataType = this.sortResultService.getSortingData();
+
+    return filterData.viewCountSortDirection;
   }
 }
