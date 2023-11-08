@@ -22,8 +22,8 @@ export class LocalStorageService {
     return `${firsPart}${secondPart}`;
   }
 
-  addUserLocalStore({ login }: UserData) {
-    localStorage.setItem('youtube-user-login', login);
+  addUserLocalStore({ email }: UserData) {
+    localStorage.setItem('youtube-user-login', email);
     this.createFakeToken();
   }
 

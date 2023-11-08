@@ -1,42 +1,64 @@
-<form class="example-form form" (submit)="onLoggingUser()">
+<form
+  class="example-form form"
+  (submit)="onSignIn()"
+  [formGroup]="signInForm">
   <h3 class="form__title">Login</h3>
   <mat-form-field>
-    <mat-label>Login</mat-label>
-
+    <mat-label>Email</mat-label>
     <input
       matInput
-      class="form__input"
-      [(ngModel)]="loginValue"
-      name="login"
+      type="email"
+      formControlName="email"
+      placeholder="###@##.##"
       autocomplete="off" />
-    <mat-error *ngIf="loginValue.length < 2 && loginValue.length !== 0">
-      Please enter a valid email address
-    </mat-error>
+    <mat-error
+      *ngIf="
+        !signInForm.get('email')!.valid &&
+        !signInForm.get('email')!.hasError('required')
+      "
+      >The login email is invalid
+      (&#35;&#35;&#64;&#35;&#35;&#46;&#35;&#35;)</mat-error
+    >
+    <mat-error *ngIf="signInForm.get('email')!.hasError('required')"
+      >Please enter a login email</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Enter your password</mat-label>
     <input
       matInput
-      [type]="hide ? 'password' : 'text'"
+      type="password"
+      [type]="isHiddenPassword ? 'password' : 'text'"
       autocomplete="off"
-      [(ngModel)]="passwordValue"
-      name="password" />
+      placeholder="12Aa!@s$#"
+      formControlName="password" />
     <button
       mat-icon-button
+      type="button"
       matSuffix
-      (click)="hide = !hide"
+      (click)="onShowPassword()"
       [attr.aria-label]="'Hide password'"
-      [attr.aria-pressed]="hide">
-      <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      [attr.aria-pressed]="isHiddenPassword">
+      <mat-icon>{{
+        isHiddenPassword ? 'visibility_off' : 'visibility'
+      }}</mat-icon>
     </button>
+
+    <mat-error *ngIf="signInForm.get('password')?.hasError('invalidPassword')"
+      >Your password isn't strong enough.(!12qQ#%$S#s), min length - 8
+    </mat-error>
+    <mat-error *ngIf="signInForm.get('password')!.hasError('required')"
+      >Please enter a password</mat-error
+    >
   </mat-form-field>
 
   <button
+    type="submit"
     mat-raised-button
     color="primary"
     class="form__btn"
-    [disabled]="onBtnDisabled()">
+    [disabled]="signInForm.invalid">
     Login
   </button>
 </form>

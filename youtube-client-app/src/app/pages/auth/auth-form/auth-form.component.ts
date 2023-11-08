@@ -1,42 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { LoginService, LocalStorageService } from 'src/app/core/services';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { passwordValidator } from 'src/app/shared/validators';
 
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss'],
 })
-export class AuthFormComponent {
-  hide: boolean = true;
-  // btnDisabled: boolean = true;
+export class AuthFormComponent implements OnInit {
+  isHiddenPassword: boolean = true;
 
-  loginValue: string = '';
+  signInForm: FormGroup;
 
-  passwordValue: string = '';
+  ngOnInit(): void {
+    this.signInForm = new FormGroup({
+      email: new FormControl('', [Validators.email, Validators.required]),
+      password: new FormControl('', [
+        Validators.minLength(8),
+        Validators.required,
+        passwordValidator(),
+      ]),
+    });
+  }
 
   constructor(
-    private localStorageServiceService: LocalStorageService,
+    private localStorageService: LocalStorageService,
     private loginService: LoginService
   ) {}
 
-  onValidate() {}
-
-  onLoggingUser() {
-    if (this.loginValue.trim() && this.passwordValue.trim()) {
-      this.localStorageServiceService.addUserLocalStore({
-        login: this.loginValue,
-        password: this.passwordValue,
-      });
-      this.loginService.createUser({
-        login: this.loginValue,
-        password: this.passwordValue,
-      });
-    }
+  onShowPassword(): boolean {
+    this.isHiddenPassword = !this.isHiddenPassword;
+    return this.isHiddenPassword;
   }
 
-  onBtnDisabled(): boolean {
-    if (this.loginValue.trim() && this.passwordValue.trim()) return false;
-    return true;
+  onSignIn(): void {
+    this.loginService.createUser({
+      email: this.signInForm.controls['email'].value,
+      password: this.signInForm.controls['password'].value,
+    });
+    this.localStorageService.addUserLocalStore({
+      email: this.signInForm.controls['email'].value,
+      password: this.signInForm.controls['password'].value,
+    });
+    this.signInForm.reset();
   }
 }
