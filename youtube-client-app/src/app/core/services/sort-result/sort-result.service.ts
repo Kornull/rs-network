@@ -22,7 +22,7 @@ export class SortResultService {
     return FilterCommand.UP;
   }
 
-  clearSorting(): void {
+  private clearSorting(): void {
     this.dateSortDirection = '';
     this.viewCountSortDirection = '';
   }
@@ -47,7 +47,7 @@ export class SortResultService {
     }
   }
 
-  setSortingData(value: string) {
+  setSortingData(value: string): void {
     switch (value) {
       case SortingTitle.DATE:
         if (this.viewCountSortDirection) {
