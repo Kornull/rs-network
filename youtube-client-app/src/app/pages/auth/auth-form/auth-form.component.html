@@ -46,11 +46,23 @@
     </button>
 
     <mat-error *ngIf="signInForm.get('password')?.hasError('invalidPassword')"
-      >Your password isn't strong enough.(!12qQ#%$S#s), min length - 8
+      >Your password isn't strong enough.(!12qQ#%$S#s)
     </mat-error>
     <mat-error *ngIf="signInForm.get('password')!.hasError('required')"
       >Please enter a password</mat-error
     >
+    <mat-error
+      *ngIf="
+        signInForm.get('password')?.hasError('minlength') &&
+        !signInForm.get('password')?.valid &&
+        signInForm.get('password')?.touched
+      "
+      >Min length password -
+      {{
+        signInForm.get('password')?.errors?.['minlength']?.['requiredLength']
+      }}, your length -
+      {{ signInForm.get('password')?.errors?.['minlength']?.['actualLength'] }}
+    </mat-error>
   </mat-form-field>
 
   <button
