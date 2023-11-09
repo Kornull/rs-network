@@ -1,0 +1,13 @@
+@import "src/scss/variables";
+
+.admin {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 480px;
+  align-items: center;
+  border-radius: 12px;
+  justify-content: center;
+  background-color: $background;
+  padding: 20px;
+}

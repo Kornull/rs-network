@@ -1,0 +1,144 @@
+<form
+  class="example-form form"
+  (submit)="onSubmit()"
+  [formGroup]="createCardForm">
+
+  <div
+    class="form__info"
+    formGroupName="info">
+    <mat-form-field class="example-full-width">
+
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Title" />
+      <mat-error *ngIf="createCardForm.get('info.title')?.hasError('required')"
+        >Please enter a title
+      </mat-error>
+      <mat-error *ngIf="createCardForm.get('info.title')?.hasError('minlength')"
+        >The title is too short
+      </mat-error>
+      <mat-error *ngIf="createCardForm.get('info.title')?.hasError('maxlength')"
+        >The title is too long
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Link image</mat-label>
+      <input
+        formControlName="imageLink"
+        matInput
+        placeholder="Image" />
+      <mat-error
+        *ngIf="createCardForm.get('info.imageLink')?.hasError('required')"
+        >Please enter a link to the image
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Link video</mat-label>
+      <input
+        formControlName="videoLink"
+        matInput
+        placeholder="Video" />
+      <mat-error
+        *ngIf="createCardForm.get('info.videoLink')?.hasError('required')"
+        >Please enter a link to the video
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        formControlName="description"
+        matInput
+        placeholder="Ex. It makes me feel..."></textarea>
+      <mat-hint
+        [class]="
+          !createCardForm.get('info.description')?.valid ? 'danger' : ''
+        ">
+        {{ createCardForm.get('info.description')?.value?.length || 0 }}
+        /255</mat-hint
+      >
+      <mat-error
+        *ngIf="
+          !createCardForm.get('info.description')?.valid &&
+          createCardForm.get('info.description')?.touched
+        "
+        >The description is too long!
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input
+        matInput
+        formControlName="date"
+        [matDatepicker]="picker" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-error *ngIf="createCardForm.get('info.date')?.hasError('required')"
+        >Please enter a creation date
+      </mat-error>
+      <mat-error
+        *ngIf="createCardForm.get('info.date')?.hasError('invalidDate')"
+        >The date is invalid
+      </mat-error>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div
+    class="form__tags"
+    formGroupName="tags">
+    <h4>Add tags</h4>
+    <div
+      class="form__create-tag tag"
+      formArrayName="tagList">
+      <div class="tag__inputs">
+        <mat-form-field
+          class="example-full-width form__tags-list"
+          *ngFor="let tagControl of onGetTags(); let i = index">
+          <mat-label>Tag</mat-label>
+          <input
+            [formControlName]="i"
+            matInput
+            type="text"
+            placeholder="Tag" />
+          <mat-error *ngIf="onGetValidity(i)">Please enter a tag </mat-error>
+        </mat-form-field>
+      </div>
+      <button
+        type="button"
+        mat-raised-button
+        class="btn__tags"
+        (click)="onAddTag()"
+        [disabled]="onGetTagsArrayLength()">
+        Add tag
+      </button>
+    </div>
+  </div>
+
+  <div class="button__block">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      class="btn"
+      (click)="onResetForm()">
+      Reset
+    </button>
+
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      class="btn"
+      [disabled]="createCardForm.invalid">
+      Add card
+    </button>
+  </div>
+</form>
