@@ -65,7 +65,15 @@ export class AdminFormComponent implements OnInit {
       .invalid;
   }
 
+  clearFormArray = () => {
+    const tagsArray = <FormArray>this.createCardForm.get('tags.tagList');
+    while (tagsArray.controls.length !== 1) {
+      tagsArray.removeAt(0);
+    }
+  };
+
   onResetForm(): void {
+    this.clearFormArray();
     this.createCardForm.reset();
   }
 
