@@ -1,0 +1,16 @@
+<div class="card__block">
+  <div
+    class="card"
+    *ngIf="cardDetails; else notCard">
+    <app-card [card]="cardDetails"></app-card>
+    <app-custom-button
+      [buttonStyle]="goBackBtnStyle"
+      class="go__back-btn"
+      (click)="goBack()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </app-custom-button>
+  </div>
+  <ng-template #notCard>
+    <h3>Ooops! Something went wrong.</h3>
+  </ng-template>
+</div>

@@ -6,13 +6,11 @@ const routes: Routes = [
   { path: '', component: MainComponent },
   {
     path: 'about/:id',
-    loadChildren: () =>
-      import('../about-card/about-card.module').then(m => m.AboutCardModule),
+    loadChildren: () => import('../about-card').then(m => m.AboutCardModule),
   },
   {
     path: 'admin',
-    loadChildren: () =>
-      import('../admin/admin.module').then(m => m.AdminModule),
+    loadChildren: () => import('../admin').then(m => m.AdminModule),
   },
 ];
 

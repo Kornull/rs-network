@@ -1,4 +1,4 @@
-<div *ngIf="card; else notCard" class="details">
+<div class="details">
     <img
       class="details__image"
       src="{{ card.snippet.thumbnails.high.url }}"
@@ -44,14 +44,7 @@
         class="details__color"
         [appDefaultColorCard]="card.snippet.publishedAt"></div>
     </div>
-    <app-custom-button
-      [buttonStyle]="goBackBtnStyle"
-      class="details__btn"
-      (click)="goBack()">
-      <mat-icon>arrow_back_ios</mat-icon>
-    </app-custom-button>
+
 </div>
-<ng-template #notCard>
-  <h3>Ooops</h3>
-</ng-template>
+
 

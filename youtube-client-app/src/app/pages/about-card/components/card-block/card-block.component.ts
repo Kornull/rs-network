@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -11,21 +11,21 @@ import {
 import { DefaultDataCustomBtn, SearchItem } from 'src/app/core/store';
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss'],
+  selector: 'app-card-block',
+  templateUrl: './card-block.component.html',
+  styleUrls: ['./card-block.component.scss'],
 })
-export class CardComponent implements OnInit {
-  card: SearchItem | null;
+export class CardBlockComponent {
+  cardDetails: SearchItem | null;
 
   goBackBtnStyle: string = DefaultDataCustomBtn.GO_BACK;
 
   constructor(
     private filterActivateService: FilterActivateService,
+    private location: Location,
     private filterOpenedService: FilterOpenedService,
     private sortResultService: SortResultService,
     private route: ActivatedRoute,
-    private location: Location,
     private searchResultService: SearchResultService
   ) {}
 
@@ -34,7 +34,7 @@ export class CardComponent implements OnInit {
     this.filterActivateService.turnOffBtn();
     this.sortResultService.resetSort();
     this.route.params.subscribe((params: Params) => {
-      this.card = this.searchResultService.getItem(params['id']);
+      this.cardDetails = this.searchResultService.getItem(params['id']);
     });
   }
 
