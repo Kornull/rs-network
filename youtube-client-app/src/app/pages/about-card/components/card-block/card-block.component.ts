@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -15,7 +15,7 @@ import { DefaultDataCustomBtn, SearchItem } from 'src/app/core/store';
   templateUrl: './card-block.component.html',
   styleUrls: ['./card-block.component.scss'],
 })
-export class CardBlockComponent {
+export class CardBlockComponent implements OnInit {
   cardDetails: SearchItem | null;
 
   goBackBtnStyle: string = DefaultDataCustomBtn.GO_BACK;
