@@ -49,23 +49,23 @@ export class AdminFormComponent implements OnInit {
     (<FormArray>this.createCardForm.get('tags.tagList')).push(newTag);
   }
 
-  onGetTags(): AbstractControl[] {
+  getTags(): AbstractControl[] {
     const tagsArray = this.createCardForm.get('tags.tagList') as FormArray;
     return tagsArray.controls;
   }
 
-  onGetTagsArrayLength(): boolean {
+  getTagsArrayLength(): boolean {
     const arr = this.createCardForm.get('tags.tagList') as FormArray;
     if (arr.controls.length < 5) return false;
     return true;
   }
 
-  onGetValidity(i: number) {
+  getValidity(i: number) {
     return (<FormArray>this.createCardForm.get('tags.tagList')).controls[i]
       .invalid;
   }
 
-  clearFormArray = () => {
+  onClearFormArray = () => {
     const tagsArray = <FormArray>this.createCardForm.get('tags.tagList');
     while (tagsArray.controls.length !== 1) {
       tagsArray.removeAt(0);
@@ -73,7 +73,7 @@ export class AdminFormComponent implements OnInit {
   };
 
   onResetForm(): void {
-    this.clearFormArray();
+    this.onClearFormArray();
     this.createCardForm.reset();
   }
 

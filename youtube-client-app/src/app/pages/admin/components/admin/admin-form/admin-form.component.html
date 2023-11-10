@@ -69,7 +69,7 @@
         >The description is too long!
       </mat-error>
     </mat-form-field>
-    
+
     <mat-form-field>
       <mat-label>Choose a date</mat-label>
       <input
@@ -101,14 +101,14 @@
       <div class="tag__inputs">
         <mat-form-field
           class="example-full-width form__tags-list"
-          *ngFor="let tagControl of onGetTags(); let i = index">
+          *ngFor="let tagControl of getTags(); let i = index">
           <mat-label>Tag</mat-label>
           <input
             [formControlName]="i"
             matInput
             type="text"
             placeholder="Tag" />
-          <mat-error *ngIf="onGetValidity(i)">Please enter a tag </mat-error>
+          <mat-error *ngIf="getValidity(i)">Please enter a tag </mat-error>
         </mat-form-field>
       </div>
       <button
@@ -116,7 +116,7 @@
         mat-raised-button
         class="btn__tags"
         (click)="onAddTag()"
-        [disabled]="onGetTagsArrayLength()">
+        [disabled]="getTagsArrayLength()">
         Add tag
       </button>
     </div>
