@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { LoginService, LocalStorageService } from 'src/app/core/services';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from 'src/app/shared/validators';
 
 @Component({
@@ -14,21 +14,21 @@ export class AuthFormComponent implements OnInit {
 
   signInForm: FormGroup;
 
-  ngOnInit(): void {
-    this.signInForm = new FormGroup({
-      email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [
-        Validators.minLength(8),
-        Validators.required,
-        passwordValidator(),
-      ]),
-    });
-  }
-
   constructor(
+    private fb: FormBuilder,
     private localStorageService: LocalStorageService,
     private loginService: LoginService
   ) {}
+
+  ngOnInit(): void {
+    this.signInForm = this.fb.group({
+      email: ['', [Validators.email, Validators.required]],
+      password: [
+        '',
+        [Validators.minLength(8), Validators.required, passwordValidator()],
+      ],
+    });
+  }
 
   onShowPassword(): boolean {
     this.isHiddenPassword = !this.isHiddenPassword;
