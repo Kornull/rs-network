@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { SortResultService } from 'src/app/core/services';
-import { SortingDataType } from 'src/app/core/store';
+import { SortingTitle } from 'src/app/core/store';
 
 @Component({
   selector: 'app-filter-list',
@@ -14,18 +14,22 @@ export class FilterListComponent {
   constructor(private sortResultService: SortResultService) {}
 
   onSortDate(): void {
-    this.sortResultService.setSortDate();
+    this.sortResultService.setSortingData(SortingTitle.DATE);
   }
 
   onSortView(): void {
-    this.sortResultService.setSortView();
+    this.sortResultService.setSortingData(SortingTitle.VIEW);
   }
 
   onTitleSort(): void {
     this.sortResultService.setTitleSort(this.filterByTitle);
   }
 
-  onResultSorting(): SortingDataType {
-    return this.sortResultService.getSortingData();
+  getViewSortDirection(): string {
+    return this.sortResultService.getSortingDirectionResult(SortingTitle.VIEW);
+  }
+
+  getDateSortDirection(): string {
+    return this.sortResultService.getSortingDirectionResult(SortingTitle.DATE);
   }
 }

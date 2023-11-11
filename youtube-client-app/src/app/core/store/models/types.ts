@@ -12,13 +12,13 @@ export enum DefaultDataCustomBtn {
   GO_BACK = 'goBack',
 }
 
-export type SortingDataType = {
-  filterByTitle: string;
-  dateSortDirection: string;
-  viewCountSortDirection: string;
-};
-
 export type UserData = {
-  login: string;
+  email: string;
   password: string;
 };
+
+export enum SortingTitle {
+  DATE = 'date',
+  FILTER = 'filter',
+  VIEW = 'view',
+}

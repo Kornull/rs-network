@@ -1,0 +1,39 @@
+@import 'src/scss/variables';
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: $background !important;
+  width: 500px;
+  padding: 20px;
+  height: 300px;
+  border-radius: 15px;
+  box-shadow: 0 0 12px #0000008c;
+
+  &__title {
+    font-size: 28px;
+  }
+
+  &__btn{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 160px;
+    font-size: 16px;
+
+    font-weight: normal;
+    background: $primary-color !important;
+    transition: background .2s linear;
+    &:hover {
+      background: $btn-hover-color !important;
+    }
+
+    &:disabled {
+      background: #bcbcc9b6 !important;
+    }
+  }
+
+}
+

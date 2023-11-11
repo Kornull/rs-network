@@ -14,15 +14,17 @@ import {
   DefaultColorCardDirective,
 } from './directives';
 import { FilterCardsPipe, SortDatePipe, SortViewPipe } from './pipes';
-import { CustomButtonComponent } from './components/UI';
+
+import { CustomButtonComponent, NotFoundComponent } from './components';
 
 @NgModule({
   declarations: [
     CustomButtonStyleDirective,
+    CustomButtonComponent,
+    NotFoundComponent,
     FilterCardsPipe,
     SortDatePipe,
     SortViewPipe,
-    CustomButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { CustomButtonComponent } from './components/UI';
   exports: [
     CustomButtonStyleDirective,
     DefaultColorCardDirective,
+    NotFoundComponent,
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,

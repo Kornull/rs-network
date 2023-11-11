@@ -1,0 +1,10 @@
+<div class="result__container">
+  <app-result-search
+    *ngIf="onFilterActivated()"
+    [searchResult]="
+      cardsResult
+        | filterTitleCards: onFilterByTitle()
+        | sortDate: onSortingByDate()
+        | sortView: onSortingByView()
+    "></app-result-search>
+</div>

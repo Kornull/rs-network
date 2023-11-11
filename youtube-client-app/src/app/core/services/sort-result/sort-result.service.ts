@@ -1,67 +1,77 @@
 import { Injectable } from '@angular/core';
 
-import { FilterCommand, SortingDataType } from '../../store';
+import { FilterCommand, SortingTitle } from '../../store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SortResultService {
-  private sortData: SortingDataType = {
-    filterByTitle: '',
-    dateSortDirection: '',
-    viewCountSortDirection: '',
-  };
+  private filterByTitle: string = '';
 
-  clearSorting(): void {
-    this.sortData.dateSortDirection = '';
-    this.sortData.viewCountSortDirection = '';
+  private dateSortDirection: string = '';
+
+  private viewCountSortDirection: string = '';
+
+  private getSortingDirection(value: string): string {
+    if (!value) {
+      return FilterCommand.UP;
+    }
+    if (value === FilterCommand.UP) {
+      return FilterCommand.DOWN;
+    }
+    return FilterCommand.UP;
   }
 
-  setSortDate(): void {
-    if (this.sortData.viewCountSortDirection.length) {
-      this.sortData.viewCountSortDirection = '';
-    }
-    if (!this.sortData.dateSortDirection.length) {
-      this.sortData.dateSortDirection = FilterCommand.UP;
-    } else if (this.sortData.dateSortDirection === FilterCommand.UP) {
-      this.sortData.dateSortDirection = FilterCommand.DOWN;
-    } else {
-      this.sortData.dateSortDirection = FilterCommand.UP;
-    }
-  }
-
-  setSortView(): void {
-    if (this.sortData.dateSortDirection.length) {
-      this.sortData.dateSortDirection = '';
-    }
-    if (!this.sortData.viewCountSortDirection.length) {
-      this.sortData.viewCountSortDirection = FilterCommand.UP;
-    } else if (this.sortData.viewCountSortDirection === FilterCommand.UP) {
-      this.sortData.viewCountSortDirection = FilterCommand.DOWN;
-    } else {
-      this.sortData.viewCountSortDirection = FilterCommand.UP;
-    }
+  private clearSorting(): void {
+    this.dateSortDirection = '';
+    this.viewCountSortDirection = '';
   }
 
   setTitleSort(searchTitleData: string): void {
-    if (
-      this.sortData.dateSortDirection.length ||
-      this.sortData.viewCountSortDirection.length
-    ) {
+    if (this.dateSortDirection || this.viewCountSortDirection) {
       this.clearSorting();
     }
-    this.sortData.filterByTitle = searchTitleData;
+    this.filterByTitle = searchTitleData;
   }
 
-  getSortingData(): SortingDataType {
-    return this.sortData;
+  getSortingDirectionResult(value: string): string {
+    switch (value) {
+      case SortingTitle.VIEW:
+        return this.viewCountSortDirection;
+      case SortingTitle.DATE:
+        return this.dateSortDirection;
+      case SortingTitle.FILTER:
+        return this.filterByTitle;
+      default:
+        return '';
+    }
+  }
+
+  setSortingData(value: string): void {
+    switch (value) {
+      case SortingTitle.DATE:
+        if (this.viewCountSortDirection) {
+          this.viewCountSortDirection = '';
+        }
+        this.dateSortDirection = this.getSortingDirection(
+          this.dateSortDirection
+        );
+        break;
+      case SortingTitle.VIEW:
+        if (this.dateSortDirection) {
+          this.dateSortDirection = '';
+        }
+        this.viewCountSortDirection = this.getSortingDirection(
+          this.viewCountSortDirection
+        );
+        break;
+      default:
+        break;
+    }
   }
 
   resetSort(): void {
-    this.sortData = {
-      filterByTitle: '',
-      dateSortDirection: '',
-      viewCountSortDirection: '',
-    };
+    this.clearSorting();
+    this.filterByTitle = '';
   }
 }

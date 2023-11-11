@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from 'src/app/shared';
 import { AuthRoutingModule } from './auth-routing.module';
-import { AuthFormComponent } from './auth-form/auth-form.component';
+import { AuthFormComponent } from './components';
 
 @NgModule({
   declarations: [AuthFormComponent],

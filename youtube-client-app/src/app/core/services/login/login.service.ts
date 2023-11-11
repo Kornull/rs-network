@@ -8,15 +8,15 @@ import { UserData } from '../../store';
 })
 export class LoginService {
   user: UserData = {
-    login: localStorage.getItem('youtube-user-login') || '',
+    email: localStorage.getItem('youtube-user-login') || '',
     password: '',
   };
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  createUser({ login, password }: UserData) {
+  createUser({ email, password }: UserData) {
     this.user = {
-      login,
+      email,
       password,
     };
   }
@@ -29,10 +29,10 @@ export class LoginService {
   }
 
   getUserLogin() {
-    if (this.getLog())
-      return this.user.login.length > 8
-        ? `${this.user.login.slice(0, 5)}...`
-        : this.user.login;
+    if (this.getLog()) {
+      const userLogin = this.user.email.split('@')[0];
+      return userLogin.length > 8 ? `${userLogin.slice(0, 5)}...` : userLogin;
+    }
     return 'Your Name';
   }
 }

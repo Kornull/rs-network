@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { SharedModule } from 'src/app/shared';
-import { MainComponent } from './main.component';
+
 import { MainRoutingModule } from './main-routing.module';
-import { ResultSearchComponent } from './result-search/result-search.component';
-import { ResultItemComponent } from './result-item/result-item.component';
-import { AboutCardRoutingModule } from '../about-card/about-card.routing.module';
+import { AboutCardRoutingModule } from '../about-card';
+import { AdminRoutingModule } from '../admin';
+
+import {
+  MainComponent,
+  ResultItemComponent,
+  ResultSearchComponent,
+} from './components';
 
 @NgModule({
   declarations: [MainComponent],
@@ -15,6 +21,7 @@ import { AboutCardRoutingModule } from '../about-card/about-card.routing.module'
     ResultItemComponent,
     MainRoutingModule,
     AboutCardRoutingModule,
+    AdminRoutingModule,
     SharedModule,
   ],
   exports: [MainComponent],

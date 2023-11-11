@@ -1,17 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { LoggerService } from './core/services/logger/logger.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title: string = 'youtube-client-app';
-
-  constructor(private loggerService: LoggerService) {}
-
-  ngOnInit(): void {
-    this.loggerService.isWorkspaceRun();
-  }
 }
