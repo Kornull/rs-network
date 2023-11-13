@@ -21,15 +21,15 @@
         autocomplete="off"
         [disabled]="!loginService.getLog()" />
     </form>
+    <app-custom-button
+      [buttonStyle]="settingsBtnStyle"
+      [disabled]="onBtnDisabled()"
+      (click)="onChangeFilterBtnStatus()">
+      <mat-icon class="settings__icon">
+        <img
+          src="./assets/settings.svg"
+          alt="" />
+      </mat-icon>
+    </app-custom-button>
   </div>
-  <app-custom-button
-    [buttonStyle]="settingsBtnStyle"
-    [disabled]="onBtnDisabled()"
-    (click)="onChangeFilterBtnStatus()">
-    <mat-icon class="settings__icon">
-      <img
-        src="./assets/settings.svg"
-        alt="" />
-    </mat-icon>
-  </app-custom-button>
 </div>
