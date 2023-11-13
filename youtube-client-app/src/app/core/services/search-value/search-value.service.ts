@@ -5,13 +5,13 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class SearchValueService {
-  private searchValue = new Subject<string>();
+  private searchValue$ = new Subject<string>();
 
   setValue(str: string): void {
-    this.searchValue.next(str);
+    this.searchValue$.next(str);
   }
 
   getSearchValue(): Subject<string> {
-    return this.searchValue;
+    return this.searchValue$;
   }
 }
