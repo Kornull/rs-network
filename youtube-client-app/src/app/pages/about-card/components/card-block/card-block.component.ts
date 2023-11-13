@@ -21,8 +21,6 @@ export class CardBlockComponent implements OnInit {
 
   goBackBtnStyle: string = DefaultDataCustomBtn.GO_BACK;
 
-  defaultValue: string = '';
-
   constructor(
     private route: ActivatedRoute,
     private location: Location,
