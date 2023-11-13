@@ -1,5 +1,5 @@
 import { SearchValueService } from 'src/app/core/services/search-value/search-value.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -10,13 +10,16 @@ import {
   SortResultService,
 } from 'src/app/core/services';
 import { DefaultDataCustomBtn, SearchItemDetails } from 'src/app/core/store';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-card-block',
   templateUrl: './card-block.component.html',
   styleUrls: ['./card-block.component.scss'],
 })
-export class CardBlockComponent implements OnInit {
+export class CardBlockComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   cardDetails: SearchItemDetails | null;
 
   goBackBtnStyle: string = DefaultDataCustomBtn.GO_BACK;
@@ -40,7 +43,13 @@ export class CardBlockComponent implements OnInit {
         .getCard(params['id'])
         .subscribe(card => (this.cardDetails = card));
     });
+    takeUntil(this.destroy$);
     this.searchValueService.setValue('');
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   goBack(): void {
