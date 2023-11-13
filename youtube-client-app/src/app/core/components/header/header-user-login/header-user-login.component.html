@@ -1,5 +1,5 @@
 <div class="user__block">
-  <span class="user__name">{{ loginService.getUserLogin() }}</span>
+  <span class="user__name">{{ getUserName() }}</span>
   <app-custom-button [buttonStyle]="userBtnStyle">
     <mat-icon class="settings__icon">
       <img
@@ -11,8 +11,13 @@
 
   <app-custom-button
     [buttonStyle]="userBtnStyle"
-    *ngIf="loginService.getLog()"
+    *ngIf="isUserLogged"
     (click)="onLogOut()">
     Log out
+  </app-custom-button>
+  <app-custom-button
+    [buttonStyle]="userBtnStyle"
+    *ngIf="!isUserLogged">
+    Log in
   </app-custom-button>
 </div>

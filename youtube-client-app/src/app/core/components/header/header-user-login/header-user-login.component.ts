@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { LocalStorageService, LoginService } from 'src/app/core/services';
 import { DefaultDataCustomBtn } from 'src/app/core/store';
@@ -8,15 +8,27 @@ import { DefaultDataCustomBtn } from 'src/app/core/store';
   templateUrl: './header-user-login.component.html',
   styleUrls: ['./header-user-login.component.scss'],
 })
-export class HeaderUserLoginComponent {
+export class HeaderUserLoginComponent implements OnInit {
   userBtnStyle: string = DefaultDataCustomBtn.USER;
+
+  isUserLogged: boolean = false;
 
   constructor(
     private localStorageService: LocalStorageService,
-    public loginService: LoginService
+    private loginService: LoginService
   ) {}
+
+  ngOnInit(): void {
+    this.loginService.isUserLogged$.subscribe(
+      data => (this.isUserLogged = data)
+    );
+  }
 
   onLogOut() {
     this.localStorageService.removeToken();
+  }
+
+  getUserName(): string {
+    return this.loginService.getUserLogin();
   }
 }
