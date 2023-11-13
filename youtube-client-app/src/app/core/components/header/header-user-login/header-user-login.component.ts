@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LocalStorageService, LoginService } from 'src/app/core/services';
+import {
+  FilterActivateService,
+  LocalStorageService,
+  LoginService,
+  SearchValueService,
+} from 'src/app/core/services';
 import { DefaultDataCustomBtn } from 'src/app/core/store';
 
 @Component({
@@ -15,7 +20,9 @@ export class HeaderUserLoginComponent implements OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private filterActivateService: FilterActivateService,
+    private searchValueService: SearchValueService
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +33,8 @@ export class HeaderUserLoginComponent implements OnInit {
 
   onLogOut() {
     this.localStorageService.removeToken();
+    this.filterActivateService.activatedFilter('');
+    this.searchValueService.setValue('');
   }
 
   getUserName(): string {

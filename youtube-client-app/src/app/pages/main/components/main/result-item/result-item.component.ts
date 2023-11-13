@@ -37,4 +37,8 @@ export class ResultItemComponent {
   getShortDescription(descr: string): string {
     return descr.length > 59 ? `${descr.slice(0, 56)}...` : descr;
   }
+
+  getShortTitle(title: string): string {
+    return title.length > 25 ? `${title.slice(0, 22)}...` : title;
+  }
 }
