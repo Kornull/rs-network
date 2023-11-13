@@ -1,23 +1,51 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, map, mergeMap, shareReplay } from 'rxjs';
 
-import { SearchItem } from '../../store';
-import { SearchMockData } from '../../mock/mock-response';
+import { SearchItem, SearchResponse } from '../../store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchResultService {
-  getItems(): Observable<SearchItem[]> {
-    const resultCards: SearchItem[] = [...SearchMockData.items];
-    const cards: Observable<SearchItem[]> = of(resultCards);
-    return cards;
+  private cardsResult$: Observable<SearchItem[]>;
+
+  public isShowResultSearch: boolean = false;
+
+  constructor(private http: HttpClient) {}
+
+  fetchCards(searchValue: string): void {
+    this.cardsResult$ = this.http
+      .get<SearchResponse>(
+        `search?type=video&part=snippet&maxResults=16&q=${searchValue}`
+      )
+      .pipe(
+        map((data: SearchResponse): SearchItem[] => {
+          return data.items;
+        }),
+        mergeMap(data => {
+          const idLine: string = data
+            .map((item: SearchItem): string => item.id.videoId)
+            .join(',');
+          return this.http
+            .get<SearchResponse>(`videos?id=${idLine}&part=snippet,statistics`)
+            .pipe(
+              map((cardsList: SearchResponse): SearchItem[] => cardsList.items)
+            );
+        }),
+        shareReplay(),
+        catchError((err: HttpErrorResponse) => {
+          console.error('Error: ', err);
+          return [];
+        })
+      );
   }
 
-  getItem(id: string): SearchItem | null {
-    const result = SearchMockData.items.find((el: SearchItem) => el.id === id);
-    if (result) return result;
+  getCards(): Observable<SearchItem[]> {
+    return this.cardsResult$;
+  }
 
-    return null;
+  setShowSearchResult() {
+    this.isShowResultSearch = true;
   }
 }

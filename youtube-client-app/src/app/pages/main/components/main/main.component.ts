@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  takeUntil,
+  tap,
+} from 'rxjs';
 
 import {
-  FilterActivateService,
   SearchResultService,
+  SearchValueService,
   SortResultService,
 } from 'src/app/core/services';
 
@@ -13,27 +21,42 @@ import { SearchItem, SortingTitle } from 'src/app/core/store';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   cardsResult: SearchItem[] = [];
 
   constructor(
     private searchResultService: SearchResultService,
-    private filterActivateService: FilterActivateService,
+    private searchValueService: SearchValueService,
     private sortResultService: SortResultService
   ) {}
 
   ngOnInit(): void {
-    this.getCards();
+    this.searchValueService
+      .getSearchValue()
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        filter(searchData => searchData.length > 2),
+        tap((searchData: string) => {
+          this.searchResultService.fetchCards(searchData);
+          this.searchResultService
+            .getCards()
+            .subscribe(cards => (this.cardsResult = [...cards]));
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
-  getCards(): void {
-    this.searchResultService
-      .getItems()
-      .subscribe(cards => (this.cardsResult = cards));
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  onFilterActivated(): boolean {
-    return this.filterActivateService.getIsSearchRun();
+  onSearchResultView(): boolean {
+    return this.searchResultService.isShowResultSearch;
   }
 
   onFilterByTitle(): string {
@@ -46,7 +69,7 @@ export class MainComponent implements OnInit {
     return this.sortResultService.getSortingDirectionResult(SortingTitle.DATE);
   }
 
-  onSortingByView() {
+  onSortingByView(): string {
     return this.sortResultService.getSortingDirectionResult(SortingTitle.VIEW);
   }
 }

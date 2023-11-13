@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-
 import {
   FilterActivateService,
   FilterOpenedService,
   LoginService,
+  SearchValueService,
 } from 'src/app/core/services';
 
 import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
@@ -33,22 +31,13 @@ export class HeaderSearchComponent {
     private router: Router,
     private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer
-  ) {
-    iconRegistry.addSvgIcon(
-      'logoIcon',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/logo.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'settings',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/settings.svg')
-    );
-  }
+    private searchValueService: SearchValueService
+  ) {}
 
-  onSearch(): void {
+  onSearch(val: string): void {
+    this.searchValueService.setValue(val);
+
     this.filterActivateService.activatedFilter(this.inputValue);
-    this.inputValue = '';
     this.onRedirectToHome();
   }
 

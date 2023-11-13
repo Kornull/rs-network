@@ -1,7 +1,12 @@
 <div class="user__block">
   <span class="user__name">{{ loginService.getUserLogin() }}</span>
   <app-custom-button [buttonStyle]="userBtnStyle">
-    <mat-icon svgIcon="userLogo" class="settings__icon"></mat-icon>
+    <mat-icon class="settings__icon">
+      <img
+        class="user__logo"
+        src="./assets/user-logo.svg"
+        alt="" />
+    </mat-icon>
   </app-custom-button>
 
   <app-custom-button
