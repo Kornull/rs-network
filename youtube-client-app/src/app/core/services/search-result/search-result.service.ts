@@ -15,17 +15,17 @@ import {
 export class SearchResultService {
   private cardsResult$: Observable<SearchItemDetails[]>;
 
-  private cardDetails: SearchItemDetails;
+  private searchTitle: string = 'search?type=video&part=snippet&maxResults=16&';
+
+  private searchId: string = 'videos?part=snippet,statistics&';
 
   public isShowResultSearch: boolean = false;
 
   constructor(private http: HttpClient) {}
 
-  fetchCards(searchValue: string): void {
-    this.cardsResult$ = this.http
-      .get<SearchResponseDefault>(
-        `search?type=video&part=snippet&maxResults=16&q=${searchValue}`
-      )
+  fetchCards(searchValue: string): Observable<SearchItemDetails[]> {
+    return this.http
+      .get<SearchResponseDefault>(`${this.searchTitle}q=${searchValue}`)
       .pipe(
         map((data: SearchResponseDefault): SearchItemDefault[] => data.items),
         mergeMap(data => {
@@ -33,9 +33,7 @@ export class SearchResultService {
             .map((item: SearchItemDefault): string => item.id.videoId)
             .join(',');
           return this.http
-            .get<SearchResponseDetails>(
-              `videos?id=${idLine}&part=snippet,statistics`
-            )
+            .get<SearchResponseDetails>(`${this.searchId}id=${idLine}`)
             .pipe(
               map(
                 (cardsList: SearchResponseDetails): SearchItemDetails[] =>
@@ -55,13 +53,10 @@ export class SearchResultService {
     return this.cardsResult$;
   }
 
-  getCard(idCard: string): SearchItemDetails {
-    this.cardsResult$.subscribe(cards => {
-      cards.forEach(card => {
-        if (card.id === idCard) this.cardDetails = card;
-      });
-    });
-    return this.cardDetails;
+  getCard(idCard: string): Observable<SearchItemDetails> {
+    return this.http
+      .get<SearchResponseDetails>(`${this.searchId}id=${idCard}`)
+      .pipe(map(card => card.items[0]));
   }
 
   setShowSearchResult() {

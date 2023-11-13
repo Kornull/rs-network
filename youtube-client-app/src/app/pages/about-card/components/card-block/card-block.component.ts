@@ -36,7 +36,9 @@ export class CardBlockComponent implements OnInit {
     this.filterActivateService.turnOffBtn();
     this.sortResultService.resetSort();
     this.route.params.subscribe((params: Params) => {
-      this.cardDetails = this.searchResultService.getCard(params['id']);
+      this.searchResultService
+        .getCard(params['id'])
+        .subscribe(card => (this.cardDetails = card));
     });
     this.searchValueService.setValue('');
   }

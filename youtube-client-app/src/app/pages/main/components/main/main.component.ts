@@ -40,9 +40,8 @@ export class MainComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         filter(searchData => searchData.length > 2),
         tap((searchData: string) => {
-          this.searchResultService.fetchCards(searchData);
           this.searchResultService
-            .getCards()
+            .fetchCards(searchData)
             .subscribe(cards => (this.cardsResult = [...cards]));
         }),
         takeUntil(this.destroy$)
