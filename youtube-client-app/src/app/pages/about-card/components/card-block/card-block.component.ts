@@ -1,3 +1,4 @@
+import { SearchValueService } from 'src/app/core/services/search-value/search-value.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
@@ -8,7 +9,7 @@ import {
   SearchResultService,
   SortResultService,
 } from 'src/app/core/services';
-import { DefaultDataCustomBtn, SearchItem } from 'src/app/core/store';
+import { DefaultDataCustomBtn, SearchItemDetails } from 'src/app/core/store';
 
 @Component({
   selector: 'app-card-block',
@@ -16,26 +17,30 @@ import { DefaultDataCustomBtn, SearchItem } from 'src/app/core/store';
   styleUrls: ['./card-block.component.scss'],
 })
 export class CardBlockComponent implements OnInit {
-  cardDetails: SearchItem | null;
+  cardDetails: SearchItemDetails | null;
 
   goBackBtnStyle: string = DefaultDataCustomBtn.GO_BACK;
 
+  defaultValue: string = '';
+
   constructor(
-    private filterActivateService: FilterActivateService,
+    private route: ActivatedRoute,
     private location: Location,
+    private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
     private sortResultService: SortResultService,
-    private route: ActivatedRoute,
-    private searchResultService: SearchResultService
+    private searchResultService: SearchResultService,
+    private searchValueService: SearchValueService
   ) {}
 
   ngOnInit(): void {
     this.filterOpenedService.closeFilter();
     this.filterActivateService.turnOffBtn();
     this.sortResultService.resetSort();
-    // this.route.params.subscribe((params: Params) => {
-    //   this.cardDetails = this.searchResultService.getItem(params['id']);
-    // });
+    this.route.params.subscribe((params: Params) => {
+      this.cardDetails = this.searchResultService.getCard(params['id']);
+    });
+    this.searchValueService.setValue('');
   }
 
   goBack(): void {

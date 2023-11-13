@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { SearchItem } from 'src/app/core/store';
+import { SearchItemDetails } from 'src/app/core/store';
 import { SharedModule } from 'src/app/shared';
 
 @Component({
@@ -23,7 +23,7 @@ import { SharedModule } from 'src/app/shared';
   styleUrls: ['./result-item.component.scss'],
 })
 export class ResultItemComponent {
-  @Input() card: SearchItem;
+  @Input() card: SearchItemDetails;
 
   constructor(
     private router: Router,
@@ -32,5 +32,9 @@ export class ResultItemComponent {
 
   onRunTo() {
     this.router.navigate([`about/${this.card.id}`], { relativeTo: this.route });
+  }
+
+  getShortDescription(descr: string): string {
+    return descr.length > 59 ? `${descr.slice(0, 56)}...` : descr;
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { SearchItem } from 'src/app/core/store';
+import { SearchItemDetails } from 'src/app/core/store';
 
 @Component({
   selector: 'app-card',
@@ -8,5 +8,9 @@ import { SearchItem } from 'src/app/core/store';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
-  @Input() card: SearchItem;
+  @Input() card: SearchItemDetails;
+
+  getShortedDescription(descr: string): string {
+    return descr.length > 252 ? `${descr.slice(0, 249)}...` : descr;
+  }
 }

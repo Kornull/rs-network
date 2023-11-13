@@ -1,18 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { SearchItem } from 'src/app/core/store';
+import { SearchItemDetails } from 'src/app/core/store';
 
 @Pipe({
   name: 'filterTitleCards',
 })
 export class FilterCardsPipe implements PipeTransform {
-  transform(cards: SearchItem[], title: string = ''): SearchItem[] {
+  transform(
+    cards: SearchItemDetails[],
+    title: string = ''
+  ): SearchItemDetails[] {
     if (title.trim()) {
-      const filterTitle = cards.filter((card: SearchItem) =>
+      const filterTitle = cards.filter((card: SearchItemDetails) =>
         card.snippet.channelTitle.toLowerCase().includes(title.toLowerCase())
       );
 
-      const subTitle = cards.filter((card: SearchItem) =>
+      const subTitle = cards.filter((card: SearchItemDetails) =>
         card.snippet.localized.title.toLowerCase().includes(title.toLowerCase())
       );
 

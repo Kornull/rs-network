@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { FilterCommand, SearchItem } from 'src/app/core/store';
+import { FilterCommand, SearchItemDetails } from 'src/app/core/store';
 
 @Pipe({
   name: 'sortView',
 })
 export class SortViewPipe implements PipeTransform {
-  transform(cards: SearchItem[], date = ''): SearchItem[] {
+  transform(cards: SearchItemDetails[], date = ''): SearchItemDetails[] {
     if (date === FilterCommand.UP) {
-      return cards.sort((a: SearchItem, b: SearchItem) =>
+      return cards.sort((a: SearchItemDetails, b: SearchItemDetails) =>
         Number(a.statistics.viewCount) < Number(b.statistics.viewCount) ? 1 : -1
       );
     }

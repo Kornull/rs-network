@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -15,7 +15,7 @@ import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
   templateUrl: './header-search.component.html',
   styleUrls: ['./header-search.component.scss'],
 })
-export class HeaderSearchComponent {
+export class HeaderSearchComponent implements OnInit {
   isBtnDisabled: boolean = true;
 
   isViewFilter: boolean = false;
@@ -34,6 +34,12 @@ export class HeaderSearchComponent {
     private searchValueService: SearchValueService
   ) {}
 
+  ngOnInit(): void {
+    this.searchValueService.getSearchValue().subscribe(value => {
+      this.inputValue = value;
+    });
+  }
+
   onSearch(val: string): void {
     this.searchValueService.setValue(val);
 
@@ -42,6 +48,7 @@ export class HeaderSearchComponent {
   }
 
   onBtnDisabled(): boolean {
+    this.filterActivateService.activatedFilter(this.inputValue);
     return this.filterActivateService.getIsBtnDisabled();
   }
 

@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, map, mergeMap, shareReplay } from 'rxjs';
 
-import { SearchItem, SearchResponse } from '../../store';
+import {
+  SearchItemDefault,
+  SearchItemDetails,
+  SearchResponseDefault,
+  SearchResponseDetails,
+} from '../../store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchResultService {
-  private cardsResult$: Observable<SearchItem[]>;
+  private cardsResult$: Observable<SearchItemDetails[]>;
+
+  private cardDetails: SearchItemDetails;
 
   public isShowResultSearch: boolean = false;
 
@@ -16,21 +23,24 @@ export class SearchResultService {
 
   fetchCards(searchValue: string): void {
     this.cardsResult$ = this.http
-      .get<SearchResponse>(
+      .get<SearchResponseDefault>(
         `search?type=video&part=snippet&maxResults=16&q=${searchValue}`
       )
       .pipe(
-        map((data: SearchResponse): SearchItem[] => {
-          return data.items;
-        }),
+        map((data: SearchResponseDefault): SearchItemDefault[] => data.items),
         mergeMap(data => {
           const idLine: string = data
-            .map((item: SearchItem): string => item.id.videoId)
+            .map((item: SearchItemDefault): string => item.id.videoId)
             .join(',');
           return this.http
-            .get<SearchResponse>(`videos?id=${idLine}&part=snippet,statistics`)
+            .get<SearchResponseDetails>(
+              `videos?id=${idLine}&part=snippet,statistics`
+            )
             .pipe(
-              map((cardsList: SearchResponse): SearchItem[] => cardsList.items)
+              map(
+                (cardsList: SearchResponseDetails): SearchItemDetails[] =>
+                  cardsList.items
+              )
             );
         }),
         shareReplay(),
@@ -41,8 +51,17 @@ export class SearchResultService {
       );
   }
 
-  getCards(): Observable<SearchItem[]> {
+  getCards(): Observable<SearchItemDetails[]> {
     return this.cardsResult$;
+  }
+
+  getCard(idCard: string): SearchItemDetails {
+    this.cardsResult$.subscribe(cards => {
+      cards.forEach(card => {
+        if (card.id === idCard) this.cardDetails = card;
+      });
+    });
+    return this.cardDetails;
   }
 
   setShowSearchResult() {

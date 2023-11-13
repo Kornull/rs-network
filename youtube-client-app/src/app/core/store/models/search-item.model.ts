@@ -34,13 +34,19 @@ interface Statistics {
   commentCount: string;
 }
 
-export interface SearchItem {
+interface SearchItem {
   kind: string;
   etag: string;
+  snippet: Snippet;
+  statistics: Statistics;
+}
+export interface SearchItemDefault extends SearchItem {
   id: {
     kind: string;
     videoId: string;
   };
-  snippet: Snippet;
-  statistics: Statistics;
+}
+
+export interface SearchItemDetails extends SearchItem {
+  id: string;
 }

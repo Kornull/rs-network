@@ -33,14 +33,17 @@
       </mat-card-title>
 
       <mat-card-subtitle class="item__subtitle"
-        >{{ card.snippet.localized.title }}
+        >{{ getShortDescription(card.snippet.localized.title) }}
       </mat-card-subtitle>
     </mat-card-header>
 
     <div class="item__button-block">
       <mat-card-actions>
-        <button mat-flat-button color="primary" class="item__button"
-        (click)="onRunTo()">
+        <button
+          mat-flat-button
+          color="primary"
+          class="item__button"
+          (click)="onRunTo()">
           more...
         </button>
       </mat-card-actions>

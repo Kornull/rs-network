@@ -14,7 +14,7 @@ import {
   SortResultService,
 } from 'src/app/core/services';
 
-import { SearchItem, SortingTitle } from 'src/app/core/store';
+import { SearchItemDetails, SortingTitle } from 'src/app/core/store';
 
 @Component({
   selector: 'app-main',
@@ -24,7 +24,7 @@ import { SearchItem, SortingTitle } from 'src/app/core/store';
 export class MainComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  cardsResult: SearchItem[] = [];
+  cardsResult: SearchItemDetails[] = [];
 
   constructor(
     private searchResultService: SearchResultService,
@@ -56,7 +56,10 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onSearchResultView(): boolean {
-    return this.searchResultService.isShowResultSearch;
+    if (this.cardsResult.length) {
+      return this.searchResultService.isShowResultSearch;
+    }
+    return false;
   }
 
   onFilterByTitle(): string {
