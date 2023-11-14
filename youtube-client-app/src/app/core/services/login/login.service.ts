@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { UserData } from '../../store';
@@ -15,11 +15,7 @@ export class LoginService {
 
   private isLogged$ = new BehaviorSubject<boolean>(false);
 
-  public isUserLogged$: Observable<boolean>;
-
-  constructor(private localStorageService: LocalStorageService) {
-    this.isUserLogged$ = this.isLogged$.asObservable();
-  }
+  constructor(private localStorageService: LocalStorageService) {}
 
   createUser({ email, password }: UserData) {
     this.user = { email, password };
@@ -33,6 +29,10 @@ export class LoginService {
     this.isLogged$.next(false);
 
     return false;
+  }
+
+  getIsLoggedUser(): BehaviorSubject<boolean> {
+    return this.isLogged$;
   }
 
   getUserLogin(): string {

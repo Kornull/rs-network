@@ -10,7 +10,7 @@ import { youtubeApiLink } from 'src/app/shared/constants';
 
 @Injectable()
 export class ApiClientInterceptor implements HttpInterceptor {
-  private key: string = 'AIzaSyBLu7wYr3_2bOzmQVd__TIc2DvfJ_F7u9c';
+  private key: string = 'AIzaSyCXmsjmBp_rm39ZP4r5B3UsU0QLAGmqLVs';
 
   intercept(
     request: HttpRequest<unknown>,
