@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 
-import { LocalStorageService, LoginService } from 'src/app/core/services';
+import {
+  FilterActivateService,
+  LocalStorageService,
+  LoginService,
+  SearchValueService,
+} from 'src/app/core/services';
 import { DefaultDataCustomBtn } from 'src/app/core/store';
 
 @Component({
@@ -10,22 +13,31 @@ import { DefaultDataCustomBtn } from 'src/app/core/store';
   templateUrl: './header-user-login.component.html',
   styleUrls: ['./header-user-login.component.scss'],
 })
-export class HeaderUserLoginComponent {
+export class HeaderUserLoginComponent implements OnInit {
   userBtnStyle: string = DefaultDataCustomBtn.USER;
+
+  isUserLogged: boolean = false;
 
   constructor(
     private localStorageService: LocalStorageService,
-    public loginService: LoginService,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer
-  ) {
-    iconRegistry.addSvgIcon(
-      'userLogo',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/user-logo.svg')
-    );
+    private loginService: LoginService,
+    private filterActivateService: FilterActivateService,
+    private searchValueService: SearchValueService
+  ) {}
+
+  ngOnInit(): void {
+    this.loginService
+      .getIsLoggedUser()
+      .subscribe(isLogged => (this.isUserLogged = isLogged));
   }
 
   onLogOut() {
     this.localStorageService.removeToken();
+    this.filterActivateService.activatedFilter('');
+    this.searchValueService.setValue('');
+  }
+
+  getUserName(): string {
+    return this.loginService.getUserLogin();
   }
 }

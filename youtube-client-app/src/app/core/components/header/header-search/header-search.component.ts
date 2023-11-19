@@ -1,13 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 
 import {
   FilterActivateService,
   FilterOpenedService,
   LoginService,
+  SearchValueService,
 } from 'src/app/core/services';
 
 import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
@@ -17,7 +15,7 @@ import { DefaultDataCustomBtn } from 'src/app/core/store/models/types';
   templateUrl: './header-search.component.html',
   styleUrls: ['./header-search.component.scss'],
 })
-export class HeaderSearchComponent {
+export class HeaderSearchComponent implements OnInit {
   isBtnDisabled: boolean = true;
 
   isViewFilter: boolean = false;
@@ -33,26 +31,24 @@ export class HeaderSearchComponent {
     private router: Router,
     private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer
-  ) {
-    iconRegistry.addSvgIcon(
-      'logoIcon',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/logo.svg')
-    );
-    iconRegistry.addSvgIcon(
-      'settings',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/settings.svg')
-    );
+    private searchValueService: SearchValueService
+  ) {}
+
+  ngOnInit(): void {
+    this.searchValueService.getSearchValue().subscribe(value => {
+      this.inputValue = value;
+    });
   }
 
-  onSearch(): void {
+  onSearch(val: string): void {
+    this.searchValueService.setValue(val);
+
     this.filterActivateService.activatedFilter(this.inputValue);
-    this.inputValue = '';
     this.onRedirectToHome();
   }
 
   onBtnDisabled(): boolean {
+    this.filterActivateService.activatedFilter(this.inputValue);
     return this.filterActivateService.getIsBtnDisabled();
   }
 

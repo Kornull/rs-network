@@ -50,6 +50,11 @@
   height: 50px;
   fill: $primary-color;
   transition: fill 0.3s linear;
+
+  &-icon {
+    width: 100%;
+    height: inherit;
+  }
 }
 
 .header__icon-btn {

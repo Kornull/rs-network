@@ -18,7 +18,7 @@
 
       <span class="item__info">
         <mat-icon class="item__info-logo">thumb_down</mat-icon>
-        {{ card.statistics.dislikeCount }}
+        {{ card.statistics.dislikeCount || 0 }}
       </span>
 
       <span class="item__info">
@@ -29,18 +29,21 @@
 
     <mat-card-header class="item__description">
       <mat-card-title class="item__title"
-        >#{{ card.snippet.channelTitle }}
+        >#{{ getShortTitle(card.snippet.channelTitle) }}
       </mat-card-title>
 
       <mat-card-subtitle class="item__subtitle"
-        >{{ card.snippet.localized.title }}
+        >{{ getShortDescription(card.snippet.localized.title) }}
       </mat-card-subtitle>
     </mat-card-header>
 
     <div class="item__button-block">
       <mat-card-actions>
-        <button mat-flat-button color="primary" class="item__button"
-        (click)="onRunTo()">
+        <button
+          mat-flat-button
+          color="primary"
+          class="item__button"
+          (click)="onRunTo()">
           more...
         </button>
       </mat-card-actions>

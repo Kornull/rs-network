@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { SearchValueService } from 'src/app/core/services/search-value/search-value.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -8,25 +9,29 @@ import {
   SearchResultService,
   SortResultService,
 } from 'src/app/core/services';
-import { DefaultDataCustomBtn, SearchItem } from 'src/app/core/store';
+import { DefaultDataCustomBtn, SearchItemDetails } from 'src/app/core/store';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-card-block',
   templateUrl: './card-block.component.html',
   styleUrls: ['./card-block.component.scss'],
 })
-export class CardBlockComponent implements OnInit {
-  cardDetails: SearchItem | null;
+export class CardBlockComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
+  cardDetails: SearchItemDetails | null;
 
   goBackBtnStyle: string = DefaultDataCustomBtn.GO_BACK;
 
   constructor(
-    private filterActivateService: FilterActivateService,
+    private route: ActivatedRoute,
     private location: Location,
+    private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
     private sortResultService: SortResultService,
-    private route: ActivatedRoute,
-    private searchResultService: SearchResultService
+    private searchResultService: SearchResultService,
+    private searchValueService: SearchValueService
   ) {}
 
   ngOnInit(): void {
@@ -34,8 +39,17 @@ export class CardBlockComponent implements OnInit {
     this.filterActivateService.turnOffBtn();
     this.sortResultService.resetSort();
     this.route.params.subscribe((params: Params) => {
-      this.cardDetails = this.searchResultService.getItem(params['id']);
+      this.searchResultService
+        .getCard(params['id'])
+        .subscribe(card => (this.cardDetails = card));
     });
+    takeUntil(this.destroy$);
+    this.searchValueService.setValue('');
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   goBack(): void {
