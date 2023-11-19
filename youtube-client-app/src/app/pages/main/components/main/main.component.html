@@ -1,6 +1,6 @@
 <div class="result__container">
   <app-result-search
-    *ngIf="onSearchResultView()"
+    *ngIf="cardsResult.length"
     [searchResult]="
       cardsResult
         | filterTitleCards: onFilterByTitle()

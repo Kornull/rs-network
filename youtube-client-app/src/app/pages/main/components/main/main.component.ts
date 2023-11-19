@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
+  Observable,
   Subject,
   debounceTime,
   distinctUntilChanged,
@@ -14,7 +16,8 @@ import {
   SortResultService,
 } from 'src/app/core/services';
 
-import { SearchItemDetails, SortingTitle } from 'src/app/core/store';
+import { CardDataType, SortingTitle } from 'src/app/core/store';
+import { allVideoListSelector, init } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-main',
@@ -24,15 +27,21 @@ import { SearchItemDetails, SortingTitle } from 'src/app/core/store';
 export class MainComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  cardsResult: SearchItemDetails[] = [];
+  cardsResult: CardDataType[] = [];
+
+  destr$: Observable<CardDataType[]>;
 
   constructor(
     private searchResultService: SearchResultService,
     private searchValueService: SearchValueService,
-    private sortResultService: SortResultService
-  ) {}
+    private sortResultService: SortResultService,
+    private store: Store
+  ) {
+    this.destr$ = this.store.select(allVideoListSelector);
+  }
 
   ngOnInit(): void {
+    this.store.dispatch(init());
     this.searchValueService
       .getSearchValue()
       .pipe(
@@ -40,13 +49,12 @@ export class MainComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         filter(searchData => searchData.length > 2),
         tap((searchData: string) => {
-          this.searchResultService
-            .fetchCards(searchData)
-            .subscribe(cards => (this.cardsResult = [...cards]));
-        }),
-        takeUntil(this.destroy$)
+          this.searchResultService.fetchCards(searchData).subscribe();
+        })
       )
       .subscribe();
+    this.destr$.subscribe(data => (this.cardsResult = [...data]));
+    takeUntil(this.destroy$);
   }
 
   ngOnDestroy() {

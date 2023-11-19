@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, map, mergeMap, shareReplay } from 'rxjs';
 
+import { Store } from '@ngrx/store';
 import {
   SearchItemDefault,
   SearchItemDetails,
   SearchResponseDefault,
   SearchResponseDetails,
 } from '../../store';
+import { CardVideoActions, setAllVideos } from '../../store/redux';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,10 @@ export class SearchResultService {
 
   public isShowResultSearch: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store
+  ) {}
 
   fetchCards(searchValue: string): Observable<SearchItemDetails[]> {
     return this.http
@@ -35,10 +40,32 @@ export class SearchResultService {
           return this.http
             .get<SearchResponseDetails>(`${this.searchId}id=${idLine}`)
             .pipe(
-              map(
-                (cardsList: SearchResponseDetails): SearchItemDetails[] =>
-                  cardsList.items
-              )
+              map((cardsList: SearchResponseDetails): SearchItemDetails[] => {
+                this.store.dispatch(
+                  CardVideoActions.addYoutubeCards({
+                    youtubeCards: cardsList.items.map(
+                      (card: SearchItemDetails) => {
+                        return {
+                          cardDetail: {
+                            title: card.snippet.title,
+                            subTitle: card.snippet.localized.title,
+                            imageLink: card.snippet.thumbnails.default.url,
+                            videoLink: '',
+                            date: card.snippet.publishedAt,
+                            description: card.snippet.localized.description,
+                            tags: card.snippet.tags,
+                            statistics: card.statistics,
+                          },
+                          id: card.id,
+                          liked: false,
+                        };
+                      }
+                    ),
+                  })
+                );
+                this.store.dispatch(setAllVideos());
+                return cardsList.items;
+              })
             );
         }),
         shareReplay(),

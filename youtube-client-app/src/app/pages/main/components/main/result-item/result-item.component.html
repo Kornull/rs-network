@@ -3,37 +3,37 @@
     <img
       class="item__img"
       mat-card-xl-image
-      src="{{ card.snippet.thumbnails.high.url }}"
-      alt="{{ card.snippet.localized.title }}" />
+      src="{{ card.cardDetail.imageLink }}"
+      alt="{{ card.cardDetail.title }}" />
     <mat-card-content class="item__statistic">
       <span class="item__info">
         <mat-icon class="item__info-logo">remove_red_eye</mat-icon>
-        {{ card.statistics.viewCount }}
+        {{ card.cardDetail.statistics?.viewCount }}
       </span>
 
       <span class="item__info">
         <mat-icon class="item__info-logo">thumb_up</mat-icon>
-        {{ card.statistics.likeCount }}
+        {{ card.cardDetail.statistics?.likeCount }}
       </span>
 
       <span class="item__info">
         <mat-icon class="item__info-logo">thumb_down</mat-icon>
-        {{ card.statistics.dislikeCount || 0 }}
+        {{ card.cardDetail.statistics?.dislikeCount || 0 }}
       </span>
 
       <span class="item__info">
         <mat-icon class="item__info-logo">forum</mat-icon>
-        {{ card.statistics.commentCount }}
+        {{ card.cardDetail.statistics?.commentCount }}
       </span>
     </mat-card-content>
 
     <mat-card-header class="item__description">
       <mat-card-title class="item__title"
-        >#{{ getShortTitle(card.snippet.channelTitle) }}
+        >#{{ getShortTitle(card.cardDetail.title) }}
       </mat-card-title>
 
       <mat-card-subtitle class="item__subtitle"
-        >{{ getShortDescription(card.snippet.localized.title) }}
+        >{{ getShortDescription(card.cardDetail.subTitle) }}
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -51,6 +51,6 @@
 
     <div
       class="item__color"
-      [appDefaultColorCard]="card.snippet.publishedAt"></div>
+      [appDefaultColorCard]="card.cardDetail.date"></div>
   </mat-card>
 </li>

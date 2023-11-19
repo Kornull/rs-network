@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { SearchItemDetails } from 'src/app/core/store';
+import { CardDataType } from 'src/app/core/store';
 import { SharedModule } from 'src/app/shared';
 
 @Component({
@@ -23,7 +23,7 @@ import { SharedModule } from 'src/app/shared';
   styleUrls: ['./result-item.component.scss'],
 })
 export class ResultItemComponent {
-  @Input() card: SearchItemDetails;
+  @Input() card: CardDataType;
 
   constructor(
     private router: Router,
