@@ -1,6 +1,6 @@
 <div class="user__block">
   <span class="user__name">{{ getUserName() }}</span>
-  <app-custom-button [buttonStyle]="userBtnStyle">
+  <app-custom-button [buttonStyle]="userBtnStyle" (click)="goAdminPage()">
     <mat-icon class="settings__icon">
       <img
         class="user__logo"

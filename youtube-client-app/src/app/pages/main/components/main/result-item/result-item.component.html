@@ -5,25 +5,27 @@
       mat-card-xl-image
       src="{{ card.cardDetail.imageLink }}"
       alt="{{ card.cardDetail.title }}" />
-    <mat-card-content class="item__statistic">
+    <mat-card-content
+      class="item__statistic"
+      *ngIf="card.cardDetail.statistics !== null">
       <span class="item__info">
         <mat-icon class="item__info-logo">remove_red_eye</mat-icon>
-        {{ card.cardDetail.statistics?.viewCount }}
+        {{ card.cardDetail.statistics.viewCount }}
       </span>
 
       <span class="item__info">
         <mat-icon class="item__info-logo">thumb_up</mat-icon>
-        {{ card.cardDetail.statistics?.likeCount }}
+        {{ card.cardDetail.statistics.likeCount }}
       </span>
 
       <span class="item__info">
         <mat-icon class="item__info-logo">thumb_down</mat-icon>
-        {{ card.cardDetail.statistics?.dislikeCount || 0 }}
+        {{ card.cardDetail.statistics.dislikeCount || 0 }}
       </span>
 
       <span class="item__info">
         <mat-icon class="item__info-logo">forum</mat-icon>
-        {{ card.cardDetail.statistics?.commentCount }}
+        {{ card.cardDetail.statistics.commentCount }}
       </span>
     </mat-card-content>
 

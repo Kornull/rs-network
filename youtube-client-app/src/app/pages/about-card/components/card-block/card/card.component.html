@@ -19,7 +19,7 @@
       </p>
     </div>
 
-    <mat-card-content class="details__statistics">
+    <mat-card-content class="details__statistics" *ngIf="card.statistics !== null">
       <span class="details__statistics-info">
         <mat-icon class="details__statistics-info--logo"
           >remove_red_eye</mat-icon

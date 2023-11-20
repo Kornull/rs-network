@@ -13,5 +13,6 @@ export const CardVideoActions = createActionGroup({
     'Add custom card': props<{ customCard: CardDataType }>(),
     'Add favorite card': props<{ favoriteCard: CardDataType }>(),
     'Set storage cards': props<{ allCards: CardDataType[] }>(),
+    'Get card': props<{ cardId: string }>(),
   },
 });

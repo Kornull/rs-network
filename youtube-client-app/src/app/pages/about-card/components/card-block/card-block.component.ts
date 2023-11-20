@@ -39,9 +39,9 @@ export class CardBlockComponent implements OnInit, OnDestroy {
     this.filterActivateService.turnOffBtn();
     this.sortResultService.resetSort();
     this.route.params.subscribe((params: Params) => {
-      this.searchResultService
-        .getCard(params['id'])
-        .subscribe(card => (this.cardDetails = card));
+      // this.searchResultService
+      //   .getCard(params['id'])
+      //   .subscribe(card => (this.cardDetails = card));
     });
     takeUntil(this.destroy$);
     this.searchValueService.setValue('');

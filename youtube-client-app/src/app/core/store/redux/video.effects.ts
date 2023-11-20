@@ -3,8 +3,8 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { of, switchMap, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CardVideoActions, init, setAllVideos } from './video.actions';
-import { allVideoListSelector } from './videos.selectors';
+import { CardVideoActions, init } from './video.actions';
+import { selectAllVideoList } from './videos.selectors';
 
 @Injectable()
 export class VideoEffects {
@@ -13,14 +13,14 @@ export class VideoEffects {
       ofType(init),
       switchMap(() => {
         const storedVideo = localStorage.getItem('user-videos');
-        if (storedVideo) {
+        if (storedVideo !== null) {
           return of(
-            CardVideoActions.setStorageCards({
-              allCards: JSON.parse(storedVideo),
+            CardVideoActions.addYoutubeCards({
+              youtubeCards: JSON.parse(storedVideo),
             })
           );
         }
-        return of(CardVideoActions.setStorageCards({ allCards: [] }));
+        return of(CardVideoActions.addYoutubeCards({ youtubeCards: [] }));
       })
     );
   });
@@ -28,8 +28,8 @@ export class VideoEffects {
   saveVideos = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(CardVideoActions.addYoutubeCards, setAllVideos),
-        concatLatestFrom(() => this.store.select(allVideoListSelector)),
+        ofType(CardVideoActions.addYoutubeCards),
+        concatLatestFrom(() => this.store.select(selectAllVideoList)),
         tap(([actions, cards]) => {
           console.log('ACTION', actions, cards);
           localStorage.setItem('user-videos', JSON.stringify(cards));

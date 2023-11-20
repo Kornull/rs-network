@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
   FormGroup,
   FormBuilder,
@@ -8,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { dateValidator } from 'src/app/shared/validators';
+import { CardVideoActions } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-admin-form',
@@ -19,7 +21,8 @@ export class AdminFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +81,27 @@ export class AdminFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const { info, tags } = this.createCardForm.value;
+    console.log('FORM');
+    this.store.dispatch(
+      CardVideoActions.addCustomCard({
+        customCard: {
+          id: `${Date.now()}`,
+          cardDetail: {
+            title: info.title,
+            subTitle: info.description,
+            imageLink: info.imageLink,
+            videoLink: info.videoLink,
+            date: info.date,
+            description: '',
+            tags: tags.tagList.join('#,'),
+            statistics: null,
+          },
+          liked: null,
+        },
+      })
+    );
+    this.onResetForm();
     this.router.navigate(['./main']);
   }
 }

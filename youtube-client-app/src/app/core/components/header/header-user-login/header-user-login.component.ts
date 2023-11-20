@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
   FilterActivateService,
@@ -19,6 +20,7 @@ export class HeaderUserLoginComponent implements OnInit {
   isUserLogged: boolean = false;
 
   constructor(
+    private router: Router,
     private localStorageService: LocalStorageService,
     private loginService: LoginService,
     private filterActivateService: FilterActivateService,
@@ -39,5 +41,9 @@ export class HeaderUserLoginComponent implements OnInit {
 
   getUserName(): string {
     return this.loginService.getUserLogin();
+  }
+
+  goAdminPage() {
+    this.router.navigate(['/main/admin']);
   }
 }

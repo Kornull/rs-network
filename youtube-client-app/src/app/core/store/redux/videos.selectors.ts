@@ -1,12 +1,12 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { VideosType } from '../models/store-card-details.model';
 
-export const videoSelector = createFeatureSelector<VideosType>('videos');
+export const selectVideo = createFeatureSelector<VideosType>('videos');
 
-export const allVideoListSelector = createSelector(videoSelector, state => {
-  return state.allCards;
+export const selectAllVideoList = createSelector(selectVideo, state => {
+  return [...state.customCards, ...state.youtubeCardList];
 });
 
-export const getYoutubeVideoSelector = createSelector(videoSelector, state => {
+export const selectGetYoutubeCards = createSelector(selectVideo, state => {
   return state.youtubeCardList;
 });

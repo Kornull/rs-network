@@ -9,7 +9,6 @@ import {
   SearchResponseDefault,
   SearchResponseDetails,
 } from '../../store';
-import { CardVideoActions, setAllVideos } from '../../store/redux';
 
 @Injectable({
   providedIn: 'root',
@@ -28,42 +27,25 @@ export class SearchResultService {
     private store: Store
   ) {}
 
+  getCardIdsByString(data: SearchItemDefault[]) {
+    return data
+      .map((item: SearchItemDefault): string => item.id.videoId)
+      .join(',');
+  }
+
   fetchCards(searchValue: string): Observable<SearchItemDetails[]> {
     return this.http
       .get<SearchResponseDefault>(`${this.searchTitle}q=${searchValue}`)
       .pipe(
         map((data: SearchResponseDefault): SearchItemDefault[] => data.items),
         mergeMap(data => {
-          const idLine: string = data
-            .map((item: SearchItemDefault): string => item.id.videoId)
-            .join(',');
+          console.log('DAta', data);
           return this.http
-            .get<SearchResponseDetails>(`${this.searchId}id=${idLine}`)
+            .get<SearchResponseDetails>(
+              `${this.searchId}id=${this.getCardIdsByString(data)}`
+            )
             .pipe(
               map((cardsList: SearchResponseDetails): SearchItemDetails[] => {
-                this.store.dispatch(
-                  CardVideoActions.addYoutubeCards({
-                    youtubeCards: cardsList.items.map(
-                      (card: SearchItemDetails) => {
-                        return {
-                          cardDetail: {
-                            title: card.snippet.title,
-                            subTitle: card.snippet.localized.title,
-                            imageLink: card.snippet.thumbnails.default.url,
-                            videoLink: '',
-                            date: card.snippet.publishedAt,
-                            description: card.snippet.localized.description,
-                            tags: card.snippet.tags,
-                            statistics: card.statistics,
-                          },
-                          id: card.id,
-                          liked: false,
-                        };
-                      }
-                    ),
-                  })
-                );
-                this.store.dispatch(setAllVideos());
                 return cardsList.items;
               })
             );
@@ -76,15 +58,15 @@ export class SearchResultService {
       );
   }
 
-  getCards(): Observable<SearchItemDetails[]> {
-    return this.cardsResult$;
-  }
+  // getCards(): Observable<SearchItemDetails[]> {
+  //   return this.cardsResult$;
+  // }
 
-  getCard(idCard: string): Observable<SearchItemDetails> {
-    return this.http
-      .get<SearchResponseDetails>(`${this.searchId}id=${idCard}`)
-      .pipe(map(card => card.items[0]));
-  }
+  // getCard(idCard: string): Observable<SearchItemDetails> {
+  //   return this.http
+  //     .get<SearchResponseDetails>(`${this.searchId}id=${idCard}`)
+  //     .pipe(map(card => card.items[0]));
+  // }
 
   setShowSearchResult() {
     this.isShowResultSearch = true;

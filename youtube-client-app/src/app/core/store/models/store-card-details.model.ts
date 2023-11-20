@@ -1,10 +1,6 @@
 import { Statistics } from './search-item.model';
 
-type VideoStoreTitles =
-  | 'youtubeCardList'
-  | 'favoriteCards'
-  | 'customCards'
-  | 'allCards';
+type VideoStoreTitles = 'youtubeCardList' | 'favoriteCards' | 'customCards';
 
 type CardDetailsType = {
   title: string;

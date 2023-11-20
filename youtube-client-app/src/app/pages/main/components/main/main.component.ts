@@ -6,8 +6,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   filter,
-  takeUntil,
-  tap,
+  switchMap,
 } from 'rxjs';
 
 import {
@@ -16,8 +15,16 @@ import {
   SortResultService,
 } from 'src/app/core/services';
 
-import { CardDataType, SortingTitle } from 'src/app/core/store';
-import { allVideoListSelector, init } from 'src/app/core/store/redux';
+import {
+  CardDataType,
+  SearchItemDetails,
+  SortingTitle,
+} from 'src/app/core/store';
+import {
+  CardVideoActions,
+  selectAllVideoList,
+  init,
+} from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-main',
@@ -29,7 +36,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   cardsResult: CardDataType[] = [];
 
-  destr$: Observable<CardDataType[]>;
+  cardsResult$: Observable<CardDataType[]>;
 
   constructor(
     private searchResultService: SearchResultService,
@@ -37,7 +44,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private sortResultService: SortResultService,
     private store: Store
   ) {
-    this.destr$ = this.store.select(allVideoListSelector);
+    this.cardsResult$ = this.store.select(selectAllVideoList);
   }
 
   ngOnInit(): void {
@@ -47,14 +54,33 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(1000),
         distinctUntilChanged(),
-        filter(searchData => searchData.length > 2),
-        tap((searchData: string) => {
-          this.searchResultService.fetchCards(searchData).subscribe();
+        filter(search => search.length > 2),
+        switchMap(data => {
+          return this.searchResultService.fetchCards(data);
         })
       )
-      .subscribe();
-    this.destr$.subscribe(data => (this.cardsResult = [...data]));
-    takeUntil(this.destroy$);
+      .subscribe(data => {
+        this.store.dispatch(
+          CardVideoActions.addYoutubeCards({
+            youtubeCards: data.map((card: SearchItemDetails) => {
+              return {
+                cardDetail: {
+                  title: card.snippet.title,
+                  subTitle: card.snippet.localized.title,
+                  imageLink: card.snippet.thumbnails.default.url,
+                  videoLink: '',
+                  date: card.snippet.publishedAt,
+                  description: card.snippet.localized.description,
+                  tags: card.snippet.tags,
+                  statistics: card.statistics,
+                },
+                id: card.id,
+                liked: false,
+              };
+            }),
+          })
+        );
+      });
   }
 
   ngOnDestroy() {

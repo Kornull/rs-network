@@ -1,10 +1,12 @@
 <div class="result__container">
-  <app-result-search
-    *ngIf="cardsResult.length"
-    [searchResult]="
-      cardsResult
-        | filterTitleCards: onFilterByTitle()
-        | sortDate: onSortingByDate()
-        | sortView: onSortingByView()
-    "></app-result-search>
+  <ng-container *ngIf="cardsResult$ | async as cardsResult">
+    <app-result-search
+      *ngIf="cardsResult.length"
+      [searchResult]="
+        cardsResult
+          | filterTitleCards: onFilterByTitle()
+          | sortDate: onSortingByDate()
+          | sortView: onSortingByView()
+      "></app-result-search>
+  </ng-container>
 </div>
