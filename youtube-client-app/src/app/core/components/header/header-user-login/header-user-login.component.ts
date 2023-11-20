@@ -46,4 +46,8 @@ export class HeaderUserLoginComponent implements OnInit {
   goAdminPage() {
     this.router.navigate(['/main/admin']);
   }
+
+  goFavoritePage() {
+    this.router.navigate(['/favorite']);
+  }
 }

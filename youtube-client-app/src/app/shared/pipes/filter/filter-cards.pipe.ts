@@ -9,11 +9,11 @@ export class FilterCardsPipe implements PipeTransform {
   transform(cards: CardDataType[], title: string = ''): CardDataType[] {
     if (title.trim()) {
       const filterTitle = cards.filter((card: CardDataType) =>
-        card.cardDetail.title.toLowerCase().includes(title.toLowerCase())
+        card.value.title.toLowerCase().includes(title.toLowerCase())
       );
 
       const subTitle = cards.filter((card: CardDataType) =>
-        card.cardDetail.subTitle.toLowerCase().includes(title.toLowerCase())
+        card.value.subTitle.toLowerCase().includes(title.toLowerCase())
       );
 
       return [...new Set([...filterTitle, ...subTitle])];

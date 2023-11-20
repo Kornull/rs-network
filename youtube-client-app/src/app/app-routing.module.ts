@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './core/guard';
 
 import { NotFoundComponent } from './shared/components';
+import { FavoriteResultComponent } from './pages/favorite/components/favorite-result/favorite-result.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -16,6 +17,11 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./pages/auth').then(m => m.AuthModule),
   },
+  {
+    path: 'favorite',
+    component: FavoriteResultComponent,
+  },
+
   {
     path: '**',
     component: NotFoundComponent,

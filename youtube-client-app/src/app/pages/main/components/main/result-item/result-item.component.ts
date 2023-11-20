@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { CardDataType } from 'src/app/core/store';
 import { SharedModule } from 'src/app/shared';
+import { Store } from '@ngrx/store';
+import { CardsVideoActions } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-result-item',
@@ -26,19 +28,32 @@ export class ResultItemComponent {
   @Input() card: CardDataType;
 
   constructor(
+    private store: Store,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   onRunTo() {
-    this.router.navigate([`about/${this.card.id}`], { relativeTo: this.route });
+    this.router.navigate([`about/${this.card.key}`], {
+      relativeTo: this.route,
+    });
   }
 
   getShortDescription(descr: string): string {
-    return descr.length > 59 ? `${descr.slice(0, 56)}...` : descr;
+    return descr.length > 39 ? `${descr.slice(0, 33)}...` : descr;
   }
 
   getShortTitle(title: string): string {
     return title.length > 25 ? `${title.slice(0, 22)}...` : title;
+  }
+
+  onLikeCard() {
+    this.store.dispatch(
+      CardsVideoActions.likedCard({ likedCardId: this.card.key })
+    );
+
+    this.store.dispatch(
+      CardsVideoActions.addLikeCard({ likeId: this.card.key })
+    );
   }
 }

@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { dateValidator } from 'src/app/shared/validators';
-import { CardVideoActions } from 'src/app/core/store/redux';
+import { CardsVideoActions } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-admin-form',
@@ -82,22 +82,22 @@ export class AdminFormComponent implements OnInit {
 
   onSubmit(): void {
     const { info, tags } = this.createCardForm.value;
-    console.log('FORM');
     this.store.dispatch(
-      CardVideoActions.addCustomCard({
+      CardsVideoActions.addCustomCard({
         customCard: {
-          id: `${Date.now()}`,
-          cardDetail: {
+          key: `${Date.now()}`,
+          value: {
             title: info.title,
-            subTitle: info.description,
+            subTitle: tags.tagList.join(', '),
             imageLink: info.imageLink,
             videoLink: info.videoLink,
             date: info.date,
-            description: '',
-            tags: tags.tagList.join('#,'),
+            description: info.description,
+            tags: tags.tagList.join(', '),
             statistics: null,
           },
           liked: null,
+          deleteBtn: true,
         },
       })
     );

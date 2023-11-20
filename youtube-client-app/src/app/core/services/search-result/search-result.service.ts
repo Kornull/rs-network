@@ -9,14 +9,13 @@ import {
   SearchResponseDefault,
   SearchResponseDetails,
 } from '../../store';
+import { CardsVideoActions } from '../../store/redux';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchResultService {
-  private cardsResult$: Observable<SearchItemDetails[]>;
-
-  private searchTitle: string = 'search?type=video&part=snippet&maxResults=16&';
+  private searchTitle: string = 'search?type=video&part=snippet&maxResults=20&';
 
   private searchId: string = 'videos?part=snippet,statistics&';
 
@@ -33,13 +32,38 @@ export class SearchResultService {
       .join(',');
   }
 
+  private addYoutubeKeyToStore() {}
+
+  private addCardsToStore(data: SearchItemDetails[]): void {
+    data.forEach((card: SearchItemDetails) => {
+      this.store.dispatch(
+        CardsVideoActions.addYoutubeCard({
+          youtubeCard: {
+            value: {
+              title: card.snippet.title,
+              subTitle: card.snippet.localized.title,
+              imageLink: card.snippet.thumbnails.medium.url,
+              videoLink: '',
+              date: card.snippet.publishedAt,
+              description: card.snippet.localized.description,
+              tags: card.snippet.tags,
+              statistics: card.statistics,
+            },
+            key: card.id,
+            liked: false,
+            deleteBtn: false,
+          },
+        })
+      );
+    });
+  }
+
   fetchCards(searchValue: string): Observable<SearchItemDetails[]> {
     return this.http
       .get<SearchResponseDefault>(`${this.searchTitle}q=${searchValue}`)
       .pipe(
         map((data: SearchResponseDefault): SearchItemDefault[] => data.items),
         mergeMap(data => {
-          console.log('DAta', data);
           return this.http
             .get<SearchResponseDetails>(
               `${this.searchId}id=${this.getCardIdsByString(data)}`
@@ -57,16 +81,6 @@ export class SearchResultService {
         })
       );
   }
-
-  // getCards(): Observable<SearchItemDetails[]> {
-  //   return this.cardsResult$;
-  // }
-
-  // getCard(idCard: string): Observable<SearchItemDetails> {
-  //   return this.http
-  //     .get<SearchResponseDetails>(`${this.searchId}id=${idCard}`)
-  //     .pipe(map(card => card.items[0]));
-  // }
 
   setShowSearchResult() {
     this.isShowResultSearch = true;

@@ -12,8 +12,12 @@ import { CoreModule } from './core/core.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ApiClientInterceptor } from './core/interceptors/api-client.interceptor';
-import { videoReducer } from './core/store/redux/video.reducer';
+import {
+  videoReducer,
+  newVideoCardsReducer,
+} from './core/store/redux/video.reducer';
 import { VideoEffects } from './core/store/redux/video.effects';
+import { FavoriteModule } from './pages/favorite';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,8 +35,10 @@ import { VideoEffects } from './core/store/redux/video.effects';
     BrowserAnimationsModule,
     CoreModule,
     HttpClientModule,
+    FavoriteModule,
     StoreModule.forRoot({
       videos: videoReducer,
+      videoCards: newVideoCardsReducer,
     }),
     EffectsModule.forRoot([VideoEffects]),
   ],

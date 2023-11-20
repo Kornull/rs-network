@@ -1,5 +1,5 @@
 import { createAction, createActionGroup, props } from '@ngrx/store';
-import { CardDataType } from '../models/store-card-details.model';
+import { CardDataType, CardInfoType } from '../models/store-card-details.model';
 
 export const init = createAction('[Videos] Init');
 
@@ -11,8 +11,19 @@ export const CardVideoActions = createActionGroup({
   events: {
     'Add youtube cards': props<{ youtubeCards: CardDataType[] }>(),
     'Add custom card': props<{ customCard: CardDataType }>(),
-    'Add favorite card': props<{ favoriteCard: CardDataType }>(),
-    'Set storage cards': props<{ allCards: CardDataType[] }>(),
-    'Get card': props<{ cardId: string }>(),
+    'Set card id': props<{ cardId: string }>(),
+  },
+});
+
+export const CardsVideoActions = createActionGroup({
+  source: 'VideoCards',
+  events: {
+    'Add youtube card': props<{ youtubeCard: CardDataType }>(),
+    'Add like card': props<{ likeId: string }>(),
+    'Add youtube cards mok': props<{ youtubeCardsMok: CardInfoType }>(),
+    'Add youtube id list': props<{ cardIds: string[] }>(),
+    'Add custom card': props<{ customCard: CardDataType }>(),
+    'Set card id': props<{ cardId: string }>(),
+    'Liked card': props<{ likedCardId: string }>(),
   },
 });

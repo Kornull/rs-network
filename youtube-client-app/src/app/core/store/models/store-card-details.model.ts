@@ -1,6 +1,6 @@
 import { Statistics } from './search-item.model';
 
-type VideoStoreTitles = 'youtubeCardList' | 'favoriteCards' | 'customCards';
+export type CardInfoType = Record<string, CardDataType>;
 
 type CardDetailsType = {
   title: string;
@@ -14,11 +14,22 @@ type CardDetailsType = {
 };
 
 export type CardDataType = {
-  id: string;
-  cardDetail: CardDetailsType;
+  key: string;
+  value: CardDetailsType;
   liked: boolean | null;
+  deleteBtn: boolean;
 };
 
 export type VideosType = {
-  [T in VideoStoreTitles]: CardDataType[];
+  selectedCardId: string;
+  youtubeCardList: CardDataType[];
+  customCards: CardDataType[];
+};
+
+export type StateVideoCardsType = {
+  openedCard: string;
+  cards: CardInfoType;
+  customCardIds: string[];
+  youtubeCardIds: string[];
+  likedCardIds: string[];
 };

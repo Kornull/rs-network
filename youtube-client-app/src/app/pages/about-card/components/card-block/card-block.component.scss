@@ -4,12 +4,33 @@
   height: 540px;
   max-width: 1120px;
   margin: 0 auto;
+
+  &__btn-back{
+    position: absolute;
+    top: 0;
+    left: -34px;
+    width: 34px;
+    box-shadow: 0 0 14px #0000006f;
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 12px;
+  }
 }
 
 .go__back-btn {
   position: absolute;
-  top: 0;
-  left: -30px;
   width: 30px;
   height: 30px;
+  padding: 0;
+  margin: 0;
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 30px !important;
+  border-radius: 5px;
 }

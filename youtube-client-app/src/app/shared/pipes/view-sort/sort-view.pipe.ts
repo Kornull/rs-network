@@ -9,8 +9,8 @@ export class SortViewPipe implements PipeTransform {
   transform(cards: CardDataType[], date = ''): CardDataType[] {
     if (date === FilterCommand.UP) {
       return cards.sort((a: CardDataType, b: CardDataType) =>
-        Number(a.cardDetail.statistics?.viewCount) <
-        Number(b.cardDetail.statistics?.viewCount)
+        Number(a.value.statistics?.viewCount) <
+        Number(b.value.statistics?.viewCount)
           ? 1
           : -1
       );

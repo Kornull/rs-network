@@ -13,18 +13,11 @@ import {
   SearchResultService,
   SearchValueService,
   SortResultService,
+  UpdateStoreService,
 } from 'src/app/core/services';
 
-import {
-  CardDataType,
-  SearchItemDetails,
-  SortingTitle,
-} from 'src/app/core/store';
-import {
-  CardVideoActions,
-  selectAllVideoList,
-  init,
-} from 'src/app/core/store/redux';
+import { CardDataType, SortingTitle } from 'src/app/core/store';
+import { init, selectGetCards } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-main',
@@ -42,9 +35,10 @@ export class MainComponent implements OnInit, OnDestroy {
     private searchResultService: SearchResultService,
     private searchValueService: SearchValueService,
     private sortResultService: SortResultService,
+    private updateStore: UpdateStoreService,
     private store: Store
   ) {
-    this.cardsResult$ = this.store.select(selectAllVideoList);
+    this.cardsResult$ = this.store.select(selectGetCards);
   }
 
   ngOnInit(): void {
@@ -60,27 +54,13 @@ export class MainComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe(data => {
-        this.store.dispatch(
-          CardVideoActions.addYoutubeCards({
-            youtubeCards: data.map((card: SearchItemDetails) => {
-              return {
-                cardDetail: {
-                  title: card.snippet.title,
-                  subTitle: card.snippet.localized.title,
-                  imageLink: card.snippet.thumbnails.default.url,
-                  videoLink: '',
-                  date: card.snippet.publishedAt,
-                  description: card.snippet.localized.description,
-                  tags: card.snippet.tags,
-                  statistics: card.statistics,
-                },
-                id: card.id,
-                liked: false,
-              };
-            }),
-          })
-        );
+        this.updateStore.addYoutubeCardToStore(data);
+        console.log('ddddd');
       });
+  }
+
+  isLinkUrl(link: string | undefined): string {
+    return link !== undefined ? link : './assets/image-not-found.jpg';
   }
 
   ngOnDestroy() {
