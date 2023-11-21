@@ -12,12 +12,8 @@ import { CoreModule } from './core/core.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ApiClientInterceptor } from './core/interceptors/api-client.interceptor';
-import {
-  videoReducer,
-  newVideoCardsReducer,
-} from './core/store/redux/video.reducer';
+import { newVideoCardsReducer } from './core/store/redux/video.reducer';
 import { VideoEffects } from './core/store/redux/video.effects';
-import { FavoriteModule } from './pages/favorite';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,9 +31,7 @@ import { FavoriteModule } from './pages/favorite';
     BrowserAnimationsModule,
     CoreModule,
     HttpClientModule,
-    FavoriteModule,
     StoreModule.forRoot({
-      videos: videoReducer,
       videoCards: newVideoCardsReducer,
     }),
     EffectsModule.forRoot([VideoEffects]),

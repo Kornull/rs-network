@@ -17,6 +17,5 @@ export class FavoriteResultComponent {
 
   constructor(private store: Store) {
     this.favoriteResult$ = this.store.select(selectLikedCards);
-    console.log(this.favoriteResult$);
   }
 }

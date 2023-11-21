@@ -23,7 +23,7 @@ export class FavoriteComponent {
 
   onLikeCard() {
     this.store.dispatch(
-      CardsVideoActions.likedCard({ likedCardId: this.card.key })
+      CardsVideoActions.addFavoriteCard({ likedCardId: this.card.key })
     );
   }
 }

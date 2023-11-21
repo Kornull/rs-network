@@ -2,20 +2,18 @@ import { SearchValueService } from 'src/app/core/services/search-value/search-va
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
+import { Subject, takeUntil, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import {
   FilterActivateService,
   FilterOpenedService,
-  SearchResultService,
   SortResultService,
 } from 'src/app/core/services';
 import { DefaultDataCustomBtn, CardDataType } from 'src/app/core/store';
-import { Subject, takeUntil, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 import {
   CardsVideoActions,
   selectGetOpenedCard,
-  selectGetViewCards,
 } from 'src/app/core/store/redux';
 
 @Component({
@@ -39,7 +37,6 @@ export class CardBlockComponent implements OnInit, OnDestroy {
     private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
     private sortResultService: SortResultService,
-    private searchResultService: SearchResultService,
     private searchValueService: SearchValueService
   ) {}
 
@@ -62,7 +59,7 @@ export class CardBlockComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    selectGetViewCards.release();
+    selectGetOpenedCard.release();
   }
 
   goBack(): void {

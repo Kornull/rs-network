@@ -48,6 +48,6 @@ export class HeaderUserLoginComponent implements OnInit {
   }
 
   goFavoritePage() {
-    this.router.navigate(['/favorite']);
+    this.router.navigate(['/main/favorite']);
   }
 }

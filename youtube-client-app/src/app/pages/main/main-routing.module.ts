@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from './components';
+import { FavoriteResultComponent } from '../favorite/components/favorite-result/favorite-result.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('../admin').then(m => m.AdminModule),
+  },
+  {
+    path: 'favorite',
+    component: FavoriteResultComponent,
   },
 ];
 

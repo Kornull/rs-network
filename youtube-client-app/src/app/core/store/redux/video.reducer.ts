@@ -1,15 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-  StateVideoCardsType,
-  VideosType,
-} from '../models/store-card-details.model';
-import { CardVideoActions, CardsVideoActions } from './video.actions';
-
-const initialState: VideosType = {
-  selectedCardId: '',
-  youtubeCardList: [],
-  customCards: [],
-};
+import { StateVideoCardsType } from '../models/store-card-details.model';
+import { CardsVideoActions } from './video.actions';
 
 const InitialState: StateVideoCardsType = {
   openedCard: '',
@@ -18,25 +9,6 @@ const InitialState: StateVideoCardsType = {
   likedCardIds: [],
   customCardIds: [],
 };
-
-export const videoReducer = createReducer(
-  initialState,
-  on(CardVideoActions.addYoutubeCards, (state, actions): VideosType => {
-    return { ...state, youtubeCardList: [...actions.youtubeCards] };
-  }),
-  on(CardVideoActions.addCustomCard, (state, actions): VideosType => {
-    return {
-      ...state,
-      customCards: [actions.customCard, ...state.customCards],
-    };
-  }),
-  on(CardVideoActions.setCardId, (state, actions): VideosType => {
-    return {
-      ...state,
-      selectedCardId: actions.cardId,
-    };
-  })
-);
 
 export const newVideoCardsReducer = createReducer(
   InitialState,
@@ -60,11 +32,20 @@ export const newVideoCardsReducer = createReducer(
     };
   }),
   on(
+    CardsVideoActions.addCustomIdList,
+    (state, action): StateVideoCardsType => {
+      return {
+        ...state,
+        customCardIds: [...action.customCardIds],
+      };
+    }
+  ),
+  on(
     CardsVideoActions.addYoutubeIdList,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
-        youtubeCardIds: [...action.cardIds],
+        youtubeCardIds: [...action.youtubeCardIds],
       };
     }
   ),
@@ -75,32 +56,41 @@ export const newVideoCardsReducer = createReducer(
     };
   }),
   on(
-    CardsVideoActions.addYoutubeCardsMok,
+    CardsVideoActions.addCustomCardsFromLocalStore,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
-        cards: action.youtubeCardsMok,
+        cards: action.customCards,
       };
     }
   ),
-  on(CardsVideoActions.likedCard, (state, action): StateVideoCardsType => {
-    console.log(state);
-    return {
-      ...state,
-      cards: {
-        ...state.cards,
-        [action.likedCardId]: {
-          ...state.cards[action.likedCardId],
-          liked: !state.cards[action.likedCardId].liked,
+  on(
+    CardsVideoActions.removeCustomCard,
+    (state, action): StateVideoCardsType => {
+      return {
+        ...state,
+        customCardIds: [
+          ...state.customCardIds.filter(id => id !== action.delCustomCardId),
+        ],
+      };
+    }
+  ),
+  on(
+    CardsVideoActions.addFavoriteCard,
+    (state, action): StateVideoCardsType => {
+      return {
+        ...state,
+        cards: {
+          ...state.cards,
+          [action.likedCardId]: {
+            ...state.cards[action.likedCardId],
+            liked: !state.cards[action.likedCardId].liked,
+          },
         },
-      },
-    };
-  }),
-  on(CardsVideoActions.addLikeCard, (state, action): StateVideoCardsType => {
-    console.log(state);
-    return {
-      ...state,
-      likedCardIds: [...state.likedCardIds, action.likeId],
-    };
-  })
+        likedCardIds: state.likedCardIds.includes(action.likedCardId)
+          ? state.likedCardIds.filter(id => id !== action.likedCardId)
+          : [...state.likedCardIds, action.likedCardId],
+      };
+    }
+  )
 );

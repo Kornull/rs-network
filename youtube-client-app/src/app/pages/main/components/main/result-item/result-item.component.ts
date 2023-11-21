@@ -10,6 +10,7 @@ import { CardDataType } from 'src/app/core/store';
 import { SharedModule } from 'src/app/shared';
 import { Store } from '@ngrx/store';
 import { CardsVideoActions } from 'src/app/core/store/redux';
+import { UpdateStoreService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-result-item',
@@ -30,7 +31,8 @@ export class ResultItemComponent {
   constructor(
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private updateStore: UpdateStoreService
   ) {}
 
   onRunTo() {
@@ -49,11 +51,11 @@ export class ResultItemComponent {
 
   onLikeCard() {
     this.store.dispatch(
-      CardsVideoActions.likedCard({ likedCardId: this.card.key })
+      CardsVideoActions.addFavoriteCard({ likedCardId: this.card.key })
     );
+  }
 
-    this.store.dispatch(
-      CardsVideoActions.addLikeCard({ likeId: this.card.key })
-    );
+  removeCustomCard() {
+    this.updateStore.removeCustomCard(this.card.key);
   }
 }

@@ -19,11 +19,12 @@ export const CardsVideoActions = createActionGroup({
   source: 'VideoCards',
   events: {
     'Add youtube card': props<{ youtubeCard: CardDataType }>(),
-    'Add like card': props<{ likeId: string }>(),
-    'Add youtube cards mok': props<{ youtubeCardsMok: CardInfoType }>(),
-    'Add youtube id list': props<{ cardIds: string[] }>(),
+    'Add custom cards from LocalStore': props<{ customCards: CardInfoType }>(),
+    'Add youtube id list': props<{ youtubeCardIds: string[] }>(),
+    'Add custom id list': props<{ customCardIds: string[] }>(),
     'Add custom card': props<{ customCard: CardDataType }>(),
+    'Remove custom card': props<{ delCustomCardId: string }>(),
     'Set card id': props<{ cardId: string }>(),
-    'Liked card': props<{ likedCardId: string }>(),
+    'Add favorite card': props<{ likedCardId: string }>(),
   },
 });

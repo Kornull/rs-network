@@ -17,7 +17,7 @@ import {
 } from 'src/app/core/services';
 
 import { CardDataType, SortingTitle } from 'src/app/core/store';
-import { init, selectGetCards } from 'src/app/core/store/redux';
+import { selectGetCards } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-main',
@@ -42,7 +42,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(init());
     this.searchValueService
       .getSearchValue()
       .pipe(
@@ -55,7 +54,6 @@ export class MainComponent implements OnInit, OnDestroy {
       )
       .subscribe(data => {
         this.updateStore.addYoutubeCardToStore(data);
-        console.log('ddddd');
       });
   }
 
