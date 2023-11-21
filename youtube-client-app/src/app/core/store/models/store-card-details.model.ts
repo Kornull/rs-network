@@ -33,5 +33,5 @@ export type StateVideoCardsType = {
   cards: CardInfoType;
   customCardIds: string[];
   youtubeCardIds: string[];
-  likedCardIds: string[];
+  favoriteCardIds: string[];
 };

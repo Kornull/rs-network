@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { CardsVideoActions, init } from './video.actions';
 import {
   selectGetAllIdsCount,
-  selectGetCustomCardsForLocalStore,
+  selectGetFavoriteCardsForLocalStore,
 } from './videos.selectors';
 
 @Injectable()
@@ -27,25 +27,44 @@ export class VideoEffects {
         const storedVideo = localStorage.getItem('user-videos');
         if (storedVideo !== null) {
           return of(
-            CardsVideoActions.addCustomCardsFromLocalStore({
-              customCards: { ...JSON.parse(storedVideo) },
+            CardsVideoActions.addFavoriteCardsFromLocalStore({
+              favoriteCards: { ...JSON.parse(storedVideo) },
             }),
-            CardsVideoActions.addCustomIdList({
-              customCardIds: Object.keys({ ...JSON.parse(storedVideo) }),
+            CardsVideoActions.addFavoriteIdList({
+              favoriteIds: Object.keys({ ...JSON.parse(storedVideo) }),
             })
           );
         }
         return of(
-          CardsVideoActions.addCustomCardsFromLocalStore({ customCards: {} })
+          CardsVideoActions.addFavoriteCardsFromLocalStore({
+            favoriteCards: {},
+          })
         );
       })
     );
   });
 
+  saveVideos = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(
+          CardsVideoActions.addFavoriteCard,
+          CardsVideoActions.removeCustomCard
+        ),
+        concatLatestFrom(() =>
+          this.store.select(selectGetFavoriteCardsForLocalStore)
+        ),
+        tap(([, cards]) => {
+          localStorage.setItem('user-videos', JSON.stringify(cards));
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   pagesVideos = createEffect(() => {
     return this.actions$.pipe(
       ofType(
-        CardsVideoActions.addCustomIdList,
         CardsVideoActions.addCustomCard,
         CardsVideoActions.addYoutubeIdList,
         CardsVideoActions.removeCustomCard
@@ -62,22 +81,4 @@ export class VideoEffects {
       })
     );
   });
-
-  saveVideos = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(
-          CardsVideoActions.addCustomCard,
-          CardsVideoActions.removeCustomCard
-        ),
-        concatLatestFrom(() =>
-          this.store.select(selectGetCustomCardsForLocalStore)
-        ),
-        tap(([, cards]) => {
-          localStorage.setItem('user-videos', JSON.stringify(cards));
-        })
-      );
-    },
-    { dispatch: false }
-  );
 }

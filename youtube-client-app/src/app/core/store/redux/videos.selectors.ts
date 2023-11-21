@@ -18,10 +18,10 @@ export const selectGetOpenedCardId = createSelector(selectCards, state => {
   return state.cards[state.openedCard];
 });
 
-export const selectGetCustomCardsForLocalStore = createSelector(
+export const selectGetFavoriteCardsForLocalStore = createSelector(
   selectCards,
   state => {
-    const cards = state.customCardIds.map(id => ({ [id]: state.cards[id] }));
+    const cards = state.favoriteCardIds.map(id => ({ [id]: state.cards[id] }));
     let obj = {};
     cards.forEach(card => {
       obj = {
@@ -34,7 +34,7 @@ export const selectGetCustomCardsForLocalStore = createSelector(
 );
 
 export const selectGetLikedCards = createSelector(selectCards, state => {
-  return state.likedCardIds.map(id => state.cards[id]);
+  return state.favoriteCardIds.map(id => state.cards[id]);
 });
 
 export const selectGetAllIdsCount = createSelector(selectCards, state => {

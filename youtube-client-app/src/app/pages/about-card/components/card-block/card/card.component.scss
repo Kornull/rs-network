@@ -16,7 +16,19 @@
     flex-direction: column;
     height: auto;
   }
+  &__video {
+    font-size: 18px;
+    text-decoration: none;
+    color: $primary-color;
+    transition:
+      color 0.2s linear,
+      text-decoration 0.2s linear;
 
+    &:hover {
+      color: $btn-hover-color;
+      text-decoration: underline;
+    }
+  }
   &__image {
     border-bottom-left-radius: 8px;
     width: 60%;

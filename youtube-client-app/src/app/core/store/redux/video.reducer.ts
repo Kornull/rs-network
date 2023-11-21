@@ -9,7 +9,7 @@ const InitialState: StateVideoCardsType = {
   openedCard: '',
   cards: {},
   youtubeCardIds: [],
-  likedCardIds: [],
+  favoriteCardIds: [],
   customCardIds: [],
 };
 
@@ -35,11 +35,11 @@ export const newVideoCardsReducer = createReducer(
     };
   }),
   on(
-    CardsVideoActions.addCustomIdList,
+    CardsVideoActions.addFavoriteIdList,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
-        customCardIds: [...action.customCardIds],
+        favoriteCardIds: [...action.favoriteIds],
       };
     }
   ),
@@ -59,11 +59,11 @@ export const newVideoCardsReducer = createReducer(
     };
   }),
   on(
-    CardsVideoActions.addCustomCardsFromLocalStore,
+    CardsVideoActions.addFavoriteCardsFromLocalStore,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
-        cards: action.customCards,
+        cards: action.favoriteCards,
       };
     }
   ),
@@ -90,9 +90,9 @@ export const newVideoCardsReducer = createReducer(
             liked: !state.cards[action.likedCardId].liked,
           },
         },
-        likedCardIds: state.likedCardIds.includes(action.likedCardId)
-          ? state.likedCardIds.filter(id => id !== action.likedCardId)
-          : [...state.likedCardIds, action.likedCardId],
+        favoriteCardIds: state.favoriteCardIds.includes(action.likedCardId)
+          ? state.favoriteCardIds.filter(id => id !== action.likedCardId)
+          : [...state.favoriteCardIds, action.likedCardId],
       };
     }
   ),

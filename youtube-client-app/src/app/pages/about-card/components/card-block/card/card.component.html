@@ -18,7 +18,13 @@
         {{ getShortedDescription(card.value.description) }}
       </p>
     </div>
-
+    <p *ngIf="card.value.videoLink">
+      <a class="details__video"
+        href="{{ card.value.videoLink }}"
+        target="_blank"
+        >Video link</a
+      >
+    </p>
     <mat-card-content
       class="details__statistics"
       *ngIf="card.value.statistics !== null">
