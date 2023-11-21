@@ -26,6 +26,6 @@ export const selectGetCustomCards = createSelector(selectCards, state => {
   return obj;
 });
 
-export const selectLikedCards = createSelector(selectCards, state => {
+export const selectGetLikedCards = createSelector(selectCards, state => {
   return state.likedCardIds.map(id => state.cards[id]);
 });

@@ -10,6 +10,7 @@ import {
 } from 'rxjs';
 
 import {
+  FilterOpenedService,
   SearchResultService,
   SearchValueService,
   SortResultService,
@@ -36,12 +37,15 @@ export class MainComponent implements OnInit, OnDestroy {
     private searchValueService: SearchValueService,
     private sortResultService: SortResultService,
     private updateStore: UpdateStoreService,
+    private openedFilter: FilterOpenedService,
     private store: Store
   ) {
     this.cardsResult$ = this.store.select(selectGetCards);
   }
 
   ngOnInit(): void {
+    this.sortResultService.resetSort();
+    this.openedFilter.closeFilter();
     this.searchValueService
       .getSearchValue()
       .pipe(
@@ -55,10 +59,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.updateStore.addYoutubeCardToStore(data);
       });
-  }
-
-  isLinkUrl(link: string | undefined): string {
-    return link !== undefined ? link : './assets/image-not-found.jpg';
   }
 
   ngOnDestroy() {

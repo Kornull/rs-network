@@ -12,7 +12,7 @@ import {
   ResultItemComponent,
   ResultSearchComponent,
 } from './components';
-import { FavoriteModule } from '../favorite';
+import { FavoriteModule, FavoriteRoutingModule } from '../favorite';
 
 @NgModule({
   declarations: [MainComponent],
@@ -23,6 +23,7 @@ import { FavoriteModule } from '../favorite';
     MainRoutingModule,
     AboutCardRoutingModule,
     AdminRoutingModule,
+    FavoriteRoutingModule,
     SharedModule,
     FavoriteModule,
   ],

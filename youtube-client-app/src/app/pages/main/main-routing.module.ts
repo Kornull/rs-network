@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from './components';
-import { FavoriteResultComponent } from '../favorite/components/favorite-result/favorite-result.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -16,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'favorite',
-    component: FavoriteResultComponent,
+    loadChildren: () => import('../favorite').then(m => m.FavoriteModule),
   },
 ];
 

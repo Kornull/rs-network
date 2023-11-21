@@ -1,29 +1,42 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CardDataType } from 'src/app/core/store';
-import { CardsVideoActions } from 'src/app/core/store/redux';
+import { Observable } from 'rxjs';
+import { FilterOpenedService, SortResultService } from 'src/app/core/services';
+import { CardDataType, SortingTitle } from 'src/app/core/store';
+import { selectGetLikedCards } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.scss'],
 })
-export class FavoriteComponent {
-  @Input() card: CardDataType;
+export class FavoriteComponent implements OnInit {
+  favoriteResult$: Observable<CardDataType[]>;
 
-  constructor(private store: Store) {}
+  favoriteResult: CardDataType[];
 
-  getShortDescription(descr: string): string {
-    return descr.length > 39 ? `${descr.slice(0, 33)}...` : descr;
+  constructor(
+    private store: Store,
+    private sortService: SortResultService,
+    private openedFilter: FilterOpenedService
+  ) {}
+
+  ngOnInit(): void {
+    this.sortService.resetSort();
+    this.openedFilter.closeFilter();
+    this.favoriteResult$ = this.store.select(selectGetLikedCards);
+    this.favoriteResult$.subscribe(cards => (this.favoriteResult = cards));
   }
 
-  getShortTitle(title: string): string {
-    return title.length > 25 ? `${title.slice(0, 22)}...` : title;
+  onFilterByTitle(): string {
+    return this.sortService.getSortingDirectionResult(SortingTitle.FILTER);
   }
 
-  onLikeCard() {
-    this.store.dispatch(
-      CardsVideoActions.addFavoriteCard({ likedCardId: this.card.key })
-    );
+  onSortingByDate(): string {
+    return this.sortService.getSortingDirectionResult(SortingTitle.DATE);
+  }
+
+  onSortingByView(): string {
+    return this.sortService.getSortingDirectionResult(SortingTitle.VIEW);
   }
 }
