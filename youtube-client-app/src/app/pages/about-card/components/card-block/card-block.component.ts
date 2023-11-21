@@ -13,7 +13,7 @@ import {
 import { DefaultDataCustomBtn, CardDataType } from 'src/app/core/store';
 import {
   CardsVideoActions,
-  selectGetOpenedCard,
+  selectGetOpenedCardId,
 } from 'src/app/core/store/redux';
 
 @Component({
@@ -51,7 +51,7 @@ export class CardBlockComponent implements OnInit, OnDestroy {
         })
       );
     });
-    this.cardDetails$ = this.store.select(selectGetOpenedCard);
+    this.cardDetails$ = this.store.select(selectGetOpenedCardId);
     takeUntil(this.destroy$);
     this.searchValueService.setValue('');
   }
@@ -59,7 +59,7 @@ export class CardBlockComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    selectGetOpenedCard.release();
+    selectGetOpenedCardId.release();
   }
 
   goBack(): void {

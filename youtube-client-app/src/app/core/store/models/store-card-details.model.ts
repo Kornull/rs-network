@@ -27,6 +27,8 @@ export type VideosType = {
 };
 
 export type StateVideoCardsType = {
+  countPages: number;
+  pageNow: number;
   openedCard: string;
   cards: CardInfoType;
   customCardIds: string[];

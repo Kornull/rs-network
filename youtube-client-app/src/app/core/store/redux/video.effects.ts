@@ -1,13 +1,20 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 
-import { of, switchMap, tap } from 'rxjs';
+import { Observable, of, switchMap, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CardsVideoActions, init } from './video.actions';
-import { selectGetCustomCards } from './videos.selectors';
+import {
+  selectGetAllIdsCount,
+  selectGetCustomCardsForLocalStore,
+} from './videos.selectors';
 
 @Injectable()
 export class VideoEffects {
+  countPages$: Observable<number>;
+
+  countPages: number;
+
   constructor(
     private actions$: Actions,
     private store: Store
@@ -35,6 +42,27 @@ export class VideoEffects {
     );
   });
 
+  pagesVideos = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(
+        CardsVideoActions.addCustomIdList,
+        CardsVideoActions.addCustomCard,
+        CardsVideoActions.addYoutubeIdList,
+        CardsVideoActions.removeCustomCard
+      ),
+      switchMap(() => {
+        this.countPages$ = this.store.select(selectGetAllIdsCount);
+        this.countPages$.subscribe(data => (this.countPages = data));
+
+        return of(
+          CardsVideoActions.addCountPages({
+            idsLength: this.countPages,
+          })
+        );
+      })
+    );
+  });
+
   saveVideos = createEffect(
     () => {
       return this.actions$.pipe(
@@ -42,7 +70,9 @@ export class VideoEffects {
           CardsVideoActions.addCustomCard,
           CardsVideoActions.removeCustomCard
         ),
-        concatLatestFrom(() => this.store.select(selectGetCustomCards)),
+        concatLatestFrom(() =>
+          this.store.select(selectGetCustomCardsForLocalStore)
+        ),
         tap(([, cards]) => {
           localStorage.setItem('user-videos', JSON.stringify(cards));
         })

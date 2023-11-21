@@ -22,3 +22,7 @@ export enum SortingTitle {
   FILTER = 'filter',
   VIEW = 'view',
 }
+
+export enum CountCardsOnPage {
+  COUNT_CARDS = 20,
+}

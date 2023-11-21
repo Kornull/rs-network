@@ -18,7 +18,7 @@ import {
 } from 'src/app/core/services';
 
 import { CardDataType, SortingTitle } from 'src/app/core/store';
-import { selectGetCards } from 'src/app/core/store/redux';
+import { selectGetCardsOnPage } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-main',
@@ -40,7 +40,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private openedFilter: FilterOpenedService,
     private store: Store
   ) {
-    this.cardsResult$ = this.store.select(selectGetCards);
+    this.cardsResult$ = this.store.select(selectGetCardsOnPage);
   }
 
   ngOnInit(): void {
