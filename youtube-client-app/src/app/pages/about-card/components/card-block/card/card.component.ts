@@ -31,7 +31,7 @@ export class CardComponent {
   }
 
   removeCustomCard() {
-    this.updateStore.removeCustomCard(this.card.key);
+    this.updateStore.deleteCustomCard(this.card.key);
     this.location.back();
   }
 }

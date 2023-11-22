@@ -116,7 +116,7 @@
         mat-raised-button
         class="btn__tags"
         (click)="onAddTag()"
-        [disabled]="getTagsArrayLength()">
+        [disabled]="isTagsArrayFull()">
         Add tag
       </button>
     </div>

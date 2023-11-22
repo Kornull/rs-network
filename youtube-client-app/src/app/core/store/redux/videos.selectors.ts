@@ -3,7 +3,7 @@ import { StateVideoCardsType } from '../models/store-card-details.model';
 import { CountCardsOnPage } from '../models/types';
 
 export const selectCards =
-  createFeatureSelector<StateVideoCardsType>('videoCards');
+  createFeatureSelector<StateVideoCardsType>('Video cards');
 
 export const selectGetCardsOnPage = createSelector(selectCards, state => {
   return [...state.customCardIds, ...state.youtubeCardIds]
@@ -14,9 +14,10 @@ export const selectGetCardsOnPage = createSelector(selectCards, state => {
     .map(id => state.cards[id]);
 });
 
-export const selectGetOpenedCardId = createSelector(selectCards, state => {
-  return state.cards[state.openedCard];
-});
+export const selectGetOpenedCard = (props: { id: string }) =>
+  createSelector(selectCards, state => {
+    return state.cards[props.id];
+  });
 
 export const selectGetFavoriteCardsForLocalStore = createSelector(
   selectCards,

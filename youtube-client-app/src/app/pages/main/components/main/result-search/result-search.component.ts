@@ -10,12 +10,11 @@ import {
   selectGetCountPages,
   selectGetPageNow,
 } from 'src/app/core/store/redux';
-import { ResultItemComponent } from '../result-item/result-item.component';
 
 @Component({
   selector: 'app-result-search',
   standalone: true,
-  imports: [CommonModule, ResultItemComponent, SharedModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './result-search.component.html',
   styleUrls: ['./result-search.component.scss'],
 })

@@ -6,14 +6,13 @@ import { CountCardsOnPage } from '../models/types';
 const InitialState: StateVideoCardsType = {
   countPages: 0,
   pageNow: 1,
-  openedCard: '',
   cards: {},
   youtubeCardIds: [],
   favoriteCardIds: [],
   customCardIds: [],
 };
 
-export const newVideoCardsReducer = createReducer(
+export const VideoCardsReducer = createReducer(
   InitialState,
   on(CardsVideoActions.addYoutubeCard, (state, action): StateVideoCardsType => {
     return {
@@ -22,6 +21,7 @@ export const newVideoCardsReducer = createReducer(
         ...state.cards,
         [action.youtubeCard.key]: action.youtubeCard,
       },
+      youtubeCardIds: [...state.youtubeCardIds, action.youtubeCard.key],
     };
   }),
   on(CardsVideoActions.addCustomCard, (state, action): StateVideoCardsType => {
@@ -43,21 +43,6 @@ export const newVideoCardsReducer = createReducer(
       };
     }
   ),
-  on(
-    CardsVideoActions.addYoutubeIdList,
-    (state, action): StateVideoCardsType => {
-      return {
-        ...state,
-        youtubeCardIds: [...action.youtubeCardIds],
-      };
-    }
-  ),
-  on(CardsVideoActions.setCardId, (state, action): StateVideoCardsType => {
-    return {
-      ...state,
-      openedCard: action.cardId,
-    };
-  }),
   on(
     CardsVideoActions.addFavoriteCardsFromLocalStore,
     (state, action): StateVideoCardsType => {
@@ -92,7 +77,7 @@ export const newVideoCardsReducer = createReducer(
         },
         favoriteCardIds: state.favoriteCardIds.includes(action.likedCardId)
           ? state.favoriteCardIds.filter(id => id !== action.likedCardId)
-          : [...state.favoriteCardIds, action.likedCardId],
+          : [action.likedCardId, ...state.favoriteCardIds],
       };
     }
   ),
@@ -112,6 +97,12 @@ export const newVideoCardsReducer = createReducer(
       };
     }
   ),
+  on(CardsVideoActions.clearYoutubeIdList, (state): StateVideoCardsType => {
+    return {
+      ...state,
+      youtubeCardIds: [],
+    };
+  }),
   on(CardsVideoActions.clearStore, (): StateVideoCardsType => {
     return InitialState;
   })

@@ -57,7 +57,7 @@ export class AdminFormComponent implements OnInit {
     return tagsArray.controls;
   }
 
-  getTagsArrayLength(): boolean {
+  isTagsArrayFull(): boolean {
     const arr = this.createCardForm.get('tags.tagList') as FormArray;
     if (arr.controls.length < 5) return false;
     return true;

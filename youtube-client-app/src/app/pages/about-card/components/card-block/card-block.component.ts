@@ -11,10 +11,7 @@ import {
   SortResultService,
 } from 'src/app/core/services';
 import { DefaultDataCustomBtn, CardDataType } from 'src/app/core/store';
-import {
-  CardsVideoActions,
-  selectGetOpenedCardId,
-} from 'src/app/core/store/redux';
+import { selectGetOpenedCard } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-card-block',
@@ -45,13 +42,13 @@ export class CardBlockComponent implements OnInit, OnDestroy {
     this.filterActivateService.turnOffBtn();
     this.sortResultService.resetSort();
     this.route.params.subscribe((params: Params) => {
-      this.store.dispatch(
-        CardsVideoActions.setCardId({
-          cardId: params['id'],
+      this.cardDetails$ = this.store.select(
+        selectGetOpenedCard({
+          id: params['id'],
         })
       );
     });
-    this.cardDetails$ = this.store.select(selectGetOpenedCardId);
+
     takeUntil(this.destroy$);
     this.searchValueService.setValue('');
   }
@@ -59,7 +56,6 @@ export class CardBlockComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    selectGetOpenedCardId.release();
   }
 
   goBack(): void {

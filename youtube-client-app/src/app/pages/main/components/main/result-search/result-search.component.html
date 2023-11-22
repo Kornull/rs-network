@@ -1,13 +1,14 @@
 <ul class="item__list">
-  <app-result-item
+  <app-card-list
     *ngFor="let card of searchResult"
-    [card]="card"></app-result-item>
+    [card]="card"></app-card-list>
 </ul>
 <div class="pages__block">
   <button
     mat-mini-fab
     [disabled]="getLeftBtnIsDisabled()"
-    color="primary" (click)="onClickPrevPage()">
+    color="primary"
+    (click)="onClickPrevPage()">
     <mat-icon>navigate_before</mat-icon>
   </button>
   {{ pageNow }}

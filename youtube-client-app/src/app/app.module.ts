@@ -12,7 +12,7 @@ import { CoreModule } from './core/core.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ApiClientInterceptor } from './core/interceptors/api-client.interceptor';
-import { newVideoCardsReducer } from './core/store/redux/video.reducer';
+import { VideoCardsReducer } from './core/store/redux/video.reducer';
 import { VideoEffects } from './core/store/redux/video.effects';
 
 @NgModule({
@@ -32,7 +32,7 @@ import { VideoEffects } from './core/store/redux/video.effects';
     CoreModule,
     HttpClientModule,
     StoreModule.forRoot({
-      videoCards: newVideoCardsReducer,
+      'Video cards': VideoCardsReducer,
     }),
     EffectsModule.forRoot([VideoEffects]),
   ],

@@ -47,10 +47,7 @@ export class VideoEffects {
   saveVideos = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(
-          CardsVideoActions.addFavoriteCard,
-          CardsVideoActions.removeCustomCard
-        ),
+        ofType(CardsVideoActions.addFavoriteCard),
         concatLatestFrom(() =>
           this.store.select(selectGetFavoriteCardsForLocalStore)
         ),
@@ -66,7 +63,7 @@ export class VideoEffects {
     return this.actions$.pipe(
       ofType(
         CardsVideoActions.addCustomCard,
-        CardsVideoActions.addYoutubeIdList,
+        CardsVideoActions.addYoutubeCard,
         CardsVideoActions.removeCustomCard
       ),
       switchMap(() => {

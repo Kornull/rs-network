@@ -10,7 +10,7 @@ import { CardsVideoActions } from '../../store/redux';
 export class UpdateStoreService {
   constructor(private store: Store) {}
 
-  removeCustomCard(id: string) {
+  deleteCustomCard(id: string) {
     this.store.dispatch(
       CardsVideoActions.removeCustomCard({
         delCustomCardId: id,
@@ -18,10 +18,13 @@ export class UpdateStoreService {
     );
   }
 
+  private clearIdYoutubeList() {
+    this.store.dispatch(CardsVideoActions.clearYoutubeIdList());
+  }
+
   addYoutubeCardToStore(cards: SearchItemDetails[]) {
-    const cardKeys: string[] = [];
+    this.clearIdYoutubeList();
     cards.forEach((card: SearchItemDetails) => {
-      cardKeys.push(card.id);
       this.store.dispatch(
         CardsVideoActions.addYoutubeCard({
           youtubeCard: {
@@ -42,13 +45,5 @@ export class UpdateStoreService {
         })
       );
     });
-
-    this.addYoutubeKeysToStore(cardKeys);
-  }
-
-  private addYoutubeKeysToStore(keys: string[]) {
-    this.store.dispatch(
-      CardsVideoActions.addYoutubeIdList({ youtubeCardIds: keys })
-    );
   }
 }

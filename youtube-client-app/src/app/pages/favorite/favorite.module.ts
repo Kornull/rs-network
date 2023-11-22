@@ -3,17 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from 'src/app/shared';
 
-import { FavoriteResultComponent } from './components/favorite/favorite-result/favorite-result.component';
-import { FavoriteCardComponent } from './components/favorite/favorite-card/favorite-card.component';
-import { FavoriteComponent } from './components/favorite/favorite.component';
 import { FavoriteRoutingModule } from './favorite-routing.module';
+import {
+  FavoriteResultComponent,
+  FavoriteComponent,
+} from './components/favorite';
 
 @NgModule({
-  declarations: [
-    FavoriteCardComponent,
-    FavoriteResultComponent,
-    FavoriteComponent,
-  ],
+  declarations: [FavoriteResultComponent, FavoriteComponent],
   imports: [CommonModule, SharedModule, FavoriteRoutingModule],
 })
 export class FavoriteModule {}

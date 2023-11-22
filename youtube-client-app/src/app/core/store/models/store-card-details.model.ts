@@ -20,16 +20,9 @@ export type CardDataType = {
   deleteBtn: boolean;
 };
 
-export type VideosType = {
-  selectedCardId: string;
-  youtubeCardList: CardDataType[];
-  customCards: CardDataType[];
-};
-
 export type StateVideoCardsType = {
   countPages: number;
   pageNow: number;
-  openedCard: string;
   cards: CardInfoType;
   customCardIds: string[];
   youtubeCardIds: string[];
