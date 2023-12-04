@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { cardsVideoActions, init } from './video.actions';
 import {
   selectGetAllIdsCount,
-  selectGetFavoriteCardsForLocalStore,
+  selectGetFavoriteCardsFromLocalStore,
 } from './videos.selectors';
 import { CountCardsOnPage } from '../models/types';
 
@@ -50,7 +50,7 @@ export class VideoEffects {
       return this.actions$.pipe(
         ofType(cardsVideoActions.addFavoriteCard),
         concatLatestFrom(() =>
-          this.store.select(selectGetFavoriteCardsForLocalStore)
+          this.store.select(selectGetFavoriteCardsFromLocalStore)
         ),
         tap(([, cards]) => {
           localStorage.setItem('user-videos', JSON.stringify(cards));

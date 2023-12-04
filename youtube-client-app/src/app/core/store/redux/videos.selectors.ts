@@ -19,19 +19,13 @@ export const selectGetOpenedCard = (props: { id: string }) =>
     return state.cards[props.id];
   });
 
-export const selectGetFavoriteCardsForLocalStore = createSelector(
+export const selectGetFavoriteCardsFromLocalStore = createSelector(
   selectCards,
-  state => {
-    const cards = state.favoriteCardIds.map(id => ({ [id]: state.cards[id] }));
-    let obj = {};
-    cards.forEach(card => {
-      obj = {
-        ...obj,
-        ...card,
-      };
-    });
-    return obj;
-  }
+  state =>
+    Object.assign(
+      {},
+      ...state.favoriteCardIds.map(id => ({ [id]: state.cards[id] }))
+    )
 );
 
 export const selectGetLikedCards = createSelector(selectCards, state => {
