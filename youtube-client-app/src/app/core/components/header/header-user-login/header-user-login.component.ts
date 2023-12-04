@@ -9,7 +9,7 @@ import {
   SearchValueService,
 } from 'src/app/core/services';
 import { DefaultDataCustomBtn } from 'src/app/core/store';
-import { CardsVideoActions } from 'src/app/core/store/redux';
+import { cardsVideoActions } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-header-user-login',
@@ -37,7 +37,7 @@ export class HeaderUserLoginComponent implements OnInit {
   }
 
   onLogOut() {
-    this.store.dispatch(CardsVideoActions.clearStore());
+    this.store.dispatch(cardsVideoActions.clearStore());
     this.localStorageService.removeToken();
     this.filterActivateService.activatedFilter('');
     this.searchValueService.setValue('');

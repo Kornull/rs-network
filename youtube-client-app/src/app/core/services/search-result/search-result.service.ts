@@ -9,7 +9,6 @@ import {
   SearchResponseDefault,
   SearchResponseDetails,
 } from '../../store';
-import { CardsVideoActions } from '../../store/redux';
 
 @Injectable({
   providedIn: 'root',
@@ -30,32 +29,6 @@ export class SearchResultService {
     return data
       .map((item: SearchItemDefault): string => item.id.videoId)
       .join(',');
-  }
-
-  private addYoutubeKeyToStore() {}
-
-  private addCardsToStore(data: SearchItemDetails[]): void {
-    data.forEach((card: SearchItemDetails) => {
-      this.store.dispatch(
-        CardsVideoActions.addYoutubeCard({
-          youtubeCard: {
-            value: {
-              title: card.snippet.title,
-              subTitle: card.snippet.localized.title,
-              imageLink: card.snippet.thumbnails.medium.url,
-              videoLink: '',
-              date: card.snippet.publishedAt,
-              description: card.snippet.localized.description,
-              tags: card.snippet.tags,
-              statistics: card.statistics,
-            },
-            key: card.id,
-            liked: false,
-            deleteBtn: false,
-          },
-        })
-      );
-    });
   }
 
   fetchCards(searchValue: string): Observable<SearchItemDetails[]> {

@@ -4,7 +4,7 @@ import { UpdateStoreService } from 'src/app/core/services';
 import { Location } from '@angular/common';
 
 import { CardDataType } from 'src/app/core/store';
-import { CardsVideoActions } from 'src/app/core/store/redux';
+import { cardsVideoActions } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-card',
@@ -26,7 +26,7 @@ export class CardComponent {
 
   onLikedCard() {
     this.store.dispatch(
-      CardsVideoActions.addFavoriteCard({ likedCardId: this.card.key })
+      cardsVideoActions.addFavoriteCard({ likedCardId: this.card.key })
     );
   }
 

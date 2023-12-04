@@ -1,13 +1,14 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CardsVideoActions, init } from './video.actions';
+import { cardsVideoActions, init } from './video.actions';
 import {
   selectGetAllIdsCount,
   selectGetFavoriteCardsForLocalStore,
 } from './videos.selectors';
+import { CountCardsOnPage } from '../models/types';
 
 @Injectable()
 export class VideoEffects {
@@ -27,16 +28,16 @@ export class VideoEffects {
         const storedVideo = localStorage.getItem('user-videos');
         if (storedVideo !== null) {
           return of(
-            CardsVideoActions.addFavoriteCardsFromLocalStore({
+            cardsVideoActions.addFavoriteCardsFromLocalStore({
               favoriteCards: { ...JSON.parse(storedVideo) },
             }),
-            CardsVideoActions.addFavoriteIdList({
+            cardsVideoActions.addFavoriteIdList({
               favoriteIds: Object.keys({ ...JSON.parse(storedVideo) }),
             })
           );
         }
         return of(
-          CardsVideoActions.addFavoriteCardsFromLocalStore({
+          cardsVideoActions.addFavoriteCardsFromLocalStore({
             favoriteCards: {},
           })
         );
@@ -47,7 +48,7 @@ export class VideoEffects {
   saveVideos = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(CardsVideoActions.addFavoriteCard),
+        ofType(cardsVideoActions.addFavoriteCard),
         concatLatestFrom(() =>
           this.store.select(selectGetFavoriteCardsForLocalStore)
         ),
@@ -62,20 +63,19 @@ export class VideoEffects {
   pagesVideos = createEffect(() => {
     return this.actions$.pipe(
       ofType(
-        CardsVideoActions.addCustomCard,
-        CardsVideoActions.addYoutubeCard,
-        CardsVideoActions.removeCustomCard
+        cardsVideoActions.addCustomCard,
+        cardsVideoActions.addYoutubeCard,
+        cardsVideoActions.removeCustomCard
       ),
-      switchMap(() => {
-        this.countPages$ = this.store.select(selectGetAllIdsCount);
-        this.countPages$.subscribe(data => (this.countPages = data));
-
-        return of(
-          CardsVideoActions.addCountPages({
-            idsLength: this.countPages,
-          })
-        );
-      })
+      switchMap(() =>
+        this.store.select(selectGetAllIdsCount).pipe(
+          map(idsLength =>
+            cardsVideoActions.addCountPages({
+              idsLength: idsLength / CountCardsOnPage.COUNT_CARDS,
+            })
+          )
+        )
+      )
     );
   });
 }

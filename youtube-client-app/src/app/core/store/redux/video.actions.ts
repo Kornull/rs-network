@@ -7,10 +7,10 @@ import {
 
 import { CardDataType, CardInfoType } from '../models/store-card-details.model';
 
-export const init = createAction('[Videos cards] Init');
+export const init = createAction('[VIDEOS] Init');
 
-export const CardsVideoActions = createActionGroup({
-  source: 'Video cards',
+export const cardsVideoActions = createActionGroup({
+  source: 'VIDEOS',
   events: {
     'Add youtube card': props<{ youtubeCard: CardDataType }>(),
     'Add favorite cards from LocalStore': props<{

@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { SharedModule } from 'src/app/shared';
 import { CardDataType } from 'src/app/core/store';
 import {
-  CardsVideoActions,
+  cardsVideoActions,
   selectGetCountPages,
   selectGetPageNow,
 } from 'src/app/core/store/redux';
@@ -50,7 +50,7 @@ export class ResultSearchComponent implements OnInit {
   onClickNexPage() {
     this.pageNow += 1;
     this.store.dispatch(
-      CardsVideoActions.updateCurrentPage({
+      cardsVideoActions.updateCurrentPage({
         pageNow: this.pageNow,
       })
     );
@@ -59,7 +59,7 @@ export class ResultSearchComponent implements OnInit {
   onClickPrevPage() {
     this.pageNow -= 1;
     this.store.dispatch(
-      CardsVideoActions.updateCurrentPage({
+      cardsVideoActions.updateCurrentPage({
         pageNow: this.pageNow,
       })
     );

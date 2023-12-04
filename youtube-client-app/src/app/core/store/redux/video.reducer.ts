@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { StateVideoCardsType } from '../models/store-card-details.model';
-import { CardsVideoActions } from './video.actions';
-import { CountCardsOnPage } from '../models/types';
+import { cardsVideoActions } from './video.actions';
 
 const InitialState: StateVideoCardsType = {
   countPages: 0,
@@ -14,7 +13,7 @@ const InitialState: StateVideoCardsType = {
 
 export const VideoCardsReducer = createReducer(
   InitialState,
-  on(CardsVideoActions.addYoutubeCard, (state, action): StateVideoCardsType => {
+  on(cardsVideoActions.addYoutubeCard, (state, action): StateVideoCardsType => {
     return {
       ...state,
       cards: {
@@ -24,7 +23,7 @@ export const VideoCardsReducer = createReducer(
       youtubeCardIds: [...state.youtubeCardIds, action.youtubeCard.key],
     };
   }),
-  on(CardsVideoActions.addCustomCard, (state, action): StateVideoCardsType => {
+  on(cardsVideoActions.addCustomCard, (state, action): StateVideoCardsType => {
     return {
       ...state,
       customCardIds: [action.customCard.key, ...state.customCardIds],
@@ -35,7 +34,7 @@ export const VideoCardsReducer = createReducer(
     };
   }),
   on(
-    CardsVideoActions.addFavoriteIdList,
+    cardsVideoActions.addFavoriteIdList,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
@@ -44,7 +43,7 @@ export const VideoCardsReducer = createReducer(
     }
   ),
   on(
-    CardsVideoActions.addFavoriteCardsFromLocalStore,
+    cardsVideoActions.addFavoriteCardsFromLocalStore,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
@@ -53,7 +52,7 @@ export const VideoCardsReducer = createReducer(
     }
   ),
   on(
-    CardsVideoActions.removeCustomCard,
+    cardsVideoActions.removeCustomCard,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
@@ -64,7 +63,7 @@ export const VideoCardsReducer = createReducer(
     }
   ),
   on(
-    CardsVideoActions.addFavoriteCard,
+    cardsVideoActions.addFavoriteCard,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
@@ -81,15 +80,14 @@ export const VideoCardsReducer = createReducer(
       };
     }
   ),
-  on(CardsVideoActions.addCountPages, (state, action): StateVideoCardsType => {
-    const countPages = action.idsLength / CountCardsOnPage.COUNT_CARDS;
+  on(cardsVideoActions.addCountPages, (state, action): StateVideoCardsType => {
     return {
       ...state,
-      countPages: Math.ceil(countPages),
+      countPages: Math.ceil(action.idsLength),
     };
   }),
   on(
-    CardsVideoActions.updateCurrentPage,
+    cardsVideoActions.updateCurrentPage,
     (state, action): StateVideoCardsType => {
       return {
         ...state,
@@ -97,13 +95,13 @@ export const VideoCardsReducer = createReducer(
       };
     }
   ),
-  on(CardsVideoActions.clearYoutubeIdList, (state): StateVideoCardsType => {
+  on(cardsVideoActions.clearYoutubeIdList, (state): StateVideoCardsType => {
     return {
       ...state,
       youtubeCardIds: [],
     };
   }),
-  on(CardsVideoActions.clearStore, (): StateVideoCardsType => {
+  on(cardsVideoActions.clearStore, (): StateVideoCardsType => {
     return InitialState;
   })
 );

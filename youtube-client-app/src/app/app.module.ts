@@ -32,7 +32,7 @@ import { VideoEffects } from './core/store/redux/video.effects';
     CoreModule,
     HttpClientModule,
     StoreModule.forRoot({
-      'Video cards': VideoCardsReducer,
+      VIDEOS: VideoCardsReducer,
     }),
     EffectsModule.forRoot([VideoEffects]),
   ],

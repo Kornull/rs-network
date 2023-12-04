@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { SearchItemDetails } from '../../store';
-import { CardsVideoActions } from '../../store/redux';
+import { cardsVideoActions } from '../../store/redux';
 
 @Injectable({
   providedIn: 'root',
@@ -12,21 +12,21 @@ export class UpdateStoreService {
 
   deleteCustomCard(id: string) {
     this.store.dispatch(
-      CardsVideoActions.removeCustomCard({
+      cardsVideoActions.removeCustomCard({
         delCustomCardId: id,
       })
     );
   }
 
   private clearIdYoutubeList() {
-    this.store.dispatch(CardsVideoActions.clearYoutubeIdList());
+    this.store.dispatch(cardsVideoActions.clearYoutubeIdList());
   }
 
   addYoutubeCardToStore(cards: SearchItemDetails[]) {
     this.clearIdYoutubeList();
     cards.forEach((card: SearchItemDetails) => {
       this.store.dispatch(
-        CardsVideoActions.addYoutubeCard({
+        cardsVideoActions.addYoutubeCard({
           youtubeCard: {
             value: {
               title: card.snippet.title,

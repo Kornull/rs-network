@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { dateValidator } from 'src/app/shared/validators';
-import { CardsVideoActions } from 'src/app/core/store/redux';
+import { cardsVideoActions } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-admin-form',
@@ -83,7 +83,7 @@ export class AdminFormComponent implements OnInit {
   onSubmit(): void {
     const { info, tags } = this.createCardForm.value;
     this.store.dispatch(
-      CardsVideoActions.addCustomCard({
+      cardsVideoActions.addCustomCard({
         customCard: {
           key: `${Date.now()}`,
           value: {
