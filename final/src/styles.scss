@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import './scss/index';
 @include mat.core();
 
 .lightTheme {
@@ -34,7 +35,7 @@
     )
   );
 
-  @include mat.all-component-themes($dark-theme);
+  @include mat.all-component-colors($dark-theme);
 }
 
 * {
@@ -51,9 +52,6 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-.theme {
-  background-color: #000000d7;
-  color: #fff;
+  color: var(--default-color);
+  background: var(--default-background);
 }

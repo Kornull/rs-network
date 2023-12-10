@@ -20,10 +20,9 @@ export class ThemesService {
   changeTheme() {
     if (this.theme === 'lightTheme') {
       this.theme = 'darkTheme';
-      this.render.addClass(this.document.body, 'theme');
+      this.render.removeClass(this.document.body, 'lightTheme');
     } else {
       this.theme = 'lightTheme';
-      this.render.removeClass(this.document.body, 'theme');
       this.render.removeClass(this.document.body, 'darkTheme');
     }
 
