@@ -1,0 +1,25 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 18px;
+  width: 100%;
+  min-width: 380px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 16px var(--shadow);
+  background: var(--background-form);
+
+  &-input {
+    width: 100%;
+  }
+
+  &-btn {
+    margin-top: 10px;
+    width: 120px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}

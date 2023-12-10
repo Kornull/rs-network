@@ -15,7 +15,6 @@ import {
 export class SnackbarComponent {
   constructor(
     public sbRef: MatSnackBarRef<SnackbarComponent>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    @Inject(MAT_SNACK_BAR_DATA) public data: any
+    @Inject(MAT_SNACK_BAR_DATA) public data: string
   ) {}
 }
