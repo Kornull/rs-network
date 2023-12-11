@@ -6,8 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { RouterLink } from '@angular/router';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +29,7 @@ import { AuthActions } from '../../core/store/redux';
     MatInputModule,
     MatToolbarModule,
     ReactiveFormsModule,
+    RouterLink,
   ],
   providers: [],
   templateUrl: './registration.component.html',

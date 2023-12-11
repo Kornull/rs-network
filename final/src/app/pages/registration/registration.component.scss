@@ -11,15 +11,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
     width: 100vw;
     max-width: 380px;
     box-shadow: 0 0 16px var(--shadow);
     background: var(--background-form);
     border-radius: 10px;
-    padding: 18px 10px 8px;
+    padding: 18px 10px 0;
   }
 
-  &-title{
+  &-title {
     display: flex;
     align-items: start;
     width: 100%;
@@ -36,5 +37,18 @@
     width: 120px;
     font-size: 18px;
     font-weight: 500;
+  }
+
+  &-link {
+    font-size: 14px;
+
+    &--click {
+      color: var(--link);
+      transition: color 0.2s ease-out;
+
+      &:hover {
+        color: var(--link-hover);
+      }
+    }
   }
 }

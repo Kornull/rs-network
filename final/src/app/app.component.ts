@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { AuthComponent, RegistrationComponent } from './pages';
 import { HeaderComponent } from './core/components';
 import { SnackbarComponent } from './shared';
 
@@ -19,8 +18,6 @@ import { AuthService, RegisterService, SnackBarService } from './core/services';
     CommonModule,
     RouterOutlet,
     HeaderComponent,
-    RegistrationComponent,
-    AuthComponent,
     SnackbarComponent,
     HttpClientModule,
   ],

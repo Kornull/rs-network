@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +28,7 @@ import { ErrorTypes } from '../../core/store/models';
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
+    RouterLink,
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',

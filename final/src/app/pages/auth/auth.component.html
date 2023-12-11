@@ -59,14 +59,10 @@
         <mat-error
           >Min length password -
           {{
-            authForm.get('password')?.errors?.['minlength']?.[
-              'requiredLength'
-            ]
+            authForm.get('password')?.errors?.['minlength']?.['requiredLength']
           }}, your length -
           {{
-            authForm.get('password')?.errors?.['minlength']?.[
-              'actualLength'
-            ]
+            authForm.get('password')?.errors?.['minlength']?.['actualLength']
           }}</mat-error
         >
       }
@@ -91,4 +87,7 @@
       Register
     </button>
   </form>
+  <h4 class="form-link">
+    Not yet registered? - <a class="form-link--click" routerLink="/signup">Register</a>
+  </h4>
 </div>
