@@ -1,0 +1,8 @@
+import { ErrorTypes } from './types';
+
+type EmailExist = { [ErrorTypes.USER_EXIST]: string[] };
+
+export interface UserState {
+  isRegisterError: boolean;
+  invalidEmails: EmailExist;
+}

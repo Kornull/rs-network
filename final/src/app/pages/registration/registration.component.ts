@@ -12,8 +12,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
 
-import { passwordValidator } from '../../shared';
+import { emailValidator, passwordValidator } from '../../shared';
+import { RegisterService } from '../../core/services';
+import { ErrorTypes } from '../../core/store/models';
+import { AuthActions } from '../../core/store/redux';
 
 @Component({
   selector: 'app-registration',
@@ -26,6 +30,7 @@ import { passwordValidator } from '../../shared';
     MatToolbarModule,
     ReactiveFormsModule,
   ],
+  providers: [RegisterService],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
@@ -35,8 +40,10 @@ export class RegistrationComponent implements OnInit {
   registerForm!: FormGroup;
 
   constructor(
+    private regService: RegisterService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +56,7 @@ export class RegistrationComponent implements OnInit {
           Validators.required,
         ],
       ],
-      email: ['', [Validators.email, Validators.required]],
+      email: ['', [Validators.email, Validators.required, emailValidator()]],
       password: [
         '',
         [passwordValidator(), Validators.minLength(8), Validators.required],
@@ -57,14 +64,30 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onSubmit() {
+    const http$ = this.regService.reg();
+    http$.subscribe(res => {
+      if (res.type === ErrorTypes.USER_EXIST) {
+        this.openSnackBar(res.message, true);
+        this.store.dispatch(
+          AuthActions.invalidRegister({
+            email: this.registerForm.controls['email'].value,
+          })
+        );
+      } else if (res.type === ErrorTypes.INVALID_FORM) {
+        this.openSnackBar(res.message, true);
+      } else {
+        this.openSnackBar('Registration success', false);
+      }
+    });
+  }
 
-  openSnackBar(content: string, action: string) {
-    this.snackBar.open(content, action, {
-      duration: 200000,
+  openSnackBar(content: string, isError: boolean) {
+    this.snackBar.open(content, 'Close', {
+      duration: 3000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
-      panelClass: ['alert-green'],
+      panelClass: [isError ? 'alert-red' : 'alert-green'],
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, Inject, Renderer2 } from '@angular/core';
+import { Injectable, Inject, Renderer2, RendererFactory2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({
@@ -7,11 +7,15 @@ import { DOCUMENT } from '@angular/common';
 export class ThemesService {
   private theme: string = 'lightTheme';
 
+  private render: Renderer2;
+
   constructor(
     @Inject(DOCUMENT)
     private document: Document,
-    private render: Renderer2
-  ) {}
+    private rendererFactory: RendererFactory2
+  ) {
+    this.render = rendererFactory.createRenderer(null, null);
+  }
 
   default(): void {
     this.render.addClass(this.document.body, this.theme);
@@ -19,11 +23,11 @@ export class ThemesService {
 
   changeTheme() {
     if (this.theme === 'lightTheme') {
+      this.render.removeClass(this.document.body, this.theme);
       this.theme = 'darkTheme';
-      this.render.removeClass(this.document.body, 'lightTheme');
     } else {
+      this.render.removeClass(this.document.body, this.theme);
       this.theme = 'lightTheme';
-      this.render.removeClass(this.document.body, 'darkTheme');
     }
 
     this.render.addClass(this.document.body, this.theme);

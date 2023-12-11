@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { RegistrationComponent } from './pages';
 import { HeaderComponent } from './core/components';
+
 import { ThemesService } from './core/services';
-import { RegistrationComponent } from './pages/registration/registration.component';
+import { AuthActions } from './core/store/redux';
+
 import { SnackbarComponent } from './shared';
 
 @Component({
@@ -15,17 +21,21 @@ import { SnackbarComponent } from './shared';
     HeaderComponent,
     RegistrationComponent,
     SnackbarComponent,
+    HttpClientModule,
   ],
-  providers: [ThemesService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   title = 'final';
 
-  constructor(private theme: ThemesService) {}
+  constructor(
+    private theme: ThemesService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(AuthActions.init());
     this.theme.default();
   }
 }

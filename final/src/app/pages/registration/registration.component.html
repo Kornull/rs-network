@@ -9,7 +9,7 @@
       matInput
       formControlName="login" />
     @if (registerForm.get('login')!.hasError('required')) {
-      <mat-error>Please enter a login</mat-error>
+      <mat-error>Please enter your login</mat-error>
     }
     @if (
       registerForm.get('login')?.hasError('minlength') &&
@@ -59,7 +59,7 @@
       </mat-error>
     }
     @if (registerForm.get('email')!.hasError('required')) {
-      <mat-error>Please enter an email </mat-error>
+      <mat-error>Please enter your email </mat-error>
     }
   </mat-form-field>
 
@@ -82,7 +82,7 @@
     </button>
 
     @if (registerForm.get('password')!.hasError('required')) {
-      <mat-error>Please enter a password</mat-error>
+      <mat-error>Please enter your password</mat-error>
     }
     @if (
       registerForm.get('password')?.hasError('minlength') &&
@@ -110,12 +110,7 @@
     class="form-btn"
     color="primary"
     type="button"
-    (click)="
-      openSnackBar(
-        'Net is offline, Trying to reconnect in 2 seconds....',
-        'Close'
-      )
-    ">
+    (click)="onSubmit()">
     Register
   </button>
 </form>
