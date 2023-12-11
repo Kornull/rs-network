@@ -39,7 +39,7 @@ export class AuthComponent implements OnInit {
 
   isSubmit: boolean = true;
 
-  registerForm!: FormGroup;
+  authForm!: FormGroup;
 
   constructor(
     private authService: AuthService,
@@ -49,7 +49,7 @@ export class AuthComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
+    this.authForm = this.fb.group({
       email: ['', [Validators.email, Validators.required, emailValidator()]],
       password: [
         '',
@@ -65,10 +65,10 @@ export class AuthComponent implements OnInit {
     http$.subscribe(res => {
       if (res.type === ErrorTypes.INVALID_LOGIN_FORM) {
         this.openSnackBar(res.message, true);
-        this.registerForm.controls['email'].setErrors({
+        this.authForm.controls['email'].setErrors({
           isEmailExist: true,
         });
-        this.registerForm.controls['password'].setErrors({
+        this.authForm.controls['password'].setErrors({
           isPasswordExist: true,
         });
         this.isDisabled = true;
