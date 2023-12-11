@@ -18,7 +18,8 @@ export enum RequestsData {
 export enum ErrorTypes {
   USER_EXIST = 'PrimaryDuplicationException',
   INVALID_REG_FORM = 'InvalidFormDataException',
-  INVALID_LOGIN_FORM = 'NotFoundException',
+  USER_ERROR_LOGIN = 'NotFoundException',
+  INVALID_LOGIN_FORM = 'InvalidFormDataException"',
 }
 
 export enum LocalStoreKeys {

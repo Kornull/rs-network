@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
   FormBuilder,
   FormGroup,
@@ -11,11 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Store } from '@ngrx/store';
 
-import { emailValidator, passwordValidator } from '../../shared';
-import { AuthService } from '../../core/services';
+import { passwordValidator } from '../../shared';
+import { AuthService, SnackBarService } from '../../core/services';
 import { ErrorTypes } from '../../core/store/models';
 
 @Component({
@@ -37,20 +36,18 @@ export class AuthComponent implements OnInit {
 
   isDisabled: boolean = true;
 
-  isSubmit: boolean = true;
-
   authForm!: FormGroup;
 
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar,
+    private snack: SnackBarService,
     private store: Store
   ) {}
 
   ngOnInit(): void {
     this.authForm = this.fb.group({
-      email: ['', [Validators.email, Validators.required, emailValidator()]],
+      email: ['', [Validators.email, Validators.required]],
       password: [
         '',
         [passwordValidator(), Validators.minLength(8), Validators.required],
@@ -63,8 +60,8 @@ export class AuthComponent implements OnInit {
     const http$ = this.authService.auth();
 
     http$.subscribe(res => {
-      if (res.type === ErrorTypes.INVALID_LOGIN_FORM) {
-        this.openSnackBar(res.message, true);
+      if (res.type === ErrorTypes.USER_ERROR_LOGIN) {
+        this.snack.openSnack(res.message, true);
         this.authForm.controls['email'].setErrors({
           isEmailExist: true,
         });
@@ -72,20 +69,11 @@ export class AuthComponent implements OnInit {
           isPasswordExist: true,
         });
         this.isDisabled = true;
-      } else if (res.type === ErrorTypes.INVALID_REG_FORM) {
-        this.openSnackBar(res.message, true);
+      } else if (res.type === ErrorTypes.INVALID_LOGIN_FORM) {
+        this.snack.openSnack(res.message, true);
       } else {
-        this.openSnackBar('Login success', false);
+        this.snack.openSnack('Login success', false);
       }
-    });
-  }
-
-  openSnackBar(content: string, isError: boolean) {
-    this.snackBar.open(content, 'Close', {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-      panelClass: [isError ? 'alert-red' : 'alert-green'],
     });
   }
 }

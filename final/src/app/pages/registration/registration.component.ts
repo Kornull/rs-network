@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Store } from '@ngrx/store';
 
 import { emailValidator, passwordValidator } from '../../shared';
-import { RegisterService } from '../../core/services';
+import { RegisterService, SnackBarService } from '../../core/services';
 import { ErrorTypes } from '../../core/store/models';
 import { AuthActions } from '../../core/store/redux';
 
@@ -39,14 +38,12 @@ export class RegistrationComponent implements OnInit {
 
   isDisabled: boolean = true;
 
-  isSubmit: boolean = true;
-
   registerForm!: FormGroup;
 
   constructor(
     private regService: RegisterService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar,
+    private snack: SnackBarService,
     private store: Store
   ) {}
 
@@ -74,7 +71,7 @@ export class RegistrationComponent implements OnInit {
 
     http$.subscribe(res => {
       if (res.type === ErrorTypes.USER_EXIST) {
-        this.openSnackBar(res.message, true);
+        this.snack.openSnack(res.message, true);
         this.registerForm.controls['email'].setErrors({
           emailExist: true,
         });
@@ -85,19 +82,10 @@ export class RegistrationComponent implements OnInit {
           })
         );
       } else if (res.type === ErrorTypes.INVALID_REG_FORM) {
-        this.openSnackBar(res.message, true);
+        this.snack.openSnack(res.message, true);
       } else {
-        this.openSnackBar('Registration success', false);
+        this.snack.openSnack('Registration success', false);
       }
-    });
-  }
-
-  openSnackBar(content: string, isError: boolean) {
-    this.snackBar.open(content, 'Close', {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-      panelClass: [isError ? 'alert-red' : 'alert-green'],
     });
   }
 }
