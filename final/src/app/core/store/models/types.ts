@@ -4,6 +4,11 @@ export type UserRegister = {
   password: string;
 };
 
+export type UserLogin = {
+  email: string;
+  password: string;
+};
+
 export enum RequestsData {
   URL = 'https://tasks.app.rs.school/angular',
   REGISTER = '/registration',

@@ -5,12 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { RegistrationComponent } from './pages';
+import { AuthComponent, RegistrationComponent } from './pages';
 import { HeaderComponent } from './core/components';
 import { SnackbarComponent } from './shared';
 
 import { AuthActions, selectTheme } from './core/store/redux';
-import { RegisterService } from './core/services';
+import { AuthService, RegisterService } from './core/services';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +20,11 @@ import { RegisterService } from './core/services';
     RouterOutlet,
     HeaderComponent,
     RegistrationComponent,
+    AuthComponent,
     SnackbarComponent,
     HttpClientModule,
   ],
-  providers: [RegisterService],
+  providers: [RegisterService, AuthService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

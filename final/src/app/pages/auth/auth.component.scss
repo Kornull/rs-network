@@ -1,0 +1,40 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    max-width: 380px;
+    box-shadow: 0 0 16px var(--shadow);
+    background: var(--background-form);
+    border-radius: 10px;
+    padding: 18px 10px 8px;
+  }
+
+  &-title{
+    display: flex;
+    align-items: start;
+    width: 100%;
+    font-size: 22px;
+    padding-left: 10px;
+  }
+
+  &-input {
+    width: 100%;
+  }
+
+  &-btn {
+    margin-top: 10px;
+    width: 120px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}

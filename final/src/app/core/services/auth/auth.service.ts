@@ -9,11 +9,11 @@ import { RequestsData, UserLogin } from '../../store/models';
 @Injectable({
   providedIn: 'root',
 })
-export class RegisterService {
+export class AuthService {
   constructor(private http: HttpClient) {}
 
   data: UserLogin = {
-    email: 'assaaaaaaaaaaafg@mai.rr',
+    email: 'assaaaaaaaaaaaaaaaaaaaxcdfvgrthbjnykumiunjybhtvgrcfedxfg@mai.rr',
     password: '12!@WSsaddW',
   };
 
