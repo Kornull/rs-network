@@ -9,3 +9,7 @@ export const selectGetErrorEmails = createSelector(
     return state.invalidEmails.PrimaryDuplicationException;
   }
 );
+
+export const selectTheme = createSelector(selectAuthState, (state): string => {
+  return state['theme-app'];
+});

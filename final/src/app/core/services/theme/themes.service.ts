@@ -1,24 +1,29 @@
 import { Injectable, Inject, Renderer2, RendererFactory2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
+import { LocalStoreKeys } from '../../store/models';
+import { selectTheme } from '../../store/redux';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemesService {
-  private theme: string = 'lightTheme';
+  private theme: string = '';
 
   private render: Renderer2;
 
   constructor(
     @Inject(DOCUMENT)
     private document: Document,
-    private rendererFactory: RendererFactory2
+    private rendererFactory: RendererFactory2,
+    private store: Store
   ) {
     this.render = rendererFactory.createRenderer(null, null);
-  }
-
-  default(): void {
-    this.render.addClass(this.document.body, this.theme);
+    this.store
+      .select(selectTheme)
+      .pipe(map(theme => (this.theme = theme)))
+      .subscribe();
   }
 
   changeTheme() {
@@ -31,5 +36,6 @@ export class ThemesService {
     }
 
     this.render.addClass(this.document.body, this.theme);
+    localStorage.setItem(LocalStoreKeys.THEME, JSON.stringify(this.theme));
   }
 }

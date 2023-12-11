@@ -38,6 +38,28 @@ export class AuthEffects {
     );
   });
 
+  installDefaultTheme = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(init),
+      switchMap(() => {
+        const theme: string | null =
+          localStorage.getItem(LocalStoreKeys.THEME) || null;
+        if (theme !== null) {
+          return of(
+            AuthActions.installTheme({
+              theme: JSON.parse(theme),
+            })
+          );
+        }
+        return of(
+          AuthActions.installTheme({
+            theme: 'lightTheme',
+          })
+        );
+      })
+    );
+  });
+
   updateInvalidEmailsToLocalStore = createEffect(
     () => {
       return this.actions$.pipe(

@@ -16,4 +16,5 @@ export enum ErrorTypes {
 
 export enum LocalStoreKeys {
   INVALID_EMAIL = 'invalid-emails',
+  THEME = 'theme-app-now',
 }

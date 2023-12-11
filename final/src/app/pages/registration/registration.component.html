@@ -1,5 +1,6 @@
 <form
   class="form"
+  (submit)="onSubmit()"
   [formGroup]="registerForm">
   <mat-form-field
     color="accent"
@@ -62,11 +63,7 @@
     @if (registerForm.get('email')!.hasError('required')) {
       <mat-error>Please enter your email! </mat-error>
     }
-    @if (
-      registerForm.get('email')?.hasError('emailExist') ||
-      (registerForm.get('email')?.hasError('emailExist') &&
-        registerForm.get('email')?.touched)
-    ) {
+    @if (registerForm.get('email')?.hasError('emailExist')) {
       <mat-error>User already exists!</mat-error>
     }
   </mat-form-field>
@@ -113,12 +110,13 @@
       <mat-error>Your password isn't strong enough! - (!12qQ#%$S#s)</mat-error>
     }
   </mat-form-field>
+  
   <button
     mat-raised-button
     class="form-btn"
     color="primary"
-    type="button"
-    (click)="onSubmit()">
+    type="submit"
+    [disabled]="isDisabled ? !registerForm.valid : registerForm.valid">
     Register
   </button>
 </form>

@@ -3,6 +3,6 @@ import { ErrorTypes } from './types';
 type EmailExist = { [ErrorTypes.USER_EXIST]: string[] };
 
 export interface UserState {
-  isRegisterError: boolean;
+  'theme-app': string;
   invalidEmails: EmailExist;
 }

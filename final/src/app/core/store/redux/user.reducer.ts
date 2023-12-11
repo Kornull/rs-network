@@ -5,7 +5,7 @@ import { AuthActions } from './action-types';
 import { ErrorTypes, UserState } from '../models';
 
 export const initialState: UserState = {
-  isRegisterError: true,
+  'theme-app': '',
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },
@@ -33,6 +33,12 @@ export const UserReducer = createReducer(
       invalidEmails: {
         PrimaryDuplicationException: [...actions.emails],
       },
+    };
+  }),
+  on(AuthActions.installTheme, (state, actions): UserState => {
+    return {
+      ...state,
+      'theme-app': actions.theme,
     };
   })
 );

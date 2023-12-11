@@ -30,12 +30,16 @@ import { AuthActions } from '../../core/store/redux';
     MatToolbarModule,
     ReactiveFormsModule,
   ],
-  providers: [RegisterService],
+  providers: [],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
 export class RegistrationComponent implements OnInit {
   hide: boolean = true;
+
+  isDisabled: boolean = true;
+
+  isSubmit: boolean = true;
 
   registerForm!: FormGroup;
 
@@ -65,10 +69,16 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isDisabled = false;
     const http$ = this.regService.reg();
+
     http$.subscribe(res => {
       if (res.type === ErrorTypes.USER_EXIST) {
         this.openSnackBar(res.message, true);
+        this.registerForm.controls['email'].setErrors({
+          emailExist: true,
+        });
+        this.isDisabled = true;
         this.store.dispatch(
           AuthActions.invalidRegister({
             email: this.registerForm.controls['email'].value,

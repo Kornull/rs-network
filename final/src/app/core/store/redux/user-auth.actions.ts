@@ -11,3 +11,8 @@ export const updateInvalidEmails = createAction(
   '[Register Page] Update invalid emails',
   props<{ emails: string[] }>()
 );
+
+export const installTheme = createAction(
+  '[Register Page] InstalAppTheme',
+  props<{ theme: string }>()
+);
