@@ -84,7 +84,7 @@ export class RegistrationComponent implements OnInit {
             email: this.registerForm.controls['email'].value,
           })
         );
-      } else if (res.type === ErrorTypes.INVALID_FORM) {
+      } else if (res.type === ErrorTypes.INVALID_REG_FORM) {
         this.openSnackBar(res.message, true);
       } else {
         this.openSnackBar('Registration success', false);
