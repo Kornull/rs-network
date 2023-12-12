@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { catchError, map } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { emailValidator, passwordValidator } from '../../shared';
 import { RegisterService, SnackBarService } from '../../core/services';
-import { ErrorTypes } from '../../core/store/models';
+import { ErrorTypes, UserRegister } from '../../core/store/models';
 import { AuthActions } from '../../core/store/redux';
 
 @Component({
@@ -46,7 +47,8 @@ export class RegistrationComponent implements OnInit {
     private regService: RegisterService,
     private fb: FormBuilder,
     private snack: SnackBarService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -69,25 +71,41 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.isDisabled = false;
-    const http$ = this.regService.reg();
+    const regData: UserRegister = {
+      email: this.registerForm.controls['email'].value,
+      name: this.registerForm.controls['name'].value,
+      password: this.registerForm.controls['password'].value,
+    };
+    const http$ = this.regService.userSignUp(regData);
 
-    http$.subscribe(res => {
-      if (res.type === ErrorTypes.USER_EXIST) {
-        this.snack.openSnack(res.message, true);
-        this.registerForm.controls['email'].setErrors({
-          emailExist: true,
-        });
-        this.isDisabled = true;
-        this.store.dispatch(
-          AuthActions.invalidRegister({
-            email: this.registerForm.controls['email'].value,
-          })
-        );
-      } else if (res.type === ErrorTypes.INVALID_REG_FORM) {
-        this.snack.openSnack(res.message, true);
-      } else {
-        this.snack.openSnack('Registration success', false);
-      }
-    });
+    http$
+      .pipe(
+        map(() => {
+          this.snack.openSnack('Registration success', false);
+          this.router.navigate(['./signin']);
+        }),
+        catchError(err => {
+          const { error } = err;
+
+          if (error.type === ErrorTypes.USER_EXIST) {
+            this.snack.openSnack(error.message, true);
+            this.registerForm.controls['email'].setErrors({
+              emailExist: true,
+            });
+            this.isDisabled = true;
+            this.store.dispatch(
+              AuthActions.invalidRegister({
+                email: this.registerForm.controls['email'].value,
+              })
+            );
+          }
+
+          if (error.type === ErrorTypes.INVALID_REG_FORM) {
+            this.snack.openSnack(error.message, true);
+          }
+          throw new Error(`Registration Error - ${error.message}`);
+        })
+      )
+      .subscribe();
   }
 }

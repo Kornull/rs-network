@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { UserRegisterData } from '../models';
 
 export const init = createAction('[Init] init app');
 
@@ -15,4 +16,9 @@ export const updateInvalidEmails = createAction(
 export const installTheme = createAction(
   '[Register Page] InstalAppTheme',
   props<{ theme: string }>()
+);
+
+export const updateUserLoginData = createAction(
+  '[Login Page] Update Used login data',
+  props<{ data: UserRegisterData }>()
 );

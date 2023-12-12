@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserState } from '../models';
+import { UserRegisterData, UserState } from '../models';
 
 export const selectAuthState = createFeatureSelector<UserState>('user');
 
@@ -13,3 +13,10 @@ export const selectGetErrorEmails = createSelector(
 export const selectTheme = createSelector(selectAuthState, (state): string => {
   return state['theme-app'];
 });
+
+export const selectUserLOgData = createSelector(
+  selectAuthState,
+  (state): UserRegisterData => {
+    return state['user-logged'];
+  }
+);

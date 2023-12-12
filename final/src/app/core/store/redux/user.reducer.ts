@@ -6,6 +6,11 @@ import { ErrorTypes, UserState } from '../models';
 
 export const initialState: UserState = {
   'theme-app': '',
+  'user-logged': {
+    email: '',
+    uid: '',
+    token: '',
+  },
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },

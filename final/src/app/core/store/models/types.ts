@@ -27,3 +27,12 @@ export enum LocalStoreKeys {
   THEME = 'theme-app-now',
   AUTH_USER = 'auth-user-data',
 }
+
+export type UserLoginSuccess = {
+  token: string;
+  uid: string;
+};
+
+export type UserRegisterData = UserLoginSuccess & {
+  email: string;
+};

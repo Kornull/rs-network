@@ -6,7 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { catchError, map } from 'rxjs';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +17,13 @@ import { MatInputModule } from '@angular/material/input';
 
 import { passwordValidator } from '../../shared';
 import { AuthService, SnackBarService } from '../../core/services';
-import { ErrorTypes } from '../../core/store/models';
+import {
+  ErrorTypes,
+  LocalStoreKeys,
+  UserLogin,
+  UserLoginSuccess,
+  UserRegisterData,
+} from '../../core/store/models';
 
 @Component({
   selector: 'app-auth',
@@ -46,7 +53,8 @@ export class AuthComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private snack: SnackBarService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -72,24 +80,49 @@ export class AuthComponent implements OnInit {
 
   onSubmit() {
     this.isDisabled = false;
-    const http$ = this.authService.auth();
 
-    http$.subscribe(res => {
-      if (res.type === ErrorTypes.USER_ERROR_LOGIN) {
-        this.snack.openSnack(res.message, true);
-        this.authForm.controls['email'].setErrors({
-          isEmailExist: true,
-        });
-        this.authForm.controls['password'].setErrors({
-          isPasswordExist: true,
-        });
-        this.isDisabled = true;
-        this.isErrorRequest = true;
-      } else if (res.type === ErrorTypes.INVALID_LOGIN_FORM) {
-        this.snack.openSnack(res.message, true);
-      } else {
-        this.snack.openSnack('Login success', false);
-      }
-    });
+    const data: UserLogin = {
+      email: this.authForm.controls['email'].value,
+      password: this.authForm.controls['password'].value,
+    };
+    const http$ = this.authService.auth(data);
+
+    http$
+      .pipe(
+        map((res: UserLoginSuccess) => {
+          const userLoggedInfo: UserRegisterData = {
+            email: this.authForm.controls['email'].value,
+            uid: res.uid,
+            token: res.token,
+          };
+          localStorage.setItem(
+            LocalStoreKeys.AUTH_USER,
+            JSON.stringify(userLoggedInfo)
+          );
+          this.snack.openSnack('Login success', false);
+          this.isErrorRequest = false;
+          this.isDisabled = true;
+          this.router.navigate(['/']);
+        }),
+        catchError(err => {
+          const { error } = err;
+          if (error.type === ErrorTypes.USER_ERROR_LOGIN) {
+            this.snack.openSnack(error.message, true);
+            this.authForm.controls['email'].setErrors({
+              isEmailExist: true,
+            });
+            this.authForm.controls['password'].setErrors({
+              isPasswordExist: true,
+            });
+            this.isDisabled = true;
+            this.isErrorRequest = true;
+          }
+          if (error.type === ErrorTypes.INVALID_LOGIN_FORM) {
+            this.snack.openSnack(error.message, true);
+          }
+          throw new Error(`Login Error - ${error.message}`);
+        })
+      )
+      .subscribe();
   }
 }
