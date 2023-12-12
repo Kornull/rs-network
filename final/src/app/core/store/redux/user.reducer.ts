@@ -6,7 +6,8 @@ import { ErrorTypes, UserState } from '../models';
 
 export const initialState: UserState = {
   'theme-app': '',
-  'user-logged': {
+  'user-logged': false,
+  'user-logged-data': {
     email: '',
     uid: '',
     token: '',
@@ -44,6 +45,12 @@ export const UserReducer = createReducer(
     return {
       ...state,
       'theme-app': actions.theme,
+    };
+  }),
+  on(AuthActions.updateUserLogged, (state, actions): UserState => {
+    return {
+      ...state,
+      'user-logged': actions.isLogged,
     };
   })
 );

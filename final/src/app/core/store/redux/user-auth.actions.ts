@@ -22,3 +22,8 @@ export const updateUserLoginData = createAction(
   '[Login Page] Update Used login data',
   props<{ data: UserRegisterData }>()
 );
+
+export const updateUserLogged = createAction(
+  '[Login Page] Update Used isLogin',
+  props<{ isLogged: boolean }>()
+);

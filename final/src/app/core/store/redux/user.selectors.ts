@@ -14,9 +14,16 @@ export const selectTheme = createSelector(selectAuthState, (state): string => {
   return state['theme-app'];
 });
 
-export const selectUserLOgData = createSelector(
+export const selectUserLogData = createSelector(
   selectAuthState,
   (state): UserRegisterData => {
+    return state['user-logged-data'];
+  }
+);
+
+export const selectIsUserLogged = createSelector(
+  selectAuthState,
+  (state): boolean => {
     return state['user-logged'];
   }
 );

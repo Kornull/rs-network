@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { catchError, map, take, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -7,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { catchError, map } from 'rxjs';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,14 +16,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
 import { passwordValidator } from '../../shared';
-import { AuthService, SnackBarService } from '../../core/services';
+import {
+  AuthService,
+  LocalStorageService,
+  SnackBarService,
+} from '../../core/services';
+
 import {
   ErrorTypes,
-  LocalStoreKeys,
   UserLogin,
   UserLoginSuccess,
-  UserRegisterData,
 } from '../../core/store/models';
+import { AuthActions, selectIsUserLogged } from '../../core/store/redux';
 
 @Component({
   selector: 'app-auth',
@@ -54,10 +58,23 @@ export class AuthComponent implements OnInit {
     private fb: FormBuilder,
     private snack: SnackBarService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private localStor: LocalStorageService
   ) {}
 
   ngOnInit(): void {
+    this.store
+      .select(selectIsUserLogged)
+      .pipe(
+        tap(res => {
+          console.log('wwww');
+          if (res) {
+            this.router.navigate(['/']);
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
     this.authForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
       password: [
@@ -90,14 +107,15 @@ export class AuthComponent implements OnInit {
     http$
       .pipe(
         map((res: UserLoginSuccess) => {
-          const userLoggedInfo: UserRegisterData = {
+          this.localStor.loginSuccess({
             email: this.authForm.controls['email'].value,
             uid: res.uid,
             token: res.token,
-          };
-          localStorage.setItem(
-            LocalStoreKeys.AUTH_USER,
-            JSON.stringify(userLoggedInfo)
+          });
+          this.store.dispatch(
+            AuthActions.updateUserLogged({
+              isLogged: true,
+            })
           );
           this.snack.openSnack('Login success', false);
           this.isErrorRequest = false;

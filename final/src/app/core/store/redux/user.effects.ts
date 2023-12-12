@@ -7,25 +7,27 @@ import { init } from './user-auth.actions';
 import { selectGetErrorEmails } from './user.selectors';
 import { AuthActions } from './action-types';
 
-import { LocalStoreKeys } from '../models';
+import { LocalStorageService } from '../../services';
+import { UserRegisterData } from '../models';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
-    private store: Store
+    private store: Store,
+    private localStore: LocalStorageService
   ) {}
 
   saveInvalidEmails = createEffect(() => {
     return this.actions$.pipe(
       ofType(init),
       switchMap(() => {
-        const invalidEmails: string | null =
-          localStorage.getItem(LocalStoreKeys.INVALID_EMAIL) || null;
+        const invalidEmails: string[] | null =
+          this.localStore.getInvalidEmails();
         if (invalidEmails !== null) {
           return of(
             AuthActions.updateInvalidEmails({
-              emails: JSON.parse(invalidEmails),
+              emails: invalidEmails,
             })
           );
         }
@@ -38,19 +40,41 @@ export class AuthEffects {
     );
   });
 
+  checkUserLog = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(init),
+      switchMap(() => {
+        const invalidEmails: UserRegisterData | null =
+          this.localStore.getLoginInfo();
+        if (invalidEmails !== null) {
+          return of(
+            AuthActions.updateUserLogged({
+              isLogged: true,
+            })
+          );
+        }
+        return of(
+          AuthActions.updateUserLogged({
+            isLogged: false,
+          })
+        );
+      })
+    );
+  });
+
   installDefaultTheme = createEffect(() => {
     return this.actions$.pipe(
       ofType(init),
       switchMap(() => {
-        const theme: string | null =
-          localStorage.getItem(LocalStoreKeys.THEME) || null;
+        const theme: string | null = this.localStore.getThemeApp();
         if (theme !== null) {
           return of(
             AuthActions.installTheme({
-              theme: JSON.parse(theme),
+              theme,
             })
           );
         }
+        this.localStore.setThemeApp('lightTheme');
         return of(
           AuthActions.installTheme({
             theme: 'lightTheme',
@@ -66,10 +90,7 @@ export class AuthEffects {
         ofType(AuthActions.invalidRegister),
         concatLatestFrom(() => this.store.select(selectGetErrorEmails)),
         tap(([, errorEmailList]) => {
-          localStorage.setItem(
-            LocalStoreKeys.INVALID_EMAIL,
-            JSON.stringify(errorEmailList)
-          );
+          this.localStore.setInvalidEmails(errorEmailList);
         })
       );
     },

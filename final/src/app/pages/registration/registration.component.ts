@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, map } from 'rxjs';
+import { catchError, map, take, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -18,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { emailValidator, passwordValidator } from '../../shared';
 import { RegisterService, SnackBarService } from '../../core/services';
 import { ErrorTypes, UserRegister } from '../../core/store/models';
-import { AuthActions } from '../../core/store/redux';
+import { AuthActions, selectIsUserLogged } from '../../core/store/redux';
 
 @Component({
   selector: 'app-registration',
@@ -52,6 +52,17 @@ export class RegistrationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.store
+      .select(selectIsUserLogged)
+      .pipe(
+        tap(res => {
+          if (res) {
+            this.router.navigate(['/']);
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
     this.registerForm = this.fb.group({
       name: [
         '',

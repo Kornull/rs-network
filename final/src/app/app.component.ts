@@ -9,7 +9,12 @@ import { HeaderComponent } from './core/components';
 import { SnackbarComponent } from './shared';
 
 import { AuthActions, selectTheme } from './core/store/redux';
-import { AuthService, RegisterService, SnackBarService } from './core/services';
+import {
+  AuthService,
+  LocalStorageService,
+  RegisterService,
+  SnackBarService,
+} from './core/services';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +26,12 @@ import { AuthService, RegisterService, SnackBarService } from './core/services';
     SnackbarComponent,
     HttpClientModule,
   ],
-  providers: [RegisterService, AuthService, SnackBarService],
+  providers: [
+    RegisterService,
+    AuthService,
+    SnackBarService,
+    LocalStorageService,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
