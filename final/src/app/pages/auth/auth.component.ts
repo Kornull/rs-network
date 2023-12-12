@@ -40,6 +40,8 @@ export class AuthComponent implements OnInit {
 
   authForm!: FormGroup;
 
+  isErrorRequest: boolean = false;
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -54,6 +56,17 @@ export class AuthComponent implements OnInit {
         '',
         [passwordValidator(), Validators.minLength(8), Validators.required],
       ],
+    });
+
+    this.authForm.valueChanges.subscribe(() => {
+      if (this.isErrorRequest && this.authForm.controls['email'].valid) {
+        this.authForm.controls['password'].setErrors(null);
+        this.isErrorRequest = false;
+      }
+      if (this.isErrorRequest && this.authForm.controls['password'].valid) {
+        this.authForm.controls['email'].setErrors(null);
+        this.isErrorRequest = false;
+      }
     });
   }
 
@@ -71,6 +84,7 @@ export class AuthComponent implements OnInit {
           isPasswordExist: true,
         });
         this.isDisabled = true;
+        this.isErrorRequest = true;
       } else if (res.type === ErrorTypes.INVALID_LOGIN_FORM) {
         this.snack.openSnack(res.message, true);
       } else {
