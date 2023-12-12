@@ -15,6 +15,7 @@ import {
   RegisterService,
   SnackBarService,
 } from './core/services';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ import {
     HeaderComponent,
     SnackbarComponent,
     HttpClientModule,
+    ProfileComponent,
   ],
   providers: [
     RegisterService,

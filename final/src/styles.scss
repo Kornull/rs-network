@@ -44,9 +44,16 @@
   margin: 0;
 }
 
+@at-root {
+  @-ms-viewport {
+    width: device-width;
+  }
+}
+
 html,
 body {
   height: 100%;
+  width: 100%;
 }
 
 body {

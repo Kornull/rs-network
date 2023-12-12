@@ -67,7 +67,6 @@ export class AuthComponent implements OnInit {
       .select(selectIsUserLogged)
       .pipe(
         tap(res => {
-          console.log('wwww');
           if (res) {
             this.router.navigate(['/']);
           }
