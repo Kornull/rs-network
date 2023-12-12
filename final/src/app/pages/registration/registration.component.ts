@@ -15,7 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
-import { emailValidator, passwordValidator } from '../../shared';
+import { emailValidator, nameValidator, passwordValidator } from '../../shared';
 import { RegisterService, SnackBarService } from '../../core/services';
 import { ErrorTypes, UserRegister } from '../../core/store/models';
 import { AuthActions, selectIsUserLogged } from '../../core/store/redux';
@@ -68,8 +68,9 @@ export class RegistrationComponent implements OnInit {
         '',
         [
           Validators.minLength(2),
-          Validators.maxLength(12),
+          Validators.maxLength(40),
           Validators.required,
+          nameValidator(),
         ],
       ],
       email: ['', [Validators.email, Validators.required, emailValidator()]],

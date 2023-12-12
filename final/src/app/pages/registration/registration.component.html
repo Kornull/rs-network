@@ -7,24 +7,24 @@
     <mat-form-field
       color="accent"
       class="form-input">
-      <mat-label>Login</mat-label>
+      <mat-label>Name</mat-label>
       <input
         matInput
         formControlName="name" />
       @if (registerForm.get('name')!.hasError('required')) {
-        <mat-error>Please enter your login!</mat-error>
+        <mat-error>Please enter your name!</mat-error>
       }
       @if (
         registerForm.get('name')?.hasError('minlength') &&
         registerForm.get('name')?.touched
       ) {
         <mat-error
-          >Min login len -
+          >Min name len -
           {{
             registerForm.get('name')?.errors?.['minlength']?.[
               'requiredLength'
             ] || '2'
-          }}, login len now -
+          }}, name now -
           {{
             registerForm.get('name')?.errors?.['minlength']?.['actualLength'] ||
               '0'
@@ -36,13 +36,18 @@
         registerForm.get('name')?.touched
       ) {
         <mat-error
-          >Max login len -
+          >Max name len -
           {{
             registerForm.get('name')?.errors?.['maxlength']?.['requiredLength']
-          }}, login len now -
+          }}, name len now -
           {{
             registerForm.get('name')?.errors?.['maxlength']?.['actualLength']
           }}</mat-error
+        >
+      }
+      @if (registerForm.get('name')?.hasError('invalidName')) {
+        <mat-error
+          >Name cannot contain numbers or special signs.</mat-error
         >
       }
     </mat-form-field>
@@ -69,6 +74,7 @@
       @if (registerForm.get('email')?.hasError('emailExist')) {
         <mat-error>User already exists!</mat-error>
       }
+
     </mat-form-field>
 
     <mat-form-field
