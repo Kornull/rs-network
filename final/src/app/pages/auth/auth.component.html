@@ -1,9 +1,9 @@
 <div class="form-container">
-  <h2 class="form-title">Log In</h2>
   <form
     class="form"
     (submit)="onSubmit()"
     [formGroup]="authForm">
+    <h2 class="form-title">Log In</h2>
     <mat-form-field
       color="accent"
       class="form-input">
@@ -86,13 +86,13 @@
       [disabled]="isDisabled ? !authForm.valid : authForm.valid">
       Register
     </button>
+    <h4 class="form-link">
+      Not yet registered? &#8259;&#160;
+      <a
+        class="form-link--click"
+        routerLink="/signup"
+        >Register</a
+      >
+    </h4>
   </form>
-  <h4 class="form-link">
-    Not yet registered? -
-    <a
-      class="form-link--click"
-      routerLink="/signup"
-      >Register</a
-    >
-  </h4>
 </div>

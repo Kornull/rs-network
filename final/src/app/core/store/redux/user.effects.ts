@@ -7,7 +7,11 @@ import { init } from './user-auth.actions';
 import { selectGetErrorEmails } from './user.selectors';
 import { AuthActions } from './action-types';
 
-import { LocalStorageService } from '../../services';
+import {
+  LocalStorageService,
+  RegisterService,
+  SnackBarService,
+} from '../../services';
 import { UserRegisterData } from '../models';
 
 @Injectable()
@@ -15,7 +19,9 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private localStore: LocalStorageService
+    private localStore: LocalStorageService,
+    private toast: SnackBarService,
+    private regProfile: RegisterService
   ) {}
 
   saveInvalidEmails = createEffect(() => {

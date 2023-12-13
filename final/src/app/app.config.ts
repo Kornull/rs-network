@@ -24,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideEffects(AuthEffects, UserLoggedEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptorsFromDi()),
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ProfileDataInterceptor,

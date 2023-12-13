@@ -1,9 +1,9 @@
 <div class="form-container">
-  <h2 class="form-title">Registration</h2>
   <form
     class="form"
     (submit)="onSubmit()"
     [formGroup]="registerForm">
+    <h2 class="form-title">Registration</h2>
     <mat-form-field
       color="accent"
       class="form-input">
@@ -46,9 +46,7 @@
         >
       }
       @if (registerForm.get('name')?.hasError('invalidName')) {
-        <mat-error
-          >Name cannot contain numbers or special signs.</mat-error
-        >
+        <mat-error>Name cannot contain numbers or special signs.</mat-error>
       }
     </mat-form-field>
 
@@ -74,7 +72,6 @@
       @if (registerForm.get('email')?.hasError('emailExist')) {
         <mat-error>User already exists!</mat-error>
       }
-
     </mat-form-field>
 
     <mat-form-field
@@ -132,13 +129,13 @@
       [disabled]="isDisabled ? !registerForm.valid : registerForm.valid">
       Register
     </button>
+    <h4 class="form-link">
+      Already have an account? &#8259;&#160;
+      <a
+        class="form-link--click"
+        routerLink="/signin"
+        >Login</a
+      >
+    </h4>
   </form>
-  <h4 class="form-link">
-    Already have an account? -
-    <a
-      class="form-link--click"
-      routerLink="/signin"
-      >Login</a
-    >
-  </h4>
 </div>

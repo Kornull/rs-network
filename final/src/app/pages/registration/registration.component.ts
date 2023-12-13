@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { EMPTY, catchError, map, take, tap } from 'rxjs';
+import {
+  EMPTY,
+  catchError,
+  exhaustMap,
+  map,
+  retry,
+  shareReplay,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -92,9 +102,10 @@ export class RegistrationComponent implements OnInit {
 
     http$
       .pipe(
-        map(() => {
+        switchMap(() => {
           this.toast.openSnack('Registration success', false);
           this.router.navigate(['./signin']);
+          return EMPTY;
         }),
         catchError(err => {
           const { error } = err;

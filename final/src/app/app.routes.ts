@@ -23,6 +23,7 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
+    canActivate: [authGuard],
     loadChildren: () =>
       import('./pages/profile/profile.module').then(m => m.RegistrationModule),
   },

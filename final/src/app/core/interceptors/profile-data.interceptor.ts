@@ -11,7 +11,7 @@ import { LocalStorageService } from '../services';
 
 @Injectable()
 export class ProfileDataInterceptor implements HttpInterceptor {
-  private userDataLogged: UserRegisterData | null;
+  private userDataLogged!: UserRegisterData | null;
 
   private token: string = '';
 
@@ -19,17 +19,24 @@ export class ProfileDataInterceptor implements HttpInterceptor {
 
   private mail: string = '';
 
-  constructor(private localStore: LocalStorageService) {
-    this.userDataLogged = this.localStore.getLoginInfo();
-  }
+  constructor(private localStore: LocalStorageService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    this.userDataLogged = this.localStore.getLoginInfo();
+
+    if (request.url.includes(RequestsData.REGISTER)) {
+      return next.handle(request);
+    }
+    if (request.url.includes(RequestsData.LOGIN)) {
+      return next.handle(request);
+    }
+
+    this.token = this.userDataLogged?.token || '';
     this.id = this.userDataLogged?.uid || '';
     this.mail = this.userDataLogged?.email || '';
-    this.token = this.userDataLogged?.token || '';
 
     const requestUrl = request.clone({
       url: `${RequestsData.PROFILE}`,
