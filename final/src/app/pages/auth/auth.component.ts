@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, map, take, tap } from 'rxjs';
+import { EMPTY, catchError, map, take, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -56,7 +56,7 @@ export class AuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private snack: SnackBarService,
+    private toast: SnackBarService,
     private store: Store,
     private router: Router,
     private localStor: LocalStorageService
@@ -116,7 +116,7 @@ export class AuthComponent implements OnInit {
               isLogged: true,
             })
           );
-          this.snack.openSnack('Login success', false);
+          this.toast.openSnack('Login success', false);
           this.isErrorRequest = false;
           this.isDisabled = true;
           this.router.navigate(['/']);
@@ -124,7 +124,7 @@ export class AuthComponent implements OnInit {
         catchError(err => {
           const { error } = err;
           if (error.type === ErrorTypes.USER_ERROR_LOGIN) {
-            this.snack.openSnack(error.message, true);
+            this.toast.openSnack(error.message, true);
             this.authForm.controls['email'].setErrors({
               isEmailExist: true,
             });
@@ -135,9 +135,9 @@ export class AuthComponent implements OnInit {
             this.isErrorRequest = true;
           }
           if (error.type === ErrorTypes.INVALID_LOGIN_FORM) {
-            this.snack.openSnack(error.message, true);
+            this.toast.openSnack(error.message, true);
           }
-          throw new Error(`Login Error - ${error.message}`);
+          return EMPTY;
         })
       )
       .subscribe();

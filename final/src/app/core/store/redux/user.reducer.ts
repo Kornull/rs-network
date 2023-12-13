@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { AuthActions } from './action-types';
+import { AuthActions, LoggedActions } from './action-types';
 
 import { ErrorTypes, UserState } from '../models';
 
@@ -12,6 +12,7 @@ export const initialState: UserState = {
     uid: '',
     token: '',
   },
+  profile: null,
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },
@@ -51,6 +52,12 @@ export const UserReducer = createReducer(
     return {
       ...state,
       'user-logged': actions.isLogged,
+    };
+  }),
+  on(LoggedActions.setUserInfo, (state, actions): UserState => {
+    return {
+      ...state,
+      profile: { ...actions.data },
     };
   })
 );

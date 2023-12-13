@@ -1,15 +1,19 @@
 <div class="profile-container">
   <div class="profile">
-    <h2 class="profile-title">profile</h2>
+    <h2 class="profile-title">Profile:</h2>
     <div class="profile-card">
       <div class="profile-card--avatar">
-        <img class="profile-card--img" src="./assets/ava.png" priority alt="">
+        <img
+          class="profile-card--img"
+          src="./assets/ava.png"
+          priority
+          alt="" />
       </div>
       <div class="profile-card--description">
-        <h3>name</h3>
-        <h3>date</h3>
-        <h3>mail</h3>
-        <h3>id</h3>
+        <h3 class="description">Name: {{ name }}</h3>
+        <h3 class="description">Email: {{ email }}</h3>
+        <h3 class="description">Id: {{ uid }}</h3>
+        <h3 class="description">Register date: {{ createAt | date }}</h3>
       </div>
     </div>
   </div>

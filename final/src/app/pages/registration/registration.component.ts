@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, map, take, tap } from 'rxjs';
+import { EMPTY, catchError, map, take, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -46,7 +46,7 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private regService: RegisterService,
     private fb: FormBuilder,
-    private snack: SnackBarService,
+    private toast: SnackBarService,
     private store: Store,
     private router: Router
   ) {}
@@ -93,14 +93,14 @@ export class RegistrationComponent implements OnInit {
     http$
       .pipe(
         map(() => {
-          this.snack.openSnack('Registration success', false);
+          this.toast.openSnack('Registration success', false);
           this.router.navigate(['./signin']);
         }),
         catchError(err => {
           const { error } = err;
 
           if (error.type === ErrorTypes.USER_EXIST) {
-            this.snack.openSnack(error.message, true);
+            this.toast.openSnack(error.message, true);
             this.registerForm.controls['email'].setErrors({
               emailExist: true,
             });
@@ -113,9 +113,9 @@ export class RegistrationComponent implements OnInit {
           }
 
           if (error.type === ErrorTypes.INVALID_REG_FORM) {
-            this.snack.openSnack(error.message, true);
+            this.toast.openSnack(error.message, true);
           }
-          throw new Error(`Registration Error - ${error.message}`);
+          return EMPTY;
         })
       )
       .subscribe();

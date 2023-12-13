@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserRegisterData, UserState } from '../models';
+import { ProfileInfoType, UserRegisterData, UserState } from '../models';
 
 export const selectAuthState = createFeatureSelector<UserState>('user');
 
@@ -25,5 +25,12 @@ export const selectIsUserLogged = createSelector(
   selectAuthState,
   (state): boolean => {
     return state['user-logged'];
+  }
+);
+
+export const selectCheckProfileInfo = createSelector(
+  selectAuthState,
+  (state): ProfileInfoType | null => {
+    return state.profile;
   }
 );

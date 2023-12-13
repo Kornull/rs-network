@@ -13,6 +13,7 @@ export enum RequestsData {
   URL = 'https://tasks.app.rs.school/angular',
   REGISTER = '/registration',
   LOGIN = '/login',
+  PROFILE = 'https://tasks.app.rs.school/angular/profile',
 }
 
 export enum ErrorTypes {
@@ -35,4 +36,10 @@ export type UserLoginSuccess = {
 
 export type UserRegisterData = UserLoginSuccess & {
   email: string;
+};
+
+type UserProfileData = 'createdAt' | 'email' | 'name' | 'uid';
+
+export type ProfileInfoType = {
+  [T in UserProfileData]: string;
 };
