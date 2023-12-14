@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,21 +31,25 @@ import { nameValidator } from '../../../shared';
   templateUrl: './profile-form.component.html',
   styleUrl: './profile-form.component.scss',
 })
-export class ProfileFormComponent implements OnInit {
+export class ProfileFormComponent implements OnInit, OnChanges {
   updateForm!: FormGroup;
 
-  @Output() newName!: string;
+  @Output() newName: EventEmitter<string> = new EventEmitter<string>();
+
+  @Output() validForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() oldName!: string;
 
+  @Input() isSaveChanges!: boolean;
+
+  @Input() disabledInput: boolean = false;
+
   nameNow: string = this.oldName;
 
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder) {
     this.updateForm = this.fb.group({
       name: [
-        this.oldName,
+        '',
         [
           Validators.minLength(2),
           Validators.maxLength(40),
@@ -47,5 +58,22 @@ export class ProfileFormComponent implements OnInit {
         ],
       ],
     });
+  }
+
+  ngOnInit(): void {
+    this.updateForm.controls['name'].setValue(this.oldName);
+  }
+
+  ngOnChanges(): void {
+    if (this.disabledInput === true) {
+      this.updateForm.controls['name'].disable();
+    } else {
+      this.updateForm.controls['name'].enable();
+    }
+  }
+
+  onChange() {
+    this.newName.emit(this.updateForm.controls['name'].value);
+    this.validForm.emit(this.updateForm.valid);
   }
 }

@@ -15,7 +15,11 @@
             Name: <span>{{ name }}</span>
           </h3>
         } @else {
-          <app-profile-form [oldName]="name"></app-profile-form>
+          <app-profile-form
+            [oldName]="name"
+            [disabledInput]="reset"
+            (newName)="newName = $event"
+            (validForm)="validForm = $event"></app-profile-form>
         }
         <h3 class="description">
           Email: <span>{{ email }}</span>
@@ -39,11 +43,15 @@
       } @else {
         <button
           mat-stroked-button
-          color="accent">
+          color="accent"
+          (click)="onCloseInput()"
+          [disabled]="reset">
           Cancel</button
         ><button
           mat-raised-button
-          color="warn">
+          color="warn"
+          (click)="onSaveChanges()"
+          [disabled]="!validForm">
           Save
         </button>
       }

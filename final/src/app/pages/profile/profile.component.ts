@@ -22,7 +22,15 @@ import { ProfileFormComponent } from './profile-form/profile-form.component';
 export class ProfileComponent implements OnInit {
   private userProfileInfo$!: Observable<ProfileInfoType | null>;
 
+  newName: string = '';
+
+  validForm: boolean = false;
+
   isUpdateProfile: boolean = false;
+
+  saveChanges: boolean = false;
+
+  reset: boolean = false;
 
   name: string = '';
 
@@ -56,5 +64,16 @@ export class ProfileComponent implements OnInit {
 
   onChangeUserInfo() {
     this.isUpdateProfile = true;
+  }
+
+  onCloseInput() {
+    this.isUpdateProfile = false;
+  }
+
+  onSaveChanges() {
+    if (this.validForm) {
+      this.validForm = false;
+      this.reset = true;
+    }
   }
 }
