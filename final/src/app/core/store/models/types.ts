@@ -29,6 +29,11 @@ export enum LocalStoreKeys {
   AUTH_USER = 'auth-user-data',
 }
 
+export enum AppTheme {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
+
 export type UserLoginSuccess = {
   token: string;
   uid: string;

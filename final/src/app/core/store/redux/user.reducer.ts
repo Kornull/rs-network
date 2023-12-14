@@ -5,7 +5,6 @@ import { AuthActions, LoggedActions } from './action-types';
 import { ErrorTypes, UserState } from '../models';
 
 export const initialState: UserState = {
-  'theme-app': '',
   'user-logged': false,
   'user-logged-data': {
     email: '',
@@ -40,12 +39,6 @@ export const UserReducer = createReducer(
       invalidEmails: {
         PrimaryDuplicationException: [...actions.emails],
       },
-    };
-  }),
-  on(AuthActions.installTheme, (state, actions): UserState => {
-    return {
-      ...state,
-      'theme-app': actions.theme,
     };
   }),
   on(AuthActions.updateUserLogged, (state, actions): UserState => {

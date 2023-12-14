@@ -13,11 +13,6 @@ export const updateInvalidEmails = createAction(
   props<{ emails: string[] }>()
 );
 
-export const installTheme = createAction(
-  '[Register Page] InstalAppTheme',
-  props<{ theme: string }>()
-);
-
 export const updateUserLoginData = createAction(
   '[Login Page] Update Used login data',
   props<{ data: UserRegisterData }>()

@@ -10,10 +10,6 @@ export const selectGetErrorEmails = createSelector(
   }
 );
 
-export const selectTheme = createSelector(selectAuthState, (state): string => {
-  return state['theme-app'];
-});
-
 export const selectUserLogData = createSelector(
   selectAuthState,
   (state): UserRegisterData => {

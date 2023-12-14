@@ -5,7 +5,6 @@ type EmailExist = { [ErrorTypes.USER_EXIST]: string[] };
 export interface UserState {
   'user-logged-data': UserRegisterData;
   'user-logged': boolean;
-  'theme-app': string;
   profile: ProfileInfoType | null;
   invalidEmails: EmailExist;
   // 'user-reg-data': UserRegisterData;

@@ -7,11 +7,7 @@ import { init } from './user-auth.actions';
 import { selectGetErrorEmails } from './user.selectors';
 import { AuthActions } from './action-types';
 
-import {
-  LocalStorageService,
-  RegisterService,
-  SnackBarService,
-} from '../../services';
+import { LocalStorageService } from '../../services';
 import { UserRegisterData } from '../models';
 
 @Injectable()
@@ -19,9 +15,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private localStore: LocalStorageService,
-    private toast: SnackBarService,
-    private regProfile: RegisterService
+    private localStore: LocalStorageService
   ) {}
 
   saveInvalidEmails = createEffect(() => {
@@ -62,28 +56,6 @@ export class AuthEffects {
         return of(
           AuthActions.updateUserLogged({
             isLogged: false,
-          })
-        );
-      })
-    );
-  });
-
-  installDefaultTheme = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(init),
-      switchMap(() => {
-        const theme: string | null = this.localStore.getThemeApp();
-        if (theme !== null) {
-          return of(
-            AuthActions.installTheme({
-              theme,
-            })
-          );
-        }
-        this.localStore.setThemeApp('lightTheme');
-        return of(
-          AuthActions.installTheme({
-            theme: 'lightTheme',
           })
         );
       })
