@@ -30,7 +30,6 @@
     margin: 0;
   }
 
-
   &-btn {
     &--block {
       display: flex;
@@ -41,6 +40,7 @@
     }
   }
   &-card {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,14 +54,16 @@
     }
 
     &--avatar {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      width: 40%;
+     position: absolute;
+     top: 0;
+     right: 0;
     }
+
     &--description {
       width: 50%;
       padding: 4px;
+      word-wrap: break-word;
+      word-break: break-all;
 
       & span {
         font-weight: 500;
@@ -74,4 +76,12 @@
 .description {
   font-size: 18px;
   font-style: italic;
+}
+.avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 40%;
+  height: 100%;
 }
