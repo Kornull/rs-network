@@ -73,6 +73,7 @@ export class ProfileComponent implements OnInit {
 
   onCloseInput() {
     this.isUpdateProfile = false;
+    this.validForm = false;
   }
 
   onSaveChanges() {
@@ -88,7 +89,6 @@ export class ProfileComponent implements OnInit {
             this.name = this.newName;
             this.isUpdateProfile = false;
 
-            this.validForm = true;
             this.reset = false;
 
             return EMPTY;
