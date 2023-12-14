@@ -17,7 +17,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { nameValidator } from '../../../shared';
+import { nameValidator, sameNameValidator } from '../../../shared';
 
 @Component({
   selector: 'app-profile-form',
@@ -55,6 +55,7 @@ export class ProfileFormComponent implements OnInit, OnChanges {
           Validators.maxLength(40),
           Validators.required,
           nameValidator(),
+          sameNameValidator(this.oldName),
         ],
       ],
     });
@@ -73,6 +74,10 @@ export class ProfileFormComponent implements OnInit, OnChanges {
   }
 
   onChange() {
+    const name = this.updateForm.controls['name'].value;
+    if (name === this.oldName) {
+      this.updateForm.controls['name'].setErrors({ sameName: true });
+    }
     this.newName.emit(this.updateForm.controls['name'].value);
     this.validForm.emit(this.updateForm.valid);
   }

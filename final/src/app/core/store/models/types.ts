@@ -13,7 +13,7 @@ export enum RequestsData {
   URL = 'https://tasks.app.rs.school/angular',
   REGISTER = '/registration',
   LOGIN = '/login',
-  PROFILE = 'https://tasks.app.rs.school/angular/profile',
+  PROFILE = '/profile',
 }
 
 export enum ErrorTypes {

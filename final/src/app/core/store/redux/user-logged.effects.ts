@@ -33,7 +33,11 @@ export class UserLoggedEffects {
           }),
           catchError(err => {
             const { error } = err;
-            this.toast.openSnack(error.message, true);
+            if (error === null) {
+              this.toast.openSnack(err.statusText, true);
+            } else {
+              this.toast.openSnack(error.message, true);
+            }
             return EMPTY;
           })
         )

@@ -15,4 +15,10 @@ export class ProfileDataService {
       `${RequestsData.URL}${RequestsData.PROFILE}`
     );
   }
+
+  setUserName(name: string) {
+    return this.http.put(`${RequestsData.URL}${RequestsData.PROFILE}`, {
+      name,
+    });
+  }
 }

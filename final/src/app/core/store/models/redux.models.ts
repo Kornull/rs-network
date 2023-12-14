@@ -1,13 +1,11 @@
-import { ErrorTypes, ProfileInfoType, UserRegisterData } from './types';
+import { ErrorTypes, ProfileInfoType } from './types';
 
 type EmailExist = { [ErrorTypes.USER_EXIST]: string[] };
 
 export interface UserState {
-  'user-logged-data': UserRegisterData;
   'user-logged': boolean;
   profile: ProfileInfoType | null;
   invalidEmails: EmailExist;
-  // 'user-reg-data': UserRegisterData;
 }
 
 export interface CreatedAt {

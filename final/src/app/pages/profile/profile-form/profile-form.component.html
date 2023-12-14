@@ -46,6 +46,9 @@
       @if (updateForm.get('name')?.hasError('invalidName')) {
         <mat-error>Name cannot contain numbers or special signs.</mat-error>
       }
+      @if (updateForm.get('name')?.hasError('sameName')) {
+        <mat-error>Same name.</mat-error>
+      }
     </mat-form-field>
   </form>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { EMPTY, Observable, catchError, exhaustMap, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { LoggedActions, selectCheckProfileInfo } from '../../core/store/redux';
 
 import { ProfileInfoType } from '../../core/store/models';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
+import { ProfileDataService, SnackBarService } from '../../core/services';
 
 @Component({
   selector: 'app-profile',
@@ -40,7 +41,11 @@ export class ProfileComponent implements OnInit {
 
   uid: string = '';
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private updateName: ProfileDataService,
+    private toast: SnackBarService
+  ) {}
 
   ngOnInit(): void {
     this.userProfileInfo$ = this.store.select(selectCheckProfileInfo).pipe(
@@ -72,8 +77,37 @@ export class ProfileComponent implements OnInit {
 
   onSaveChanges() {
     if (this.validForm) {
-      this.validForm = false;
-      this.reset = true;
+      this.updateName
+        .setUserName(this.newName)
+        .pipe(
+          exhaustMap(() => {
+            this.toast.openSnack('Name updated successfully', false);
+            this.store.dispatch(
+              LoggedActions.changeProfileName({ name: this.newName })
+            );
+            this.name = this.newName;
+            this.isUpdateProfile = false;
+
+            this.validForm = true;
+            this.reset = false;
+
+            return EMPTY;
+          }),
+          catchError(err => {
+            const { error } = err;
+            if (error === null) {
+              this.toast.openSnack(err.statusText, true);
+            } else {
+              this.toast.openSnack(error.message, true);
+            }
+            this.validForm = true;
+            this.reset = false;
+            return EMPTY;
+          })
+        )
+        .subscribe();
     }
+    this.validForm = false;
+    this.reset = true;
   }
 }

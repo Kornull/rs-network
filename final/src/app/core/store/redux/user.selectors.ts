@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ProfileInfoType, UserRegisterData, UserState } from '../models';
+import { ProfileInfoType, UserState } from '../models';
 
 export const selectAuthState = createFeatureSelector<UserState>('user');
 
@@ -7,13 +7,6 @@ export const selectGetErrorEmails = createSelector(
   selectAuthState,
   (state): string[] => {
     return state.invalidEmails.PrimaryDuplicationException;
-  }
-);
-
-export const selectUserLogData = createSelector(
-  selectAuthState,
-  (state): UserRegisterData => {
-    return state['user-logged-data'];
   }
 );
 

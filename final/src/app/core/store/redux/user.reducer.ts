@@ -6,11 +6,6 @@ import { ErrorTypes, UserState } from '../models';
 
 export const initialState: UserState = {
   'user-logged': false,
-  'user-logged-data': {
-    email: '',
-    uid: '',
-    token: '',
-  },
   profile: null,
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
@@ -51,6 +46,18 @@ export const UserReducer = createReducer(
     return {
       ...state,
       profile: { ...actions.data },
+    };
+  }),
+  on(LoggedActions.changeProfileName, (state, actions): UserState => {
+    return {
+      ...state,
+      profile:
+        state.profile !== null
+          ? {
+              ...state.profile,
+              name: actions.name,
+            }
+          : null,
     };
   })
 );

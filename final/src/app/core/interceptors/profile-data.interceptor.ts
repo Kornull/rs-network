@@ -37,9 +37,8 @@ export class ProfileDataInterceptor implements HttpInterceptor {
     this.token = this.userDataLogged?.token || '';
     this.id = this.userDataLogged?.uid || '';
     this.mail = this.userDataLogged?.email || '';
-
     const requestUrl = request.clone({
-      url: `${RequestsData.PROFILE}`,
+      url: `${RequestsData.URL}${RequestsData.PROFILE}`,
       setHeaders: {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',

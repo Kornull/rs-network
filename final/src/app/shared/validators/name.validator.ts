@@ -18,3 +18,17 @@ export function nameValidator(): ValidatorFn {
     return nameValid ? { invalidName: true } : null;
   };
 }
+
+export function sameNameValidator(name: string): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const { value } = control;
+
+    if (!value) {
+      return null;
+    }
+
+    const sameNameValid = value === name;
+
+    return sameNameValid ? { invalidName: true } : null;
+  };
+}
