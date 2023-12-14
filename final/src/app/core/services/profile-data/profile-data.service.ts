@@ -21,4 +21,8 @@ export class ProfileDataService {
       name,
     });
   }
+
+  profileLogout() {
+    return this.http.delete(`${RequestsData.URL}${RequestsData.PROFILE}`);
+  }
 }

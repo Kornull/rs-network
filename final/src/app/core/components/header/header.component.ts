@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     private store: Store,
     private router: Router
   ) {
-    this.appTheme = this.theme.getThemeApp() || 'lightThem';
+    this.appTheme = this.theme.getThemeApp() || 'light';
   }
 
   ngOnInit(): void {

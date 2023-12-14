@@ -13,6 +13,7 @@ export enum RequestsData {
   URL = 'https://tasks.app.rs.school/angular',
   REGISTER = '/registration',
   LOGIN = '/login',
+  LOGOUT = '/logout',
   PROFILE = '/profile',
 }
 
