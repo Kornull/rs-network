@@ -37,17 +37,21 @@ export class HeaderComponent implements OnInit {
       .pipe(data => data)
       .subscribe(res => (this.isUserLogged = res));
 
-    this.onSwitchTheme();
+    this.installTheme();
   }
 
   onSwitchTheme() {
     this.appTheme =
       this.appTheme === AppTheme.LIGHT ? AppTheme.DARK : AppTheme.LIGHT;
-    this.theme.setThemeApp(this.appTheme);
     this.themeNow.emit(this.appTheme);
+    this.theme.setThemeApp(this.appTheme);
   }
 
   onRunToProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  installTheme() {
+    this.themeNow.emit(this.appTheme);
   }
 }

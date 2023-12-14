@@ -1,16 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  EMPTY,
-  catchError,
-  exhaustMap,
-  map,
-  retry,
-  shareReplay,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { EMPTY, catchError, switchMap, take, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,

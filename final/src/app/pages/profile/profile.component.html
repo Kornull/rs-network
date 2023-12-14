@@ -10,11 +10,43 @@
           alt="" />
       </div>
       <div class="profile-card--description">
-        <h3 class="description">Name: {{ name }}</h3>
-        <h3 class="description">Email: {{ email }}</h3>
-        <h3 class="description">Id: {{ uid }}</h3>
-        <h3 class="description">Register date: {{ createAt | date }}</h3>
+        @if (!isUpdateProfile) {
+          <h3 class="description">
+            Name: <span>{{ name }}</span>
+          </h3>
+        } @else {
+          <app-profile-form [oldName]="name"></app-profile-form>
+        }
+        <h3 class="description">
+          Email: <span>{{ email }}</span>
+        </h3>
+        <h3 class="description">
+          Id: <span>{{ uid }}</span>
+        </h3>
+        <h3 class="description">
+          Register date: <span>{{ createAt | date: 'medium' }}</span>
+        </h3>
       </div>
+    </div>
+    <div class="profile-btn--block">
+      @if (!isUpdateProfile) {
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="onChangeUserInfo()">
+          Change
+        </button>
+      } @else {
+        <button
+          mat-stroked-button
+          color="accent">
+          Cancel</button
+        ><button
+          mat-raised-button
+          color="warn">
+          Save
+        </button>
+      }
     </div>
   </div>
 </div>

@@ -2,7 +2,7 @@
 @import './scss/index';
 @include mat.core();
 
-.lightTheme {
+.light {
   $light-primary: mat.define-palette(mat.$blue-palette);
   $light-accent: mat.define-palette(mat.$green-palette);
   $light-warm: mat.define-palette(mat.$red-palette);
@@ -20,7 +20,7 @@
   @include mat.all-component-themes($light-theme);
 }
 
-.darkTheme {
+.dark {
   $dark-primary: mat.define-palette(mat.$indigo-palette);
   $dark-accent: mat.define-palette(mat.$lime-palette);
   $dark-warm: mat.define-palette(mat.$red-palette);

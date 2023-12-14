@@ -1,0 +1,50 @@
+<div class="form-container">
+  <form
+    class="form"
+    [formGroup]="updateForm">
+    <mat-form-field
+      color="accent"
+      class="form-input">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        formControlName="name" />
+      @if (updateForm.get('name')!.hasError('required')) {
+        <mat-error>Please enter your name!</mat-error>
+      }
+      @if (
+        updateForm.get('name')?.hasError('minlength') &&
+        updateForm.get('name')?.touched
+      ) {
+        <mat-error
+          >Min name len -
+          {{
+            updateForm.get('name')?.errors?.['minlength']?.['requiredLength'] ||
+              '2'
+          }}, name now -
+          {{
+            updateForm.get('name')?.errors?.['minlength']?.['actualLength'] ||
+              '0'
+          }}</mat-error
+        >
+      }
+      @if (
+        updateForm.get('name')?.hasError('maxlength') &&
+        updateForm.get('name')?.touched
+      ) {
+        <mat-error
+          >Max name len -
+          {{
+            updateForm.get('name')?.errors?.['maxlength']?.['requiredLength']
+          }}, name len now -
+          {{
+            updateForm.get('name')?.errors?.['maxlength']?.['actualLength']
+          }}</mat-error
+        >
+      }
+      @if (updateForm.get('name')?.hasError('invalidName')) {
+        <mat-error>Name cannot contain numbers or special signs.</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</div>
