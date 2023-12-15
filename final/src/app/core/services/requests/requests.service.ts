@@ -7,7 +7,7 @@ import { GetProfileInfoType, RequestsData } from '../../store/models';
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileDataService {
+export class RequestsService {
   constructor(private http: HttpClient) {}
 
   getUserInfo(): Observable<GetProfileInfoType> {

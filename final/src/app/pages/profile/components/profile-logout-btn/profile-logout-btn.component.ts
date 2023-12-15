@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ProfileDataService, SnackBarService } from '../../../../core/services';
+import { RequestsService, SnackBarService } from '../../../../core/services';
 
 @Component({
   selector: 'app-profile-logout-btn',
@@ -14,13 +14,13 @@ import { ProfileDataService, SnackBarService } from '../../../../core/services';
 })
 export class ProfileLogoutBtnComponent {
   constructor(
-    private logoutService: ProfileDataService,
+    private requestService: RequestsService,
     private toast: SnackBarService,
     private router: Router
   ) {}
 
   logout() {
-    this.logoutService.profileLogout().subscribe({
+    this.requestService.profileLogout().subscribe({
       next: () => {
         this.toast.openSnack('Logout success', false);
         this.deleteCookie();

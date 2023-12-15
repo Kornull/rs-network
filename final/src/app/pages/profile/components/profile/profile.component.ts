@@ -15,7 +15,7 @@ import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileLogoutBtnComponent } from '../profile-logout-btn/profile-logout-btn.component';
 
 import { ProfileInfoType } from '../../../../core/store/models';
-import { ProfileDataService, SnackBarService } from '../../../../core/services';
+import { RequestsService, SnackBarService } from '../../../../core/services';
 
 @Component({
   selector: 'app-profile',
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private updateName: ProfileDataService,
+    private requestService: RequestsService,
     private toast: SnackBarService
   ) {}
 
@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
 
   onSaveChanges() {
     if (this.validForm) {
-      this.updateName.setUserName(this.newName).subscribe({
+      this.requestService.setUserName(this.newName).subscribe({
         next: () => {
           this.toast.openSnack('Name updated successfully', false);
           this.store.dispatch(
