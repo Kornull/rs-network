@@ -24,9 +24,29 @@ export interface Uid {
   S: string;
 }
 
+export interface GroupId {
+  S: string;
+}
+
+export interface GroupCreatedBy {
+  S: string;
+}
+
 export interface GetProfileInfoType {
   createdAt: CreatedAt;
   email: Email;
   name: Name;
   uid: Uid;
+}
+export interface GroupInfo {
+  createdAt: CreatedAt;
+  createdBy: GroupCreatedBy;
+  name: Name;
+  id: GroupId;
+}
+
+export interface GroupsData {
+  Count: number;
+  Items: GroupInfo[];
+  ScannedCount: number;
 }

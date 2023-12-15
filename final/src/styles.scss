@@ -44,6 +44,11 @@
   margin: 0;
 }
 
+ul,
+li,
+ol {
+  list-style-type: none;
+}
 @at-root {
   @-ms-viewport {
     width: device-width;
@@ -74,7 +79,7 @@ body {
 
   & * {
     font-size: 14px;
-    background-color:  #b90c00 ;
+    background-color: #b90c00;
     color: #fff !important;
   }
 }
@@ -90,7 +95,7 @@ body {
 
   & * {
     font-size: 14px;
-    background-color:  #025710 ;
+    background-color: #025710;
     color: #fff !important;
   }
 }

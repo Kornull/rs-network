@@ -38,6 +38,7 @@
     <div class="profile-btn--block">
       @if (!isUpdateProfile) {
         <button
+          class="profile-btn"
           mat-stroked-button
           color="primary"
           (click)="onChangeUserInfo()">
@@ -45,12 +46,14 @@
         </button>
       } @else {
         <button
+          class="profile-btn"
           mat-stroked-button
           color="accent"
           (click)="onCloseInput()"
           [disabled]="reset">
           Cancel</button
         ><button
+          class="profile-btn"
           mat-raised-button
           color="warn"
           (click)="onSaveChanges()"

@@ -1,3 +1,5 @@
+@import '../../../../../scss/mixins';
+
 .profile {
   position: relative;
   display: flex;
@@ -32,6 +34,8 @@
   }
 
   &-btn {
+    @include hover-btn;
+
     &--block {
       display: flex;
       align-items: center;
@@ -40,6 +44,7 @@
       width: 100%;
     }
   }
+
   &-card {
     position: relative;
     display: flex;
@@ -55,9 +60,9 @@
     }
 
     &--avatar {
-     position: absolute;
-     top: 0;
-     right: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
     }
 
     &--description {

@@ -1,4 +1,5 @@
 @import '../../../../../scss/constants';
+@import '../../../../../scss/mixins';
 
 .form {
   display: flex;
@@ -37,6 +38,8 @@
     width: 120px;
     font-size: 18px;
     font-weight: 500;
+
+    @include hover-btn
   }
 
   &-link {
