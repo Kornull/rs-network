@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ProfileDataService, SnackBarService } from '../../../core/services';
+import { ProfileDataService, SnackBarService } from '../../../../core/services';
 
 @Component({
   selector: 'app-profile-logout-btn',

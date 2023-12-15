@@ -16,8 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
-import { nameValidator, sameNameValidator } from '../../../shared';
+import { nameValidator, sameNameValidator } from '../../../../shared';
 
 @Component({
   selector: 'app-profile-form',

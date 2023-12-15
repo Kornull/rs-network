@@ -15,19 +15,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
-import { passwordValidator } from '../../shared';
+import { passwordValidator } from '../../../../shared';
 import {
   AuthService,
   LocalStorageService,
   SnackBarService,
-} from '../../core/services';
+} from '../../../../core/services';
 
 import {
   ErrorTypes,
   UserLogin,
   UserLoginSuccess,
-} from '../../core/store/models';
-import { AuthActions, selectIsUserLogged } from '../../core/store/redux';
+} from '../../../../core/store/models';
+import { AuthActions, selectIsUserLogged } from '../../../../core/store/redux';
 
 @Component({
   selector: 'app-auth',

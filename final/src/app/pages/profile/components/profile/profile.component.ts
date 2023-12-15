@@ -6,13 +6,16 @@ import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { LoggedActions, selectCheckProfileInfo } from '../../core/store/redux';
+import {
+  LoggedActions,
+  selectCheckProfileInfo,
+} from '../../../../core/store/redux';
 
-import { ProfileFormComponent } from './profile-form/profile-form.component';
-import { ProfileLogoutBtnComponent } from './profile-logout-btn/profile-logout-btn.component';
+import { ProfileFormComponent } from '../profile-form/profile-form.component';
+import { ProfileLogoutBtnComponent } from '../profile-logout-btn/profile-logout-btn.component';
 
-import { ProfileInfoType } from '../../core/store/models';
-import { ProfileDataService, SnackBarService } from '../../core/services';
+import { ProfileInfoType } from '../../../../core/store/models';
+import { ProfileDataService, SnackBarService } from '../../../../core/services';
 
 @Component({
   selector: 'app-profile',

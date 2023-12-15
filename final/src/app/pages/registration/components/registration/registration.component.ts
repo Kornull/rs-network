@@ -15,10 +15,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
-import { emailValidator, nameValidator, passwordValidator } from '../../shared';
-import { RegisterService, SnackBarService } from '../../core/services';
-import { ErrorTypes, UserRegister } from '../../core/store/models';
-import { AuthActions, selectIsUserLogged } from '../../core/store/redux';
+import {
+  emailValidator,
+  nameValidator,
+  passwordValidator,
+} from '../../../../shared';
+import { RegisterService, SnackBarService } from '../../../../core/services';
+import { ErrorTypes, UserRegister } from '../../../../core/store/models';
+import { AuthActions, selectIsUserLogged } from '../../../../core/store/redux';
 
 @Component({
   selector: 'app-registration',
