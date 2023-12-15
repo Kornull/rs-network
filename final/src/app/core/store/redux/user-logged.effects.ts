@@ -50,7 +50,7 @@ export class UserLoggedEffects {
       exhaustMap(() => {
         return this.request.getUsersGroups().pipe(
           map(groups => {
-            console.log(groups);
+            this.toast.openSnack('Groups updated', false);
             return LoggedActions.setGroupsList({
               groupsData: {
                 Count: groups.Count,
