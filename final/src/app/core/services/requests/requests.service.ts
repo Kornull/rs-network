@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { GetProfileInfoType, RequestsData } from '../../store/models';
+import {
+  GetProfileInfoType,
+  GroupsData,
+  RequestsData,
+} from '../../store/models';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +28,11 @@ export class RequestsService {
 
   profileLogout() {
     return this.http.delete(`${RequestsData.URL}${RequestsData.PROFILE}`);
+  }
+
+  getUsersGroups(): Observable<GroupsData> {
+    return this.http.get<GroupsData>(
+      `${RequestsData.URL}${RequestsData.GROUP_LIST}`
+    );
   }
 }

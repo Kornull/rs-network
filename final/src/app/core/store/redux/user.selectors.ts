@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ProfileInfoType, UserState } from '../models';
+import { GroupsData, ProfileInfoType, UserState } from '../models';
 
 export const selectAuthState = createFeatureSelector<UserState>('user');
 
@@ -21,5 +21,12 @@ export const selectCheckProfileInfo = createSelector(
   selectAuthState,
   (state): ProfileInfoType | null => {
     return state.profile;
+  }
+);
+
+export const selectGroupsInfo = createSelector(
+  selectAuthState,
+  (state): GroupsData => {
+    return state.groups;
   }
 );

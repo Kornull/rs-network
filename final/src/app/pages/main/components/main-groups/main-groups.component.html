@@ -1,5 +1,5 @@
 <div class="group">
-  <h1>groups</h1>
+  <h1>Groups: {{ groupsCount }}</h1>
   <div class="group-btn">
     <div class="group-btn--update">
       <button
@@ -11,9 +11,7 @@
         Update list
       </button>
       @if (disabledBtn$ | async) {
-        <div class="timer">
-          {{ timeNow$ | async }} s
-        </div>
+        <div class="timer">{{ timeNow$ | async }} s</div>
       }
     </div>
 
@@ -25,7 +23,7 @@
     </button>
   </div>
   <ul class="group-list">
-    @for (item of groups.Items; track item.name) {
+    @for (item of groups; track item.name) {
       <li class="group-item">
         <a
           class="group-item--link"

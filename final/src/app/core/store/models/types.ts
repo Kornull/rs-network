@@ -15,6 +15,7 @@ export enum RequestsData {
   LOGIN = '/login',
   LOGOUT = '/logout',
   PROFILE = '/profile',
+  GROUP_LIST = '/groups/list',
 }
 
 export enum ErrorTypes {

@@ -6,6 +6,8 @@ export interface UserState {
   'user-logged': boolean;
   profile: ProfileInfoType | null;
   invalidEmails: EmailExist;
+  isGroupsReceived: boolean;
+  groups: GroupsData;
 }
 
 export interface CreatedAt {

@@ -4,8 +4,7 @@ import { EMPTY, catchError, exhaustMap, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { LoggedActions } from './action-types';
-import { ProfileDataService } from '../../services/profile-data/profile-data.service';
-import { SnackBarService } from '../../services';
+import { RequestsService, SnackBarService } from '../../services';
 
 @Injectable()
 export class UserLoggedEffects {
@@ -13,14 +12,14 @@ export class UserLoggedEffects {
     private actions$: Actions,
     private toast: SnackBarService,
     private store: Store,
-    private getProfileData: ProfileDataService
+    private request: RequestsService
   ) {}
 
   checkProfileInfo = createEffect(() => {
     return this.actions$.pipe(
       ofType(LoggedActions.getUserInfo, LoggedActions.setUserInfo),
       exhaustMap(() =>
-        this.getProfileData.getUserInfo().pipe(
+        this.request.getUserInfo().pipe(
           map(data => {
             return LoggedActions.setUserInfo({
               data: {
@@ -42,6 +41,35 @@ export class UserLoggedEffects {
           })
         )
       )
+    );
+  });
+
+  updateGroups = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoggedActions.getGroupsList),
+      exhaustMap(() => {
+        return this.request.getUsersGroups().pipe(
+          map(groups => {
+            console.log(groups);
+            return LoggedActions.setGroupsList({
+              groupsData: {
+                Count: groups.Count,
+                Items: groups.Items,
+                ScannedCount: groups.ScannedCount,
+              },
+            });
+          }),
+          catchError(err => {
+            const { error } = err;
+            if (error === null) {
+              this.toast.openSnack(err.statusText, true);
+            } else {
+              this.toast.openSnack(error.message, true);
+            }
+            return EMPTY;
+          })
+        );
+      })
     );
   });
 }

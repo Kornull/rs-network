@@ -7,6 +7,12 @@ import { ErrorTypes, UserState } from '../models';
 export const initialState: UserState = {
   'user-logged': false,
   profile: null,
+  isGroupsReceived: false,
+  groups: {
+    Count: 0,
+    Items: [],
+    ScannedCount: 0,
+  },
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },
@@ -58,6 +64,14 @@ export const UserReducer = createReducer(
               name: actions.name,
             }
           : null,
+    };
+  }),
+  on(LoggedActions.setGroupsList, (state, actions): UserState => {
+    return {
+      ...state,
+      groups: {
+        ...actions.groupsData,
+      },
     };
   })
 );
