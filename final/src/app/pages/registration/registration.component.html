@@ -10,7 +10,8 @@
       <mat-label>Name</mat-label>
       <input
         matInput
-        formControlName="name" />
+        formControlName="name"
+        autocomplete="off" />
       @if (registerForm.get('name')!.hasError('required')) {
         <mat-error>Please enter your name!</mat-error>
       }
@@ -56,7 +57,8 @@
       <mat-label>Email</mat-label>
       <input
         matInput
-        formControlName="email" />
+        formControlName="email"
+        autocomplete="off" />
       @if (
         !registerForm.get('email')?.valid &&
         !registerForm.get('email')?.hasError('required') &&
@@ -81,7 +83,8 @@
       <input
         matInput
         formControlName="password"
-        [type]="hide ? 'password' : 'text'" />
+        [type]="hide ? 'password' : 'text'"
+        autocomplete="off" />
       <button
         mat-icon-button
         matSuffix
