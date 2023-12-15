@@ -1,4 +1,82 @@
-.groups {
-  min-width: 50%;
+@import '../../../../../scss/mixins';
+
+.group {
+  background: var(--profile);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
   border: 1px solid #000;
+  padding: 6px;
+
+  &-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &--update {
+      display: flex;
+      width: 40%;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+  }
+
+  &-list {
+    border: 1px solid #000;
+    height: 700px;
+    overflow-y: auto;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 10px;
+    border-bottom: 1px dashed var(--default-color);
+
+    &--link {
+      font-size: 18px;
+      color: var(--group-link);
+      text-decoration: none;
+      transition: color 0.2s linear;
+
+      &:hover {
+        color: var(--link-hover);
+      }
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 145, 255, 0.979) inset;
+    background-color: var(--group-link);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #000;
+  }
+}
+
+.update-btn {
+  @include hover-btn;
+}
+
+.btn-create {
+  background-color: var(--btn-group--bg) !important;
+  color: var(--default-color) !important;
+
+  @include hover-btn;
+}
+
+.timer {
+  text-align: center;
+  padding:4px  8px;
+  border-radius: 12px;
+  width: 50px;
+  border: 1px dashed var(--default-color);
 }
