@@ -17,7 +17,9 @@
   </div>
   <ul class="people-list">
     @for (item of users; track item.name) {
-      <li class="people-item">
+      <li
+        class="people-item"
+        [ngClass]="{conversation: item.isConversation }">
         <div class="people-item--info">
           <span class="people-item--icon">
             <mat-icon>person_outline</mat-icon>

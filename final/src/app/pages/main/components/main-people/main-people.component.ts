@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Observable, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -25,7 +25,7 @@ import {
 @Component({
   selector: 'app-main-people',
   standalone: true,
-  imports: [MatButtonModule, AsyncPipe, MatIconModule],
+  imports: [MatButtonModule, AsyncPipe, MatIconModule, NgClass],
   templateUrl: './main-people.component.html',
   styleUrl: './main-people.component.scss',
 })

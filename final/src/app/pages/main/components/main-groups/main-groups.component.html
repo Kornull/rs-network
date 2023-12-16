@@ -25,7 +25,9 @@
   </div>
   <ul class="group-list">
     @for (item of groups; track item.name) {
-      <li class="group-item">
+      <li
+        class="group-item"
+        [ngClass]="{ own: loginInfo?.uid === item.createdBy.S }">
         <div class="group-item--info">
           <span class="group-item--icon">
             <mat-icon>group</mat-icon>

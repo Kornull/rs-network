@@ -75,7 +75,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
@@ -88,6 +88,10 @@
   }
 }
 
+
+.own {
+  background: var(--conversation)
+}
 .update-btn {
   @include hover-btn;
 }
