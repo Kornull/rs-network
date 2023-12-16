@@ -26,7 +26,7 @@
   <ul class="group-list">
     @for (item of groups; track item.name) {
       <li class="group-item">
-        <div class="">
+        <div class="group-item--info">
           <span class="group-item--icon">
             <mat-icon>people</mat-icon>
           </span>
@@ -38,7 +38,11 @@
           >
         </div>
         @if (loginInfo?.uid === item.createdBy.S) {
-          <button>btn</button>
+          <button
+            class="btn-delete"
+            (click)="deleteGroup(item.id.S, item.name.S)">
+            <mat-icon class="btn-delete--icon">delete</mat-icon>
+          </button>
         }
       </li>
     } @empty {

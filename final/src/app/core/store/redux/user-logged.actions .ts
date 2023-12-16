@@ -29,3 +29,13 @@ export const addOwnGroup = createAction(
   '[Main Page: Groups] Add own group to the list',
   props<{ group: GroupInfo }>()
 );
+
+export const removeOwnGroup = createAction(
+  '[Main Page: Groups] Remove own group',
+  props<{ groupId: string }>()
+);
+
+export const delistOwnGroup = createAction(
+  '[Main Page: Groups] Delist the own group',
+  props<{ groupId: string }>()
+);

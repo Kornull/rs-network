@@ -83,5 +83,17 @@ export const UserReducer = createReducer(
         Items: [actions.group, ...state.groups.Items],
       },
     };
+  }),
+  on(LoggedActions.delistOwnGroup, (state, actions): UserState => {
+    return {
+      ...state,
+      groups: {
+        ...state.groups,
+        Count: state.groups.Count - 1,
+        Items: [
+          ...state.groups.Items.filter(group => group.id.S !== actions.groupId),
+        ],
+      },
+    };
   })
 );

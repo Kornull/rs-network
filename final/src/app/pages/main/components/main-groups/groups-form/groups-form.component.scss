@@ -11,6 +11,11 @@
     width: 100%;
   }
 }
+
+.btn-close {
+  @include hover-btn;
+}
+
 .btn-create {
   background-color: var(--btn-group--bg) !important;
   color: var(--default-color) !important;

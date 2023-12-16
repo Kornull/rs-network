@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 export type ModalData = {
   groupTitle: string;
+  groupId: string;
 };
 
 @Component({

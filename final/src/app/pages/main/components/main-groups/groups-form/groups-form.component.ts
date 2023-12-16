@@ -71,7 +71,6 @@ export class GroupsFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.onNoClick();
     this.store.dispatch(
       LoggedActions.setOwnGroup({
         titleGroup: this.createGroup.controls['title'].value,

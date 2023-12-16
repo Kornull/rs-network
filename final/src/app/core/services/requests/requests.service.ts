@@ -43,4 +43,10 @@ export class RequestsService {
       { name: title }
     );
   }
+
+  deleteOwnGroup(groupId: string) {
+    return this.http.delete(
+      `${RequestsData.URL}${RequestsData.DELETE_GROUP}${groupId}`
+    );
+  }
 }

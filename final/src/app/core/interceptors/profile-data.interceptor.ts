@@ -47,6 +47,6 @@ export class ProfileDataInterceptor implements HttpInterceptor {
       },
     });
 
-    return next.handle(requestUrl).pipe(retry(1));
+    return next.handle(requestUrl).pipe(retry(0));
   }
 }

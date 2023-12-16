@@ -17,6 +17,7 @@ export enum RequestsData {
   PROFILE = '/profile',
   GROUP_LIST = '/groups/list',
   CREATE_GROUP = '/groups/create',
+  DELETE_GROUP = '/groups/delete?groupID=',
 }
 
 export enum ErrorTypes {

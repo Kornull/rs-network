@@ -12,6 +12,7 @@ import { LocalStorageService, TimerService } from '../../../../core/services';
 import { LoggedActions, selectGroupsInfo } from '../../../../core/store/redux';
 import { GroupsFormComponent } from './groups-form/groups-form.component';
 import { GROUPS } from './groups';
+import { GroupDeleteComponent } from './group-delete/groups-delete.component';
 
 @Component({
   selector: 'app-main-groups',
@@ -45,7 +46,6 @@ export class MainGroupsComponent implements OnDestroy {
   }
 
   // ngOnInit(): void {
-  //   console.log(this.loginInfo);
   //   this.groups$ = this.store
   //     .select(selectGroupsInfo)
   //     .pipe(
@@ -74,5 +74,16 @@ export class MainGroupsComponent implements OnDestroy {
 
   createGroup() {
     this.dialog.open(GroupsFormComponent, { height: '300px', width: '400px' });
+  }
+
+  deleteGroup(id: string, title: string) {
+    this.dialog.open(GroupDeleteComponent, {
+      data: {
+        groupTitle: title,
+        groupId: id,
+      },
+      minHeight: '200px',
+      width: '400px',
+    });
   }
 }
