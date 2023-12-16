@@ -1,29 +1,40 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
-import { UserList, UserRegisterData } from '../../../../core/store/models';
-import { LocalStorageService, TimerService } from '../../../../core/services';
-import { LoggedActions } from '../../../../core/store/redux';
-import { USERS } from './users';
+import {
+  LoggedActions,
+  selectAllUsersInfo,
+} from '../../../../core/store/redux';
+
+import {
+  UserDataAddConversation,
+  UserRegisterData,
+} from '../../../../core/store/models';
+
+import {
+  LocalStorageService,
+  UserTimerService,
+} from '../../../../core/services';
 
 @Component({
   selector: 'app-main-people',
   standalone: true,
   imports: [MatButtonModule, AsyncPipe, MatIconModule],
-  providers: [TimerService],
   templateUrl: './main-people.component.html',
   styleUrl: './main-people.component.scss',
 })
-export class MainPeopleComponent implements OnInit {
-  users: UserList[] = USERS.Items;
+export class MainPeopleComponent implements OnInit, OnDestroy {
+  users: UserDataAddConversation[] = [];
 
   usersCount: number = 0;
+
+  users$!: Subscription;
 
   loginInfo: UserRegisterData | null = null;
 
@@ -32,7 +43,7 @@ export class MainPeopleComponent implements OnInit {
   disabledBtn$!: Observable<boolean>;
 
   constructor(
-    private timerService: TimerService,
+    private timer: UserTimerService,
     private store: Store,
     private localStore: LocalStorageService,
     public dialog: MatDialog
@@ -41,12 +52,32 @@ export class MainPeopleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.timeNow$ = this.timerService.getCountdown();
-    this.disabledBtn$ = this.timerService.getRunTimer();
+    this.users$ = this.store
+      .select(selectAllUsersInfo)
+      .pipe(
+        tap(res => {
+          if (!res.count) {
+            this.store.dispatch(LoggedActions.getUsers());
+          } else {
+            this.users = [
+              ...res.users.filter(user => user.uid.S !== this.loginInfo?.uid),
+            ];
+            this.usersCount = res.count;
+          }
+        })
+      )
+      .subscribe();
+
+    this.timeNow$ = this.timer.getCountdown();
+    this.disabledBtn$ = this.timer.getRunTimer();
+  }
+
+  ngOnDestroy(): void {
+    this.users$.unsubscribe();
   }
 
   updateList() {
-    this.timerService.startCountdown();
-    // this.store.dispatch(LoggedActions.getGroupsList());
+    this.timer.startCountdown();
+    this.store.dispatch(LoggedActions.getUsers());
   }
 }

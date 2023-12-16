@@ -1,5 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { GroupInfo, GroupsData, ProfileInfoType } from '../models';
+import {
+  GroupInfo,
+  GroupsData,
+  ProfileInfoType,
+  UsersConversationData,
+  UsersData,
+} from '../models';
 
 export const getUserInfo = createAction('[Profile Page]  Get profile info');
 
@@ -38,4 +44,11 @@ export const removeOwnGroup = createAction(
 export const delistOwnGroup = createAction(
   '[Main Page: Groups] Delist the own group',
   props<{ groupId: string }>()
+);
+
+export const getUsers = createAction('[Main Page: Users] Get Users');
+
+export const setUserAllLists = createAction(
+  '[Main Page: Users] Update user list',
+  props<{ users: UsersData; conversation: UsersConversationData }>()
 );

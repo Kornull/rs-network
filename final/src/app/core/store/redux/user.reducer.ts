@@ -13,6 +13,16 @@ export const initialState: UserState = {
     Items: [],
     ScannedCount: 0,
   },
+  users: {
+    Count: 0,
+    Items: [],
+    ScannedCount: 0,
+  },
+  conversations: {
+    Count: 0,
+    Items: [],
+    ScannedCount: 0,
+  },
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },
@@ -93,6 +103,17 @@ export const UserReducer = createReducer(
         Items: [
           ...state.groups.Items.filter(group => group.id.S !== actions.groupId),
         ],
+      },
+    };
+  }),
+  on(LoggedActions.setUserAllLists, (state, actions): UserState => {
+    return {
+      ...state,
+      users: {
+        ...actions.users,
+      },
+      conversations: {
+        ...actions.conversation,
       },
     };
   })

@@ -16,6 +16,8 @@ export enum RequestsData {
   LOGOUT = '/logout',
   PROFILE = '/profile',
   GROUP_LIST = '/groups/list',
+  USER_LIST = '/users',
+  USER_CONVERSATION = '/conversations/list',
   CREATE_GROUP = '/groups/create',
   DELETE_GROUP = '/groups/delete?groupID=',
 }

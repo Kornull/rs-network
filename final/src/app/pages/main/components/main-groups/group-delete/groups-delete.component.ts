@@ -43,7 +43,6 @@ export class GroupDeleteComponent {
   }
 
   removeGroup() {
-    console.log(this.data);
     this.store.dispatch(
       LoggedActions.removeOwnGroup({ groupId: this.data.groupId })
     );

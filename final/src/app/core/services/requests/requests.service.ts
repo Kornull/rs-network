@@ -7,6 +7,8 @@ import {
   GroupsData,
   RequestsData,
   ResponseCreateGroup,
+  UsersConversationData,
+  UsersData,
 } from '../../store/models';
 
 @Injectable({
@@ -47,6 +49,18 @@ export class RequestsService {
   deleteOwnGroup(groupId: string) {
     return this.http.delete(
       `${RequestsData.URL}${RequestsData.DELETE_GROUP}${groupId}`
+    );
+  }
+
+  getAllUsers(): Observable<UsersData> {
+    return this.http.get<UsersData>(
+      `${RequestsData.URL}${RequestsData.USER_LIST}`
+    );
+  }
+
+  getAllUsersDialogs(): Observable<UsersConversationData> {
+    return this.http.get<UsersConversationData>(
+      `${RequestsData.URL}${RequestsData.USER_CONVERSATION}`
     );
   }
 }

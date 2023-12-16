@@ -11,7 +11,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class TimerService {
+export class GroupTimerService {
   private subscribeTimer$!: Subscription;
 
   private runTimer = false;
@@ -32,12 +32,11 @@ export class TimerService {
       )
       .subscribe(res => {
         this.countdown$.next(res);
-        console.log(res);
         if (!this.runTimer) {
           this.runTimer$.next(true);
           this.runTimer = true;
         }
-        if (res === 10) {
+        if (res === 0) {
           this.runTimer$.next(false);
           this.runTimer = false;
           this.stopTimer();
@@ -46,7 +45,6 @@ export class TimerService {
   }
 
   stopTimer(): void {
-    console.log('unsubscribe');
     this.subscribeTimer$.unsubscribe();
   }
 

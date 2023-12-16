@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, catchError, exhaustMap, map, take } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { EMPTY, catchError, exhaustMap, forkJoin, map } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { LoggedActions } from './action-types';
@@ -17,7 +16,6 @@ export class UserLoggedEffects {
   constructor(
     private actions$: Actions,
     private toast: SnackBarService,
-    private store: Store,
     private request: RequestsService,
     private localStore: LocalStorageService,
     public modal: MatDialog
@@ -92,12 +90,6 @@ export class UserLoggedEffects {
 
             this.toast.openSnack('Group was created', false);
             this.modal.closeAll();
-            console.log({
-              createdAt: { S: `${Date.now()}` },
-              createdBy: { S: `${loginInfo?.uid}` },
-              name: { S: data.titleGroup },
-              id: { S: groupId.groupID },
-            });
             return LoggedActions.addOwnGroup({
               group: {
                 createdAt: { S: `${Date.now()}` },
@@ -143,8 +135,36 @@ export class UserLoggedEffects {
             return EMPTY;
           })
         );
-      }),
-      take(1)
+      })
+    );
+  });
+
+  updateUsersAllLists = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoggedActions.getUsers),
+      exhaustMap(() => {
+        return forkJoin({
+          users: this.request.getAllUsers(),
+          dialogs: this.request.getAllUsersDialogs(),
+        }).pipe(
+          map(res => {
+            this.toast.openSnack('Users list has been updated', false);
+            return LoggedActions.setUserAllLists({
+              users: res.users,
+              conversation: res.dialogs,
+            });
+          }),
+          catchError(err => {
+            const { error } = err;
+            if (error === null) {
+              this.toast.openSnack(err.statusText, true);
+            } else {
+              this.toast.openSnack(error.message, true);
+            }
+            return EMPTY;
+          })
+        );
+      })
     );
   });
 }

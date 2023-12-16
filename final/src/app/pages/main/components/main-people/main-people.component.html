@@ -1,5 +1,5 @@
 <div class="people">
-  <h1>peoples: </h1>
+  <h1>Users: {{ usersCount }}</h1>
   <div class="people-btn">
     <div class="people-btn--update">
       <button
@@ -14,14 +14,13 @@
         <div class="timer">{{ timeNow$ | async }} s</div>
       }
     </div>
-
   </div>
   <ul class="people-list">
     @for (item of users; track item.name) {
       <li class="people-item">
         <div class="people-item--info">
           <span class="people-item--icon">
-            <mat-icon>people</mat-icon>
+            <mat-icon>person_outline</mat-icon>
           </span>
 
           <a
@@ -30,6 +29,10 @@
             {{ item.name.S }}</a
           >
         </div>
+
+        @if (item.isConversation) {
+          <mat-icon>sms</mat-icon>
+        }
       </li>
     } @empty {
       <li class="people-item">There are no users.</li>

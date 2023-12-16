@@ -16,8 +16,10 @@ export interface UserState {
   invalidEmails: EmailExist;
   isGroupsReceived: boolean;
   groups: GroupsData;
+  users: UsersData;
+  conversations: UsersConversationData;
 }
-export interface UserList {
+export interface UserListPersonalData {
   name: { [T in DataResponseType]: string };
   uid: { [T in DataResponseType]: string };
 }
@@ -46,9 +48,24 @@ export interface GroupsData extends DefaultData {
 }
 
 export interface UsersData extends DefaultData {
-  Items: UserList[];
+  Items: UserListPersonalData[];
 }
 
 export interface UsersConversationData extends DefaultData {
   Items: ConversationDataList[];
+}
+
+export type GetAllUserInfoType = {
+  count: number;
+  users: UserListPersonalData[];
+  conversation: ConversationDataList[];
+};
+
+export interface UserDataAddConversation extends UserListPersonalData {
+  isConversation?: boolean;
+}
+
+export interface UserDataInfo {
+  count: number;
+  users: UserDataAddConversation[];
 }

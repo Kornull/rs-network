@@ -75,7 +75,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
@@ -85,6 +85,7 @@
 
   ::-webkit-scrollbar-thumb {
     background-color: var(--link-hover);
+    cursor: pointer;
   }
 }
 

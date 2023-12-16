@@ -1,5 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { GroupsData, ProfileInfoType, UserState } from '../models';
+import {
+  GroupsData,
+  ProfileInfoType,
+  UserDataInfo,
+  UserState,
+} from '../models';
 
 export const selectAuthState = createFeatureSelector<UserState>('user');
 
@@ -28,5 +33,26 @@ export const selectGroupsInfo = createSelector(
   selectAuthState,
   (state): GroupsData => {
     return state.groups;
+  }
+);
+
+export const selectAllUsersInfo = createSelector(
+  selectAuthState,
+  (state): UserDataInfo => {
+    const conversationList = state.conversations.Items.map(
+      item => item.companionID.S
+    );
+
+    return {
+      count: state.users.Count,
+      users: state.users.Items.map(user => {
+        return conversationList.includes(user.uid.S)
+          ? {
+              ...user,
+              isConversation: true,
+            }
+          : user;
+      }),
+    };
   }
 );
