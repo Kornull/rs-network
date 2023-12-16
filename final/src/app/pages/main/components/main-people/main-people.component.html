@@ -1,3 +1,38 @@
 <div class="people">
-  <h1>people</h1>
+  <h1>peoples: </h1>
+  <div class="people-btn">
+    <div class="people-btn--update">
+      <button
+        class="update-btn"
+        mat-raised-button
+        color="primary"
+        (click)="updateList()"
+        [disabled]="disabledBtn$ | async">
+        Update list
+      </button>
+      @if (disabledBtn$ | async) {
+        <div class="timer">{{ timeNow$ | async }} s</div>
+      }
+    </div>
+
+  </div>
+  <ul class="people-list">
+    @for (item of users; track item.name) {
+      <li class="people-item">
+        <div class="people-item--info">
+          <span class="people-item--icon">
+            <mat-icon>people</mat-icon>
+          </span>
+
+          <a
+            class="people-item--link"
+            href="#">
+            {{ item.name.S }}</a
+          >
+        </div>
+      </li>
+    } @empty {
+      <li class="people-item">There are no users.</li>
+    }
+  </ul>
 </div>

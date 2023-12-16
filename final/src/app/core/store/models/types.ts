@@ -47,12 +47,6 @@ export type UserRegisterData = UserLoginSuccess & {
   email: string;
 };
 
-type UserProfileData = 'createdAt' | 'email' | 'name' | 'uid';
-
-export type ProfileInfoType = {
-  [T in UserProfileData]: string;
-};
-
 export type ResponseCreateGroup = {
   groupID: string;
 };

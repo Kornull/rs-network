@@ -1,6 +1,14 @@
-import { ErrorTypes, ProfileInfoType } from './types';
+import { ErrorTypes } from './types';
 
 type EmailExist = { [ErrorTypes.USER_EXIST]: string[] };
+
+type DataResponseType = 'S';
+
+type UserProfileData = 'createdAt' | 'email' | 'name' | 'uid';
+
+export type ProfileInfoType = {
+  [T in UserProfileData]: string;
+};
 
 export interface UserState {
   'user-logged': boolean;
@@ -9,46 +17,38 @@ export interface UserState {
   isGroupsReceived: boolean;
   groups: GroupsData;
 }
-
-export interface CreatedAt {
-  S: string;
+export interface UserList {
+  name: { [T in DataResponseType]: string };
+  uid: { [T in DataResponseType]: string };
 }
 
-export interface Email {
-  S: string;
+export interface ConversationDataList {
+  id: { [T in DataResponseType]: string };
+  companionID: { [T in DataResponseType]: string };
 }
 
-export interface Name {
-  S: string;
-}
-
-export interface Uid {
-  S: string;
-}
-
-export interface GroupId {
-  S: string;
-}
-
-export interface GroupCreatedBy {
-  S: string;
-}
-
-export interface GetProfileInfoType {
-  createdAt: CreatedAt;
-  email: Email;
-  name: Name;
-  uid: Uid;
-}
+export type GetProfileInfoType = {
+  [T in UserProfileData]: { [S in DataResponseType]: string };
+};
 export interface GroupInfo {
-  createdAt: CreatedAt;
-  createdBy: GroupCreatedBy;
-  name: Name;
-  id: GroupId;
+  createdAt: { [T in DataResponseType]: string };
+  createdBy: { [T in DataResponseType]: string };
+  name: { [T in DataResponseType]: string };
+  id: { [T in DataResponseType]: string };
 }
 
-export interface GroupsData {
+export interface DefaultData {
   Count: number;
-  Items: GroupInfo[];
   ScannedCount: number;
+}
+export interface GroupsData extends DefaultData {
+  Items: GroupInfo[];
+}
+
+export interface UsersData extends DefaultData {
+  Items: UserList[];
+}
+
+export interface UsersConversationData extends DefaultData {
+  Items: ConversationDataList[];
 }

@@ -18,10 +18,11 @@ import { GroupDeleteComponent } from './group-delete/groups-delete.component';
   selector: 'app-main-groups',
   standalone: true,
   imports: [MatButtonModule, AsyncPipe, MatIconModule],
+  providers: [TimerService],
   templateUrl: './main-groups.component.html',
   styleUrl: './main-groups.component.scss',
 })
-export class MainGroupsComponent implements OnDestroy {
+export class MainGroupsComponent implements OnInit {
   groups: GroupInfo[] = GROUPS.Items;
 
   groupsCount: number = 0;
@@ -34,8 +35,6 @@ export class MainGroupsComponent implements OnDestroy {
 
   disabledBtn$!: Observable<boolean>;
 
-  seconds = 60;
-
   constructor(
     private timerService: TimerService,
     private store: Store,
@@ -45,27 +44,27 @@ export class MainGroupsComponent implements OnDestroy {
     this.loginInfo = this.localStore.getLoginInfo();
   }
 
-  // ngOnInit(): void {
-  //   this.groups$ = this.store
-  //     .select(selectGroupsInfo)
-  //     .pipe(
-  //       tap(res => {
-  //         if (!res.Items.length) {
-  //           this.store.dispatch(LoggedActions.getGroupsList());
-  //         } else {
-  //           this.groups = [...res.Items];
-  //           this.groupsCount = res.Count;
-  //         }
-  //       })
-  //     )
-  //     .subscribe();
-  //   this.timeNow$ = this.timerService.getCountdown();
-  //   this.disabledBtn$ = this.timerService.getRunTimer();
-  // }
-
-  ngOnDestroy(): void {
-    this.groups$.unsubscribe();
+  ngOnInit(): void {
+    // this.groups$ = this.store
+    //   .select(selectGroupsInfo)
+    //   .pipe(
+    //     tap(res => {
+    //       if (!res.Items.length) {
+    //         this.store.dispatch(LoggedActions.getGroupsList());
+    //       } else {
+    //         this.groups = [...res.Items];
+    //         this.groupsCount = res.Count;
+    //       }
+    //     })
+    //   )
+    //   .subscribe();
+    this.timeNow$ = this.timerService.getCountdown();
+    this.disabledBtn$ = this.timerService.getRunTimer();
   }
+
+  // ngOnDestroy(): void {
+  //   // this.groups$.unsubscribe();
+  // }
 
   updateList() {
     this.timerService.startCountdown();

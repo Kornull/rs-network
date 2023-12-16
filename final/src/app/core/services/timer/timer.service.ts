@@ -32,11 +32,12 @@ export class TimerService {
       )
       .subscribe(res => {
         this.countdown$.next(res);
+        console.log(res);
         if (!this.runTimer) {
           this.runTimer$.next(true);
           this.runTimer = true;
         }
-        if (res === 0) {
+        if (res === 10) {
           this.runTimer$.next(false);
           this.runTimer = false;
           this.stopTimer();
@@ -45,6 +46,7 @@ export class TimerService {
   }
 
   stopTimer(): void {
+    console.log('unsubscribe');
     this.subscribeTimer$.unsubscribe();
   }
 
