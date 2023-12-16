@@ -6,6 +6,7 @@ import {
   GetProfileInfoType,
   GroupsData,
   RequestsData,
+  ResponseCreateGroup,
 } from '../../store/models';
 
 @Injectable({
@@ -33,6 +34,13 @@ export class RequestsService {
   getUsersGroups(): Observable<GroupsData> {
     return this.http.get<GroupsData>(
       `${RequestsData.URL}${RequestsData.GROUP_LIST}`
+    );
+  }
+
+  createGroup(title: string): Observable<ResponseCreateGroup> {
+    return this.http.post<ResponseCreateGroup>(
+      `${RequestsData.URL}${RequestsData.CREATE_GROUP}`,
+      { name: title }
     );
   }
 }

@@ -1,7 +1,7 @@
 import { GroupsData } from '../../../../core/store/models';
 
 export const GROUPS: GroupsData = {
-  Count: 283,
+  Count: 296,
   Items: [
     {
       createdAt: { S: '1702377786433' },
@@ -10,10 +10,10 @@ export const GROUPS: GroupsData = {
       name: { S: 'neMy' },
     },
     {
-      createdAt: { S: '1702522319287' },
-      id: { S: '131cdfj9u36c' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'Qwerty' },
+      createdAt: { S: '1702644246842' },
+      id: { S: 'ptlw2u1ohq9' },
+      createdBy: { S: 'b0efh7ra1id' },
+      name: { S: 'Group for the ducks' },
     },
     {
       createdAt: { S: '1702302576660' },
@@ -64,10 +64,28 @@ export const GROUPS: GroupsData = {
       name: { S: '2' },
     },
     {
+      createdAt: { S: '1702665418218' },
+      id: { S: 'v9o5beknbn' },
+      createdBy: { S: 'ba4mn6a70jq' },
+      name: { S: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwww' },
+    },
+    {
+      createdAt: { S: '1702722556495' },
+      id: { S: 'nvsbqerz4is' },
+      createdBy: { S: 'h5qgobaif3' },
+      name: { S: 'sdff' },
+    },
+    {
       createdAt: { S: '1702454772294' },
       id: { S: '3o0xr9773jn' },
       createdBy: { S: '0ew5br3xg116' },
       name: { S: '9th Chamber' },
+    },
+    {
+      createdAt: { S: '1702724949752' },
+      id: { S: '6xranxe2ajg' },
+      createdBy: { S: 'om6ashyyhi' },
+      name: { S: 'TESTTOST' },
     },
     {
       createdAt: { S: '1702306175548' },
@@ -94,10 +112,22 @@ export const GROUPS: GroupsData = {
       name: { S: 'Test01' },
     },
     {
+      createdAt: { S: '1702665121831' },
+      id: { S: 'oyu6ub6on3' },
+      createdBy: { S: 'ba4mn6a70jq' },
+      name: { S: 'xcv' },
+    },
+    {
       createdAt: { S: '1702241773804' },
       id: { S: 'bti3fp6on07' },
       createdBy: { S: 'lyxa42owwm' },
       name: { S: 'aaa' },
+    },
+    {
+      createdAt: { S: '1702722724318' },
+      id: { S: '74rczj2tnjf' },
+      createdBy: { S: 'h5qgobaif3' },
+      name: { S: 'dddd' },
     },
     {
       createdAt: { S: '1702213620493' },
@@ -178,12 +208,6 @@ export const GROUPS: GroupsData = {
       name: { S: 'aaa' },
     },
     {
-      createdAt: { S: '1702521122780' },
-      id: { S: '095mqx48uhtd' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'NewNewGroup' },
-    },
-    {
       createdAt: { S: '1702501176104' },
       id: { S: 'axbbqm5dzwj' },
       createdBy: { S: '4864rsv2qr6' },
@@ -200,6 +224,12 @@ export const GROUPS: GroupsData = {
       id: { S: 'gva3kq4dwjk' },
       createdBy: { S: 'nyvcbpaht6n' },
       name: { S: 'wilden abra' },
+    },
+    {
+      createdAt: { S: '1702724744552' },
+      id: { S: '1vw787r7ta8' },
+      createdBy: { S: 'om6ashyyhi' },
+      name: { S: '1111aaaaa' },
     },
     {
       createdAt: { S: '1702501114444' },
@@ -230,12 +260,6 @@ export const GROUPS: GroupsData = {
       id: { S: '069a4e64wxq7' },
       createdBy: { S: 'csvx10rutws' },
       name: { S: 'ddd' },
-    },
-    {
-      createdAt: { S: '1702511167029' },
-      id: { S: '1l82iezoqtz' },
-      createdBy: { S: 'lg2u8g010q' },
-      name: { S: 'MishaGroup' },
     },
     {
       createdAt: { S: '1702626379741' },
@@ -280,16 +304,16 @@ export const GROUPS: GroupsData = {
       name: { S: '2' },
     },
     {
-      createdAt: { S: '1702606855504' },
-      id: { S: 'c6k7rpqp8nl' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'My Group' },
-    },
-    {
       createdAt: { S: '1702492282885' },
       id: { S: 'mrn90ikyz2' },
       createdBy: { S: '9pllf1myiw4' },
       name: { S: 'something new' },
+    },
+    {
+      createdAt: { S: '1702664237445' },
+      id: { S: 'j1kio1klxzn' },
+      createdBy: { S: 'ba4mn6a70jq' },
+      name: { S: 'fds' },
     },
     {
       createdAt: { S: '1702501986733' },
@@ -302,6 +326,12 @@ export const GROUPS: GroupsData = {
       id: { S: '5spy5zfnuu5' },
       createdBy: { S: 'lyxa42owwm' },
       name: { S: 'wwww' },
+    },
+    {
+      createdAt: { S: '1702724097980' },
+      id: { S: 'p7j7yfgsoha' },
+      createdBy: { S: 'om6ashyyhi' },
+      name: { S: 'sasasassa' },
     },
     {
       createdAt: { S: '1702626904169' },
@@ -322,10 +352,22 @@ export const GROUPS: GroupsData = {
       name: { S: 'ss' },
     },
     {
+      createdAt: { S: '1702665036466' },
+      id: { S: '57f1nthz6gb' },
+      createdBy: { S: 'ba4mn6a70jq' },
+      name: { S: 'ghhgf' },
+    },
+    {
       createdAt: { S: '1702302800397' },
       id: { S: 'rkcvxr3asur' },
       createdBy: { S: 'nj9jg49hic' },
       name: { S: 'group of snails' },
+    },
+    {
+      createdAt: { S: '1702663447649' },
+      id: { S: 's64wb3lse3e' },
+      createdBy: { S: 'ba4mn6a70jq' },
+      name: { S: 'dsfds' },
     },
     {
       createdAt: { S: '1702307379475' },
@@ -338,12 +380,6 @@ export const GROUPS: GroupsData = {
       id: { S: 'bl956ue4tzh' },
       createdBy: { S: 'qc6ffdt391' },
       name: { S: 'jet set radio' },
-    },
-    {
-      createdAt: { S: '1702569278722' },
-      id: { S: 't0waxcmydw' },
-      createdBy: { S: 'jpogww8xfmi' },
-      name: { S: 'лорр' },
     },
     {
       createdAt: { S: '1702309227599' },
@@ -430,18 +466,6 @@ export const GROUPS: GroupsData = {
       name: { S: '*test1' },
     },
     {
-      createdAt: { S: '1702571916623' },
-      id: { S: 'nml5llaym1' },
-      createdBy: { S: 'cs4pv8i48c' },
-      name: { S: 'boo' },
-    },
-    {
-      createdAt: { S: '1702521786597' },
-      id: { S: 'yuykn2mkhwp' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'Hi' },
-    },
-    {
       createdAt: { S: '1702501144022' },
       id: { S: 'i8y7tz2b2g' },
       createdBy: { S: '4864rsv2qr6' },
@@ -496,12 +520,6 @@ export const GROUPS: GroupsData = {
       name: { S: 'cc' },
     },
     {
-      createdAt: { S: '1702566665886' },
-      id: { S: '1hxm24krv03' },
-      createdBy: { S: 'ke2lm1wscfa' },
-      name: { S: 'syberia' },
-    },
-    {
       createdAt: { S: '1702484623880' },
       id: { S: 'jd8pxodzbi' },
       createdBy: { S: '642dk1yk0z3' },
@@ -538,6 +556,12 @@ export const GROUPS: GroupsData = {
       name: { S: 'dff' },
     },
     {
+      createdAt: { S: '1702665541355' },
+      id: { S: 'g4w1rg95ila' },
+      createdBy: { S: 'wxr4yhy2t8d' },
+      name: { S: 'ok new group 5' },
+    },
+    {
       createdAt: { S: '1702497114991' },
       id: { S: 'xyrxrukbd' },
       createdBy: { S: 'jpogww8xfmi' },
@@ -548,6 +572,12 @@ export const GROUPS: GroupsData = {
       id: { S: 'ed3orofos9d' },
       createdBy: { S: 'l3rwxedq29' },
       name: { S: 'Kidopfffff' },
+    },
+    {
+      createdAt: { S: '1702676322672' },
+      id: { S: 'tpw088ghtb' },
+      createdBy: { S: 'cs4pv8i48c' },
+      name: { S: 'xcas' },
     },
     {
       createdAt: { S: '1702585722118' },
@@ -592,6 +622,12 @@ export const GROUPS: GroupsData = {
       name: { S: '324' },
     },
     {
+      createdAt: { S: '1702719944318' },
+      id: { S: 'np473dk3cr' },
+      createdBy: { S: 'xw1aftqvekm' },
+      name: { S: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwww' },
+    },
+    {
       createdAt: { S: '1701934652996' },
       id: { S: 'boyt5m8zy9e' },
       createdBy: { S: 'csvx10rutws' },
@@ -628,12 +664,6 @@ export const GROUPS: GroupsData = {
       name: { S: '324234' },
     },
     {
-      createdAt: { S: '1702522417305' },
-      id: { S: 'rfxgz2ht44q' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'q' },
-    },
-    {
       createdAt: { S: '1702384974233' },
       id: { S: 'c5o79w5jaqh' },
       createdBy: { S: 'oo4f8yd4li' },
@@ -652,28 +682,22 @@ export const GROUPS: GroupsData = {
       name: { S: '2' },
     },
     {
+      createdAt: { S: '1702665682162' },
+      id: { S: 'gg0wjr5uq1r' },
+      createdBy: { S: 'wxr4yhy2t8d' },
+      name: { S: 'ok ng 55' },
+    },
+    {
       createdAt: { S: '1702531852454' },
       id: { S: 'q81ld53l0x8' },
       createdBy: { S: 'jpogww8xfmi' },
       name: { S: 'ss' },
     },
     {
-      createdAt: { S: '1702628407175' },
-      id: { S: 'zs0zsfpiyz8' },
-      createdBy: { S: '49ofwtwuqmt' },
-      name: { S: 'angular 12345' },
-    },
-    {
       createdAt: { S: '1701931859022' },
       id: { S: 'gagse70cjkf' },
       createdBy: { S: 'csvx10rutws' },
       name: { S: 'a1a2' },
-    },
-    {
-      createdAt: { S: '1702521866476' },
-      id: { S: 'o2yd2wh9yn' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'NewNewGroup' },
     },
     {
       createdAt: { S: '1702468460592' },
@@ -688,22 +712,16 @@ export const GROUPS: GroupsData = {
       name: { S: 'Some new group' },
     },
     {
-      createdAt: { S: '1702522629366' },
-      id: { S: 't6trkxvsn7s' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'Hi' },
-    },
-    {
       createdAt: { S: '1701781539845' },
       id: { S: 'oslbc1fjkke' },
       createdBy: { S: '290jaobb6b8' },
       name: { S: 'Base group' },
     },
     {
-      createdAt: { S: '1702521639861' },
-      id: { S: 'gwb5tca7dcj' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'My Group' },
+      createdAt: { S: '1702635150338' },
+      id: { S: 'vhgfbd6o2is' },
+      createdBy: { S: 'lyxa42owwm' },
+      name: { S: 'vvv' },
     },
     {
       createdAt: { S: '1702389498044' },
@@ -724,6 +742,12 @@ export const GROUPS: GroupsData = {
       name: { S: 'wwww' },
     },
     {
+      createdAt: { S: '1702654351735' },
+      id: { S: 'na93dh6lne' },
+      createdBy: { S: 'svnacrgnmh8' },
+      name: { S: '1234' },
+    },
+    {
       createdAt: { S: '1702384489926' },
       id: { S: '76qj4ymrmmt' },
       createdBy: { S: 'uid' },
@@ -740,12 +764,6 @@ export const GROUPS: GroupsData = {
       id: { S: 'fporvwm1uw9' },
       createdBy: { S: '642dk1yk0z3' },
       name: { S: 'xcz' },
-    },
-    {
-      createdAt: { S: '1702634902692' },
-      id: { S: 'pn5ck5ri8f' },
-      createdBy: { S: 'b0efh7ra1id' },
-      name: { S: 'Group for the ducks' },
     },
     {
       createdAt: { S: '1702497176649' },
@@ -772,16 +790,16 @@ export const GROUPS: GroupsData = {
       name: { S: '36th Chamber' },
     },
     {
+      createdAt: { S: '1702643015284' },
+      id: { S: 'cgwq2g6xerm' },
+      createdBy: { S: '49ofwtwuqmt' },
+      name: { S: 'angular 123456' },
+    },
+    {
       createdAt: { S: '1702493852512' },
       id: { S: '64dhn9hsu6c' },
       createdBy: { S: 'idz5ltevn4h' },
       name: { S: 'ANGULAR1' },
-    },
-    {
-      createdAt: { S: '1702521968405' },
-      id: { S: 'zhuoeccjgld' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'Qwerty' },
     },
     {
       createdAt: { S: '1702213629686' },
@@ -802,12 +820,6 @@ export const GROUPS: GroupsData = {
       name: { S: '12412' },
     },
     {
-      createdAt: { S: '1702518854486' },
-      id: { S: '56hc81xjy8e' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'MyGroup' },
-    },
-    {
       createdAt: { S: '1702628693832' },
       id: { S: 'or6pakovau' },
       createdBy: { S: 'lyxa42owwm' },
@@ -820,16 +832,28 @@ export const GROUPS: GroupsData = {
       name: { S: 'name' },
     },
     {
-      createdAt: { S: '1702489860068' },
-      id: { S: '0zl0xa0erm1' },
-      createdBy: { S: 'ebcl0jy7e85' },
-      name: { S: 'LobzhaY' },
+      createdAt: { S: '1702671016346' },
+      id: { S: 'xj8lfpztekr' },
+      createdBy: { S: '614r5mk74q3' },
+      name: { S: '16 12 MCQ' },
+    },
+    {
+      createdAt: { S: '1702642758835' },
+      id: { S: 'ge37fqisslc' },
+      createdBy: { S: 'nyvcbpaht6n' },
+      name: { S: 'wildenio 123' },
     },
     {
       createdAt: { S: '1702327989013' },
       id: { S: 'mhw96tzfvd' },
       createdBy: { S: '9pllf1myiw4' },
       name: { S: 'hohohoho' },
+    },
+    {
+      createdAt: { S: '1702665055632' },
+      id: { S: 'g2if8h7yy7u' },
+      createdBy: { S: 'ba4mn6a70jq' },
+      name: { S: 'dfg' },
     },
     {
       createdAt: { S: '1702389946012' },
@@ -848,6 +872,12 @@ export const GROUPS: GroupsData = {
       id: { S: '8gonavcuipl' },
       createdBy: { S: 'jpogww8xfmi' },
       name: { S: 'Create' },
+    },
+    {
+      createdAt: { S: '1702664066369' },
+      id: { S: '3ctw4b7jy67' },
+      createdBy: { S: 'ba4mn6a70jq' },
+      name: { S: 'СВМ' },
     },
     {
       createdAt: { S: '1702329956769' },
@@ -872,6 +902,12 @@ export const GROUPS: GroupsData = {
       id: { S: 'wzfb1ue84xk' },
       createdBy: { S: 'jpogww8xfmi' },
       name: { S: 'NIna' },
+    },
+    {
+      createdAt: { S: '1702724055736' },
+      id: { S: 'bysebz7fhd7' },
+      createdBy: { S: 'om6ashyyhi' },
+      name: { S: 'sssssssssss' },
     },
     {
       createdAt: { S: '1702213719409' },
@@ -946,6 +982,12 @@ export const GROUPS: GroupsData = {
       name: { S: '4' },
     },
     {
+      createdAt: { S: '1702674966458' },
+      id: { S: 'j01f0wg5pk' },
+      createdBy: { S: 'ebcl0jy7e85' },
+      name: { S: 'LobzhaY' },
+    },
+    {
       createdAt: { S: '1702246981873' },
       id: { S: '6i0mt915s9g' },
       createdBy: { S: '36gmo41ifjt' },
@@ -976,16 +1018,16 @@ export const GROUPS: GroupsData = {
       name: { S: 'фффф' },
     },
     {
-      createdAt: { S: '1702537681159' },
-      id: { S: 'r2vpck9maym' },
-      createdBy: { S: 'sixe6hnnt8' },
-      name: { S: 'great group' },
-    },
-    {
       createdAt: { S: '1702418853974' },
       id: { S: 'qjpu81cz03j' },
       createdBy: { S: 'uid' },
       name: { S: 'some name' },
+    },
+    {
+      createdAt: { S: '1702671028986' },
+      id: { S: 'pzedmwmdlgk' },
+      createdBy: { S: '614r5mk74q3' },
+      name: { S: '15 12 MCQ' },
     },
     {
       createdAt: { S: '1702497175066' },
@@ -1000,16 +1042,16 @@ export const GROUPS: GroupsData = {
       name: { S: 'kmkm' },
     },
     {
+      createdAt: { S: '1702645274791' },
+      id: { S: '2gkfpjq77t6' },
+      createdBy: { S: 'jepjni60tfk' },
+      name: { S: 'IIIIIIIIIII' },
+    },
+    {
       createdAt: { S: '1702501210976' },
       id: { S: 'c9dylrf6xef' },
       createdBy: { S: '4864rsv2qr6' },
       name: { S: '2' },
-    },
-    {
-      createdAt: { S: '1702523702928' },
-      id: { S: '3uwr7a51umk' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'MyNewGroup' },
     },
     {
       createdAt: { S: '1702529332482' },
@@ -1036,6 +1078,18 @@ export const GROUPS: GroupsData = {
       name: { S: 'some name' },
     },
     {
+      createdAt: { S: '1702667367508' },
+      id: { S: 'wd60ykzwmsc' },
+      createdBy: { S: '6f2gzf55b9h' },
+      name: { S: 'NEwXXXGroip' },
+    },
+    {
+      createdAt: { S: '1702678090570' },
+      id: { S: 'katrwjt23ge' },
+      createdBy: { S: 'mfend4x5cxh' },
+      name: { S: 'w1w1' },
+    },
+    {
       createdAt: { S: '1702501170054' },
       id: { S: 't7vcsak7dt' },
       createdBy: { S: '4864rsv2qr6' },
@@ -1046,6 +1100,12 @@ export const GROUPS: GroupsData = {
       id: { S: 'bzwf8vcpmse' },
       createdBy: { S: '4864rsv2qr6' },
       name: { S: '1' },
+    },
+    {
+      createdAt: { S: '1702657301318' },
+      id: { S: 'wl1d6bi6ciq' },
+      createdBy: { S: 'lyxa42owwm' },
+      name: { S: 'qqq1' },
     },
     {
       createdAt: { S: '1702304820618' },
@@ -1060,22 +1120,10 @@ export const GROUPS: GroupsData = {
       name: { S: 'Amazing group' },
     },
     {
-      createdAt: { S: '1702550379266' },
-      id: { S: 'x6qx9lj84r' },
-      createdBy: { S: 'svnacrgnmh8' },
-      name: { S: 'fsbf' },
-    },
-    {
-      createdAt: { S: '1702551522590' },
-      id: { S: '2q5ql88lpxo' },
-      createdBy: { S: '614r5mk74q3' },
-      name: { S: '14 12 MCQ' },
-    },
-    {
-      createdAt: { S: '1702570201084' },
-      id: { S: 'ko17ahpezk' },
-      createdBy: { S: 'svnacrgnmh8' },
-      name: { S: 'вамав' },
+      createdAt: { S: '1702645013709' },
+      id: { S: 'nwj61ril8n8' },
+      createdBy: { S: '67vqsxoun2' },
+      name: { S: 'bkxkvm8' },
     },
     {
       createdAt: { S: '1702498002086' },
@@ -1088,12 +1136,6 @@ export const GROUPS: GroupsData = {
       id: { S: 'ymus01c2wua' },
       createdBy: { S: '9lv4jpyas06' },
       name: { S: 'Peoples' },
-    },
-    {
-      createdAt: { S: '1702551640421' },
-      id: { S: '99cnceeslhq' },
-      createdBy: { S: '614r5mk74q3' },
-      name: { S: '13 12 MCQ' },
     },
     {
       createdAt: { S: '1702501864620' },
@@ -1132,6 +1174,12 @@ export const GROUPS: GroupsData = {
       name: { S: 'Hoook' },
     },
     {
+      createdAt: { S: '1702665055577' },
+      id: { S: 'd5qdxzrrmq' },
+      createdBy: { S: 'skafndkc0q' },
+      name: { S: 'gg' },
+    },
+    {
       createdAt: { S: '1701896234452' },
       id: { S: 'vmytepiodfh' },
       createdBy: { S: 'an2bxboozg6' },
@@ -1148,6 +1196,12 @@ export const GROUPS: GroupsData = {
       id: { S: 'crn5p90xjr7' },
       createdBy: { S: 'csvx10rutws' },
       name: { S: 'qqq 444' },
+    },
+    {
+      createdAt: { S: '1702710540648' },
+      id: { S: 'x5kahnghdn8' },
+      createdBy: { S: '9pllf1myiw4' },
+      name: { S: 'Harry Potter' },
     },
     {
       createdAt: { S: '1702343231447' },
@@ -1168,6 +1222,18 @@ export const GROUPS: GroupsData = {
       name: { S: 'Lia1' },
     },
     {
+      createdAt: { S: '1702651378005' },
+      id: { S: 'yt50jiof12l' },
+      createdBy: { S: 'svnacrgnmh8' },
+      name: { S: 'fdvfd' },
+    },
+    {
+      createdAt: { S: '1702666491774' },
+      id: { S: 'ivr3p4wx3xq' },
+      createdBy: { S: '6f2gzf55b9h' },
+      name: { S: 'GROUP TEST' },
+    },
+    {
       createdAt: { S: '1702157913745' },
       id: { S: 'olbg26kfla8' },
       createdBy: { S: '36gmo41ifjt' },
@@ -1178,6 +1244,12 @@ export const GROUPS: GroupsData = {
       id: { S: 'cbcxwq92pwh' },
       createdBy: { S: 'an2bxboozg6' },
       name: { S: 'ssss' },
+    },
+    {
+      createdAt: { S: '1702724218617' },
+      id: { S: 'i3ka9zqa6q9' },
+      createdBy: { S: 'om6ashyyhi' },
+      name: { S: 'testtesttest' },
     },
     {
       createdAt: { S: '1702493745886' },
@@ -1210,6 +1282,12 @@ export const GROUPS: GroupsData = {
       name: { S: 'd111s222' },
     },
     {
+      createdAt: { S: '1702668023305' },
+      id: { S: '3zxw3c3dkn7' },
+      createdBy: { S: 'jrjixxn49yl' },
+      name: { S: 'My Group' },
+    },
+    {
       createdAt: { S: '1701946177727' },
       id: { S: '0eb6zy7bgsma' },
       createdBy: { S: 'cu3w2dc4xa' },
@@ -1232,12 +1310,6 @@ export const GROUPS: GroupsData = {
       id: { S: 'y5pk68chtbc' },
       createdBy: { S: 'fs6hrqk7es' },
       name: { S: 'cccc' },
-    },
-    {
-      createdAt: { S: '1702521381381' },
-      id: { S: 'ymrcg24l5p' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'Group Qwerty' },
     },
     {
       createdAt: { S: '1702207982560' },
@@ -1276,12 +1348,6 @@ export const GROUPS: GroupsData = {
       name: { S: 'ww' },
     },
     {
-      createdAt: { S: '1702570856185' },
-      id: { S: '3vkh03la2fd' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'Group' },
-    },
-    {
       createdAt: { S: '1702312002231' },
       id: { S: '0r381ln3v49' },
       createdBy: { S: 'lyxa42owwm' },
@@ -1304,12 +1370,6 @@ export const GROUPS: GroupsData = {
       id: { S: 'phwvt2bqsw' },
       createdBy: { S: '8n37a4kujjs' },
       name: { S: 'ff 11' },
-    },
-    {
-      createdAt: { S: '1702633294861' },
-      id: { S: 'h1ilyzpiz3' },
-      createdBy: { S: 'h5qgobaif3' },
-      name: { S: 'wsx' },
     },
     {
       createdAt: { S: '1702309133560' },
@@ -1420,6 +1480,12 @@ export const GROUPS: GroupsData = {
       name: { S: 'xx' },
     },
     {
+      createdAt: { S: '1702712771174' },
+      id: { S: '7x4uj4do64s' },
+      createdBy: { S: '0avgugfsrs5s' },
+      name: { S: '5th Chamber' },
+    },
+    {
       createdAt: { S: '1702501947352' },
       id: { S: '6r7l8saha5o' },
       createdBy: { S: '4864rsv2qr6' },
@@ -1454,6 +1520,18 @@ export const GROUPS: GroupsData = {
       id: { S: '88a8lbdn9p5' },
       createdBy: { S: '4864rsv2qr6' },
       name: { S: '234' },
+    },
+    {
+      createdAt: { S: '1702640227116' },
+      id: { S: 'fd5j26oc6a' },
+      createdBy: { S: '4z1m442lr5w' },
+      name: { S: "GAY LORD'S GYM" },
+    },
+    {
+      createdAt: { S: '1702722627153' },
+      id: { S: 'nmy62ty7ug' },
+      createdBy: { S: 'h5qgobaif3' },
+      name: { S: 'xcv' },
     },
     {
       createdAt: { S: '1702250513314' },
@@ -1508,12 +1586,6 @@ export const GROUPS: GroupsData = {
       id: { S: 'in25ek73hm' },
       createdBy: { S: 'vtovypprj2' },
       name: { S: 'AWAY' },
-    },
-    {
-      createdAt: { S: '1702521258899' },
-      id: { S: 'x6a24uc5fy' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'NewNewGroup' },
     },
     {
       createdAt: { S: '1702400338805' },
@@ -1594,6 +1666,12 @@ export const GROUPS: GroupsData = {
       name: { S: 'smorgon' },
     },
     {
+      createdAt: { S: '1702660047497' },
+      id: { S: 'j38r4l8g70l' },
+      createdBy: { S: 'jqy5xsttxa' },
+      name: { S: 'Test0010' },
+    },
+    {
       createdAt: { S: '1702308694132' },
       id: { S: 'ibg7h3trutl' },
       createdBy: { S: 'nj9jg49hic' },
@@ -1624,6 +1702,12 @@ export const GROUPS: GroupsData = {
       name: { S: 'New test group' },
     },
     {
+      createdAt: { S: '1702666350286' },
+      id: { S: 'ynca6nkwnme' },
+      createdBy: { S: 'qrtce6rf5hf' },
+      name: { S: 'Cyber Punks' },
+    },
+    {
       createdAt: { S: '1702317403355' },
       id: { S: 'q5w209mhtn' },
       createdBy: { S: '642dk1yk0z3' },
@@ -1634,6 +1718,12 @@ export const GROUPS: GroupsData = {
       id: { S: 'fd94bjzi36k' },
       createdBy: { S: '67vqsxoun2' },
       name: { S: 'newGroup' },
+    },
+    {
+      createdAt: { S: '1702668164064' },
+      id: { S: 'xeqhml7txjr' },
+      createdBy: { S: 'jrjixxn49yl' },
+      name: { S: 'qwerty' },
     },
     {
       createdAt: { S: '1702501209293' },
@@ -1652,18 +1742,6 @@ export const GROUPS: GroupsData = {
       id: { S: 'u7bkp9tigc' },
       createdBy: { S: 'qc6ffdt391' },
       name: { S: 'Dishwasher tips' },
-    },
-    {
-      createdAt: { S: '1702213291691' },
-      id: { S: 'd90aviweoir' },
-      createdBy: { S: 'wvzxq229oe9' },
-      name: { S: 'wowow' },
-    },
-    {
-      createdAt: { S: '1702521513277' },
-      id: { S: 'nvkce3lrjt' },
-      createdBy: { S: 'jrjixxn49yl' },
-      name: { S: 'NewNewGroup' },
     },
     {
       createdAt: { S: '1702552109498' },
@@ -1702,5 +1780,5 @@ export const GROUPS: GroupsData = {
       name: { S: 'MyCoolGroups' },
     },
   ],
-  ScannedCount: 283,
+  ScannedCount: 296,
 };

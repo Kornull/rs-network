@@ -18,18 +18,28 @@
     <button
       class="btn-create"
       mat-raised-button
-      color="primary">
+      color="primary"
+      (click)="createGroup()">
       Create group
     </button>
   </div>
   <ul class="group-list">
     @for (item of groups; track item.name) {
       <li class="group-item">
-        <a
-          class="group-item--link"
-          href="#"
-          >{{ item.name.S }}</a
-        >
+        <div class="">
+          <span class="group-item--icon">
+            <mat-icon>people</mat-icon>
+          </span>
+
+          <a
+            class="group-item--link"
+            href="#">
+            {{ item.name.S }}</a
+          >
+        </div>
+        @if (loginInfo?.uid === item.createdBy.S) {
+          <button>btn</button>
+        }
       </li>
     } @empty {
       <li class="group-item">There are no groups.</li>

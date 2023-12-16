@@ -73,5 +73,15 @@ export const UserReducer = createReducer(
         ...actions.groupsData,
       },
     };
+  }),
+  on(LoggedActions.addOwnGroup, (state, actions): UserState => {
+    return {
+      ...state,
+      groups: {
+        ...state.groups,
+        Count: state.groups.Count + 1,
+        Items: [actions.group, ...state.groups.Items],
+      },
+    };
   })
 );

@@ -4,22 +4,28 @@ import { Observable, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
-import { GroupInfo } from '../../../../core/store/models';
-import { TimerService } from '../../../../core/services';
+import { GroupInfo, UserRegisterData } from '../../../../core/store/models';
+import { LocalStorageService, TimerService } from '../../../../core/services';
 import { LoggedActions, selectGroupsInfo } from '../../../../core/store/redux';
+import { GroupsFormComponent } from './groups-form/groups-form.component';
+import { GROUPS } from './groups';
 
 @Component({
   selector: 'app-main-groups',
   standalone: true,
-  imports: [MatButtonModule, AsyncPipe],
+  imports: [MatButtonModule, AsyncPipe, MatIconModule],
   templateUrl: './main-groups.component.html',
   styleUrl: './main-groups.component.scss',
 })
-export class MainGroupsComponent implements OnInit, OnDestroy {
-  groups: GroupInfo[] = [];
+export class MainGroupsComponent implements OnDestroy {
+  groups: GroupInfo[] = GROUPS.Items;
 
   groupsCount: number = 0;
+
+  loginInfo: UserRegisterData | null = null;
 
   groups$!: Subscription;
 
@@ -31,26 +37,31 @@ export class MainGroupsComponent implements OnInit, OnDestroy {
 
   constructor(
     private timerService: TimerService,
-    private store: Store
-  ) {}
-
-  ngOnInit(): void {
-    this.groups$ = this.store
-      .select(selectGroupsInfo)
-      .pipe(
-        tap(res => {
-          if (!res.Items.length) {
-            this.store.dispatch(LoggedActions.getGroupsList());
-          } else {
-            this.groups = [...res.Items];
-            this.groupsCount = res.Count;
-          }
-        })
-      )
-      .subscribe();
-    this.timeNow$ = this.timerService.getCountdown();
-    this.disabledBtn$ = this.timerService.getRunTimer();
+    private store: Store,
+    private localStore: LocalStorageService,
+    public dialog: MatDialog
+  ) {
+    this.loginInfo = this.localStore.getLoginInfo();
   }
+
+  // ngOnInit(): void {
+  //   console.log(this.loginInfo);
+  //   this.groups$ = this.store
+  //     .select(selectGroupsInfo)
+  //     .pipe(
+  //       tap(res => {
+  //         if (!res.Items.length) {
+  //           this.store.dispatch(LoggedActions.getGroupsList());
+  //         } else {
+  //           this.groups = [...res.Items];
+  //           this.groupsCount = res.Count;
+  //         }
+  //       })
+  //     )
+  //     .subscribe();
+  //   this.timeNow$ = this.timerService.getCountdown();
+  //   this.disabledBtn$ = this.timerService.getRunTimer();
+  // }
 
   ngOnDestroy(): void {
     this.groups$.unsubscribe();
@@ -59,5 +70,9 @@ export class MainGroupsComponent implements OnInit, OnDestroy {
   updateList() {
     this.timerService.startCountdown();
     this.store.dispatch(LoggedActions.getGroupsList());
+  }
+
+  createGroup() {
+    this.dialog.open(GroupsFormComponent, { height: '300px', width: '400px' });
   }
 }
