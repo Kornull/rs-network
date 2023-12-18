@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guard';
+import { NotFoundComponent } from './shared';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -34,5 +35,9 @@ export const routes: Routes = [
       import('./pages/group-dialog/group-dialog.module').then(
         m => m.GroupDialogRoutingModule
       ),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];

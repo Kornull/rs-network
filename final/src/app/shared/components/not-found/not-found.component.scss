@@ -1,0 +1,31 @@
+.not {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 80%;
+  font-weight: 600;
+  background: var(--profile);
+
+  &-title {
+    font-size: 26px;
+    font-weight: inherit;
+  }
+  &-em {
+    font-size: 40px;
+  }
+
+  &-message {
+    font-size: 20px;
+    color: red;
+  }
+
+  &-link {
+    color: var(--link);
+
+    &:hover {
+      color: var(--link-hover);
+    }
+  }
+}
