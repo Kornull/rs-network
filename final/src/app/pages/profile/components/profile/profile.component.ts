@@ -16,6 +16,7 @@ import { ProfileLogoutBtnComponent } from '../profile-logout-btn/profile-logout-
 
 import { ProfileInfoType } from '../../../../core/store/models';
 import { RequestsService, SnackBarService } from '../../../../core/services';
+import { LoaderComponent } from '../../../../shared';
 
 @Component({
   selector: 'app-profile',
@@ -26,6 +27,7 @@ import { RequestsService, SnackBarService } from '../../../../core/services';
     MatIconModule,
     ProfileFormComponent,
     ProfileLogoutBtnComponent,
+    LoaderComponent,
   ],
   providers: [NgOptimizedImage],
   templateUrl: './profile.component.html',
