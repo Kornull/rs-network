@@ -10,6 +10,8 @@ export type ProfileInfoType = {
   [T in UserProfileData]: string;
 };
 
+export type DialogData = Record<string, GroupMessage[]>;
+
 export interface UserState {
   'user-logged': boolean;
   profile: ProfileInfoType | null;
@@ -18,6 +20,7 @@ export interface UserState {
   groups: GroupsData;
   users: UsersData;
   conversations: UsersConversationData;
+  dialogs: DialogData;
 }
 export interface UserListPersonalData {
   name: { [T in DataResponseType]: string };

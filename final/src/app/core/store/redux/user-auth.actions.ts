@@ -11,6 +11,7 @@ export const updateInvalidEmails = createAction(
   '[Register Page] Update invalid emails',
   props<{ emails: string[] }>()
 );
+
 export const updateUserLogged = createAction(
   '[Login Page] Update Used isLogin',
   props<{ isLogged: boolean }>()

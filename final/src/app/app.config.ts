@@ -12,7 +12,11 @@ import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
 
-import { AuthEffects, UserReducer } from './core/store/redux';
+import {
+  AuthEffects,
+  ConversationEffects,
+  UserReducer,
+} from './core/store/redux';
 import { UserLoggedEffects } from './core/store/redux/user-logged.effects';
 import { ProfileDataInterceptor } from './core/interceptors';
 
@@ -21,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideStore({ user: UserReducer }),
-    provideEffects(AuthEffects, UserLoggedEffects),
+    provideEffects(AuthEffects, UserLoggedEffects, ConversationEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptorsFromDi()),
 

@@ -27,7 +27,9 @@ export class ProfileLogoutBtnComponent {
         this.deleteCookie();
         localStorage.clear();
         sessionStorage.clear();
-        this.router.navigate(['']);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1800);
       },
       error: err => {
         const { error } = err;

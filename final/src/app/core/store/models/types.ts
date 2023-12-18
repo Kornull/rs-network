@@ -53,3 +53,10 @@ export type UserRegisterData = UserLoginSuccess & {
 export type ResponseCreateGroup = {
   groupID: string;
 };
+
+export type GroupMessagesDataType = {
+  name: string;
+  time: string;
+  message: string;
+  id: string;
+};

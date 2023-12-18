@@ -56,3 +56,29 @@ export const selectAllUsersInfo = createSelector(
     };
   }
 );
+
+export const selectGroupMessages = (props: { groupId: string }) =>
+  createSelector(selectAuthState, state => {
+    console.log('messGroup');
+    const usersObj = Object.assign(
+      {},
+      ...state.users.Items.map(item => {
+        return { [item.uid.S]: item.name.S };
+      })
+    );
+
+    const messGroup = state.dialogs[props.groupId]
+      .map(mes => {
+        return {
+          name: usersObj[mes.authorID.S],
+          time: mes.createdAt.S,
+          message: mes.message.S,
+          id: mes.authorID.S,
+        };
+      })
+      .sort((a, b) => +a.time - +b.time);
+    // const conversationList = state.dialogs[`${props.groupId}`].map(item => item);
+    console.log(messGroup);
+
+    return messGroup;
+  });

@@ -99,3 +99,16 @@ body {
     color: #fff !important;
   }
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 145, 255, 0.979) inset;
+  background-color: var(--group-link);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--link-hover);
+}
