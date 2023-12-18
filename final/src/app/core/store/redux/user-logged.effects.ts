@@ -49,7 +49,6 @@ export class UserLoggedEffects {
               if (error.message.includes('was not')) {
                 localStorage.clear();
                 setTimeout(() => {
-                  this.router.navigate(['/']);
                   window.location.reload();
                 }, 1800);
               }

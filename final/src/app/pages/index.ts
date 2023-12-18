@@ -1,2 +1,5 @@
-export * from './registration/components/registration/registration.component';
-export * from './auth/components/auth/auth.component';
+export * from './auth';
+export * from './registration';
+export * from './main';
+export * from './profile';
+export * from './group-dialog';

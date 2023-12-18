@@ -1,40 +1,38 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guard';
 import { NotFoundComponent } from './shared';
+import {
+  AuthComponent,
+  GroupDialogComponent,
+  MainComponent,
+  ProfileComponent,
+  RegistrationComponent,
+} from './pages';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/main', pathMatch: 'full' },
   {
-    path: 'main',
+    path: '',
+    pathMatch: 'full',
     canActivate: [authGuard],
-    loadChildren: () =>
-      import('./pages/main/main.module').then(m => m.MainModule),
+    component: MainComponent,
   },
   {
     path: 'signin',
-    loadChildren: () =>
-      import('./pages/auth/auth.module').then(m => m.AuthModule),
+    component: AuthComponent,
   },
   {
     path: 'signup',
-    loadChildren: () =>
-      import('./pages/registration/registration.module').then(
-        m => m.RegistrationModule
-      ),
+    component: RegistrationComponent,
   },
   {
     path: 'profile',
     canActivate: [authGuard],
-    loadChildren: () =>
-      import('./pages/profile/profile.module').then(m => m.RegistrationModule),
+    component: ProfileComponent,
   },
   {
     path: 'group/:id',
     canActivate: [authGuard],
-    loadChildren: () =>
-      import('./pages/group-dialog/group-dialog.module').then(
-        m => m.GroupDialogRoutingModule
-      ),
+    component: GroupDialogComponent,
   },
   {
     path: '**',

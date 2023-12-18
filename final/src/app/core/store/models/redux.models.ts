@@ -69,3 +69,13 @@ export interface UserDataInfo {
   count: number;
   users: UserDataAddConversation[];
 }
+
+export interface GroupMessage {
+  authorID: { [T in DataResponseType]: string };
+  createdAt: { [T in DataResponseType]: string };
+  message: { [T in DataResponseType]: string };
+}
+
+export interface GroupMessages extends DefaultData {
+  Items: GroupMessage[];
+}

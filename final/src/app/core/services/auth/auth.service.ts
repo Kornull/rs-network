@@ -8,6 +8,8 @@ import { RequestsData, UserLogin, UserLoginSuccess } from '../../store/models';
   providedIn: 'root',
 })
 export class AuthService {
+  private isRegister: boolean = false;
+
   constructor(private http: HttpClient) {}
 
   auth(data: UserLogin): Observable<UserLoginSuccess> {

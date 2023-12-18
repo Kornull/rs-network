@@ -27,7 +27,7 @@ export class ProfileLogoutBtnComponent {
         this.deleteCookie();
         localStorage.clear();
         sessionStorage.clear();
-        this.router.navigate(['/signin']);
+        this.router.navigate(['']);
       },
       error: err => {
         const { error } = err;
@@ -38,7 +38,6 @@ export class ProfileLogoutBtnComponent {
             this.toast.openSnack(error.message, true);
             localStorage.clear();
             setTimeout(() => {
-              this.router.navigate(['/']);
               window.location.reload();
             }, 1800);
             return;
