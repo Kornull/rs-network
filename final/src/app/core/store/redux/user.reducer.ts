@@ -116,5 +116,10 @@ export const UserReducer = createReducer(
         ...actions.conversation,
       },
     };
+  }),
+  on(LoggedActions.isUserNotFound, (): UserState => {
+    return {
+      ...initialState,
+    };
   })
 );

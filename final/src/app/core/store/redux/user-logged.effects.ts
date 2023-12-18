@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { EMPTY, catchError, exhaustMap, forkJoin, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 import { LoggedActions } from './action-types';
@@ -18,6 +20,8 @@ export class UserLoggedEffects {
     private toast: SnackBarService,
     private request: RequestsService,
     private localStore: LocalStorageService,
+    private store: Store,
+    private router: Router,
     public modal: MatDialog
   ) {}
 
@@ -38,9 +42,17 @@ export class UserLoggedEffects {
           }),
           catchError(err => {
             const { error } = err;
+
             if (error === null) {
               this.toast.openSnack(err.statusText, true);
             } else {
+              if (error.message.includes('was not')) {
+                localStorage.clear();
+                setTimeout(() => {
+                  this.router.navigate(['/']);
+                  window.location.reload();
+                }, 1800);
+              }
               this.toast.openSnack(error.message, true);
             }
             return EMPTY;

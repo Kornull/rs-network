@@ -30,7 +30,7 @@ export class RequestsService {
   }
 
   profileLogout() {
-    return this.http.delete(`${RequestsData.URL}${RequestsData.PROFILE}`);
+    return this.http.delete(`${RequestsData.URL}${RequestsData.LOGOUT}`);
   }
 
   getUsersGroups(): Observable<GroupsData> {

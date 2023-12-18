@@ -27,6 +27,7 @@ export enum ErrorTypes {
   INVALID_REG_FORM = 'InvalidFormDataException',
   USER_ERROR_LOGIN = 'NotFoundException',
   INVALID_LOGIN_FORM = 'InvalidFormDataException"',
+  TOKEN_ERROR = 'Current session token is not valid.',
 }
 
 export enum LocalStoreKeys {

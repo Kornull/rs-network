@@ -52,3 +52,7 @@ export const setUserAllLists = createAction(
   '[Main Page: Users] Update user list',
   props<{ users: UsersData; conversation: UsersConversationData }>()
 );
+
+export const isUserNotFound = createAction(
+  '[Profile] If user not found - logout'
+);
