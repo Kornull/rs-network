@@ -83,8 +83,10 @@ export class UserLoggedEffects {
     return this.actions$.pipe(
       ofType(LoggedActions.setOwnGroup),
       exhaustMap(data => {
+        console.log(data.titleGroup);
         return this.request.createGroup(data.titleGroup).pipe(
           map(groupId => {
+            console.log(groupId);
             const loginInfo: UserRegisterData | null =
               this.localStore.getLoginInfo();
 

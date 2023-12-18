@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe, NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Observable, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -20,7 +21,7 @@ import {
 @Component({
   selector: 'app-main-groups',
   standalone: true,
-  imports: [MatButtonModule, AsyncPipe, MatIconModule, NgClass],
+  imports: [MatButtonModule, AsyncPipe, MatIconModule, NgClass, RouterLink],
   templateUrl: './main-groups.component.html',
   styleUrl: './main-groups.component.scss',
 })

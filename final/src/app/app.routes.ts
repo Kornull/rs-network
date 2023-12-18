@@ -27,4 +27,12 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./pages/profile/profile.module').then(m => m.RegistrationModule),
   },
+  {
+    path: 'group/:id',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./pages/group-dialog/group-dialog.module').then(
+        m => m.GroupDialogRoutingModule
+      ),
+  },
 ];
