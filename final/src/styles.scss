@@ -1,4 +1,89 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import './scss/index';
+@include mat.core();
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.lightTheme {
+  $light-primary: mat.define-palette(mat.$blue-palette);
+  $light-accent: mat.define-palette(mat.$green-palette);
+  $light-warm: mat.define-palette(mat.$red-palette);
+
+  $light-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $light-primary,
+        accent: $light-accent,
+        warm: $light-warm,
+      ),
+    )
+  );
+
+  @include mat.all-component-themes($light-theme);
+}
+
+.darkTheme {
+  $dark-primary: mat.define-palette(mat.$indigo-palette);
+  $dark-accent: mat.define-palette(mat.$lime-palette);
+  $dark-warm: mat.define-palette(mat.$red-palette);
+
+  $dark-theme: mat.define-dark-theme(
+    (
+      color: (
+        primary: $dark-primary,
+        accent: $dark-accent,
+        warm: $dark-warm,
+      ),
+    )
+  );
+
+  @include mat.all-component-colors($dark-theme);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  color: var(--default-color);
+  background: var(--default-background);
+}
+
+.alert-red {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 14px var(--shadow);
+  margin: 48px !important;
+  & > div {
+    padding: 0 !important;
+  }
+
+  & * {
+    font-size: 14px;
+    background-color:  #b90c00 ;
+    color: #fff !important;
+  }
+}
+
+.alert-green {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 14px var(--shadow);
+  margin: 48px !important;
+  & > div {
+    padding: 0 !important;
+  }
+
+  & * {
+    font-size: 14px;
+    background-color:  #025710 ;
+    color: #fff !important;
+  }
+}

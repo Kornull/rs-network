@@ -1,0 +1,138 @@
+<div class="form-container">
+  <h2 class="form-title">Registration</h2>
+  <form
+    class="form"
+    (submit)="onSubmit()"
+    [formGroup]="registerForm">
+    <mat-form-field
+      color="accent"
+      class="form-input">
+      <mat-label>Login</mat-label>
+      <input
+        matInput
+        formControlName="name" />
+      @if (registerForm.get('name')!.hasError('required')) {
+        <mat-error>Please enter your login!</mat-error>
+      }
+      @if (
+        registerForm.get('name')?.hasError('minlength') &&
+        registerForm.get('name')?.touched
+      ) {
+        <mat-error
+          >Min login len -
+          {{
+            registerForm.get('name')?.errors?.['minlength']?.[
+              'requiredLength'
+            ] || '2'
+          }}, login len now -
+          {{
+            registerForm.get('name')?.errors?.['minlength']?.['actualLength'] ||
+              '0'
+          }}</mat-error
+        >
+      }
+      @if (
+        registerForm.get('name')?.hasError('maxlength') &&
+        registerForm.get('name')?.touched
+      ) {
+        <mat-error
+          >Max login len -
+          {{
+            registerForm.get('name')?.errors?.['maxlength']?.['requiredLength']
+          }}, login len now -
+          {{
+            registerForm.get('name')?.errors?.['maxlength']?.['actualLength']
+          }}</mat-error
+        >
+      }
+    </mat-form-field>
+
+    <mat-form-field
+      color="accent"
+      class="form-input">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        formControlName="email" />
+      @if (
+        !registerForm.get('email')?.valid &&
+        !registerForm.get('email')?.hasError('required') &&
+        !registerForm.get('email')?.hasError('emailExist')
+      ) {
+        <mat-error
+          >The email is invalid! (&#35;&#35;&#64;&#35;&#35;&#46;&#35;&#35;)
+        </mat-error>
+      }
+      @if (registerForm.get('email')!.hasError('required')) {
+        <mat-error>Please enter your email! </mat-error>
+      }
+      @if (registerForm.get('email')?.hasError('emailExist')) {
+        <mat-error>User already exists!</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field
+      color="accent"
+      class="form-input">
+      <mat-label>Enter your password!</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        [type]="hide ? 'password' : 'text'" />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide">
+        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+
+      @if (registerForm.get('password')!.hasError('required')) {
+        <mat-error>Please enter your password!</mat-error>
+      }
+      @if (
+        registerForm.get('password')?.hasError('minlength') &&
+        !registerForm.get('password')?.valid &&
+        registerForm.get('password')?.touched
+      ) {
+        <mat-error
+          >Min length password -
+          {{
+            registerForm.get('password')?.errors?.['minlength']?.[
+              'requiredLength'
+            ]
+          }}, your length -
+          {{
+            registerForm.get('password')?.errors?.['minlength']?.[
+              'actualLength'
+            ]
+          }}</mat-error
+        >
+      }
+      @if (registerForm.get('password')?.hasError('invalidPassword')) {
+        <mat-error
+          >Your password isn't strong enough! - (!12qQ#%$S#s)</mat-error
+        >
+      }
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      class="form-btn"
+      color="primary"
+      type="submit"
+      [disabled]="isDisabled ? !registerForm.valid : registerForm.valid">
+      Register
+    </button>
+  </form>
+  <h4 class="form-link">
+    Already have an account? -
+    <a
+      class="form-link--click"
+      routerLink="/signin"
+      >Login</a
+    >
+  </h4>
+</div>
