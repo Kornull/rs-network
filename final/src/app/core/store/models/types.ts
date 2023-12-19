@@ -15,6 +15,11 @@ export enum RequestsData {
   LOGIN = '/login',
   LOGOUT = '/logout',
   PROFILE = '/profile',
+  GROUP_LIST = '/groups/list',
+  USER_LIST = '/users',
+  USER_CONVERSATION = '/conversations/list',
+  CREATE_GROUP = '/groups/create',
+  DELETE_GROUP = '/groups/delete?groupID=',
 }
 
 export enum ErrorTypes {
@@ -22,6 +27,7 @@ export enum ErrorTypes {
   INVALID_REG_FORM = 'InvalidFormDataException',
   USER_ERROR_LOGIN = 'NotFoundException',
   INVALID_LOGIN_FORM = 'InvalidFormDataException"',
+  TOKEN_ERROR = 'Current session token is not valid.',
 }
 
 export enum LocalStoreKeys {
@@ -44,8 +50,13 @@ export type UserRegisterData = UserLoginSuccess & {
   email: string;
 };
 
-type UserProfileData = 'createdAt' | 'email' | 'name' | 'uid';
+export type ResponseCreateGroup = {
+  groupID: string;
+};
 
-export type ProfileInfoType = {
-  [T in UserProfileData]: string;
+export type GroupMessagesDataType = {
+  name: string;
+  time: string;
+  message: string;
+  id: string;
 };

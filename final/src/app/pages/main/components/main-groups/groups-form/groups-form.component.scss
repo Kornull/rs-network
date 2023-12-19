@@ -1,0 +1,30 @@
+@import '../../../../../../scss/mixins';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+
+  &-input {
+    width: 100%;
+  }
+}
+
+.btn-close {
+  @include hover-btn;
+}
+
+.btn-create {
+  background-color: var(--btn-group--bg) !important;
+  color: var(--default-color) !important;
+
+  @include hover-btn;
+}
+
+
+:disabled {
+  background: #c5c5c5 !important;
+  color: #e9e9e9 !important;
+}

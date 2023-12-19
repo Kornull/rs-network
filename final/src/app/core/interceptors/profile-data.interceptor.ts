@@ -38,9 +38,7 @@ export class ProfileDataInterceptor implements HttpInterceptor {
     this.id = this.userDataLogged?.uid || '';
     this.mail = this.userDataLogged?.email || '';
     const requestUrl = request.clone({
-      url: `${RequestsData.URL}${
-        request.method === 'DELETE' ? RequestsData.LOGOUT : RequestsData.PROFILE
-      }`,
+      url: `${request.url}`,
       setHeaders: {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
@@ -49,6 +47,6 @@ export class ProfileDataInterceptor implements HttpInterceptor {
       },
     });
 
-    return next.handle(requestUrl).pipe(retry(1));
+    return next.handle(requestUrl).pipe(retry(0));
   }
 }

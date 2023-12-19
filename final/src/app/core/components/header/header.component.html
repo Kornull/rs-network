@@ -1,14 +1,14 @@
 <mat-toolbar
   class="header"
   color="primary">
-  <a class="header-logo" routerLink="/main">Rs-network</a>
+  <a class="header-logo" routerLink="/">Rs-network</a>
   <span class="example-spacer"></span>
   <div class="">
     @if (isUserLogged) {
       <button
         mat-icon-button
         (click)="onRunToProfile()">
-        <mat-icon> person</mat-icon>
+        <mat-icon>account_circle</mat-icon>
       </button>
     }
     <button

@@ -1,0 +1,100 @@
+<div class="form-container">
+  <form
+    class="form"
+    (submit)="onSubmit()"
+    [formGroup]="authForm">
+    <h2 class="form-title">LogIn</h2>
+    <mat-form-field
+      color="accent"
+      class="form-input">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        formControlName="email"
+        autocomplete="off" />
+      @if (
+        !authForm.get('email')?.valid &&
+        !authForm.get('email')?.hasError('required') &&
+        !authForm.get('email')?.hasError('isEmailExist')
+      ) {
+        <mat-error
+          >The email is invalid! (&#35;&#35;&#64;&#35;&#35;&#46;&#35;&#35;)
+        </mat-error>
+      }
+      @if (authForm.get('email')!.hasError('required')) {
+        <mat-error>Please enter your email! </mat-error>
+      }
+      @if (authForm.get('email')?.hasError('isEmailExist')) {
+        <mat-error
+          >Email and/or password doesn't exist in the system.</mat-error
+        >
+      }
+    </mat-form-field>
+
+    <mat-form-field
+      color="accent"
+      class="form-input">
+      <mat-label>Enter your password!</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        [type]="hide ? 'password' : 'text'"
+        autocomplete="new-password" />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide">
+        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+
+      @if (authForm.get('password')!.hasError('required')) {
+        <mat-error>Please enter your password!</mat-error>
+      }
+      @if (
+        authForm.get('password')?.hasError('minlength') &&
+        !authForm.get('password')?.valid &&
+        authForm.get('password')?.touched
+      ) {
+        <mat-error
+          >Min length password -
+          {{
+            authForm.get('password')?.errors?.['minlength']?.['requiredLength']
+          }}, your length -
+          {{
+            authForm.get('password')?.errors?.['minlength']?.['actualLength']
+          }}</mat-error
+        >
+      }
+      @if (authForm.get('password')?.hasError('invalidPassword')) {
+        <mat-error
+          >Your password isn't strong enough! - (!12qQ#%$S#s)</mat-error
+        >
+      }
+      @if (authForm.get('password')?.hasError('isPasswordExist')) {
+        <mat-error
+          >Email and/or password doesn't exist in the system.</mat-error
+        >
+      }
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      class="form-btn"
+      color="primary"
+      type="submit"
+      [disabled]="isDisabled ? !authForm.valid : authForm.valid">
+      Login
+    </button>
+    <h4 class="form-link">
+      Not yet registered? &#8259;&#160;
+      <a
+        class="form-link--click"
+        [routerLink]="['/signup']"
+        >Register</a
+      >
+    </h4>
+  </form>
+</div>

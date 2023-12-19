@@ -1,0 +1,70 @@
+@if (name) {
+  <div class="profile-container">
+    <div class="profile">
+      <app-profile-logout-btn></app-profile-logout-btn>
+      <h2 class="profile-title">Profile:</h2>
+      <div class="profile-card">
+        <div class="avatar">
+          <div class="profile-card--avatar">
+            <img
+              class="profile-card--img"
+              src="./assets/ava.png"
+              priority
+              alt="" />
+          </div>
+        </div>
+        <div class="profile-card--description">
+          @if (!isUpdateProfile) {
+            <h3 class="description">
+              Name: <span>{{ name }}</span>
+            </h3>
+          } @else {
+            <app-profile-form
+              [oldName]="name"
+              [disabledInput]="reset"
+              (newName)="newName = $event"
+              (validForm)="validForm = $event"></app-profile-form>
+          }
+          <h3 class="description">
+            Email: <span>{{ email }}</span>
+          </h3>
+          <h3 class="description">
+            Id: <span>{{ uid }}</span>
+          </h3>
+          <h3 class="description">
+            Register date: <span>{{ createAt | date: 'medium' }}</span>
+          </h3>
+        </div>
+      </div>
+      <div class="profile-btn--block">
+        @if (!isUpdateProfile) {
+          <button
+            class="profile-btn"
+            mat-stroked-button
+            color="primary"
+            (click)="onChangeUserInfo()">
+            Change
+          </button>
+        } @else {
+          <button
+            class="profile-btn"
+            mat-stroked-button
+            color="accent"
+            (click)="onCloseInput()"
+            [disabled]="reset">
+            Cancel</button
+          ><button
+            class="profile-btn"
+            mat-raised-button
+            color="warn"
+            (click)="onSaveChanges()"
+            [disabled]="!validForm">
+            Save
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+  <app-loader></app-loader>
+}

@@ -1,0 +1,14 @@
+.main-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+  max-width: 1420px;
+  height: calc(100vh - 84px);
+  margin: 0 auto;
+}
+
+.main-groups,
+.main-people {
+  width: 50%;
+}

@@ -1,0 +1,133 @@
+@import '../../../../../scss/mixins';
+
+.group {
+  background: var(--profile);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid var(--border-main);
+  box-shadow: 0 0 4px var(--hover);
+  border-radius: 6px;
+  padding: 6px;
+
+
+  &-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &--update {
+      display: flex;
+      width: 40%;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+    }
+  }
+
+  &-list {
+    height: 700px;
+    border: 1px solid var(--border-main);
+    border-radius: 4px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 60px;
+    padding: 10px 20px;
+    border-bottom: 1px dashed var(--default-color);
+
+    &--info {
+      display: flex;
+      align-items: center;
+      min-width: 40px;
+      justify-content: flex-start;
+      gap: 10px;
+
+    }
+
+    &--icon {
+      height: 24px;
+      font-size: 16px;
+      color: var(--group-link);
+    }
+
+    &--link {
+      font-size: 18px;
+      color: var(--group-link);
+      text-decoration: none;
+      width: 100%;
+      padding: 0 6px;
+      transition: color 0.2s linear;
+      text-wrap: wrap;
+      word-wrap: break-word;
+
+      &:hover {
+        color: var(--link-hover);
+      }
+    }
+  }
+
+
+}
+
+
+.own {
+  background: var(--conversation)
+}
+.update-btn {
+  @include hover-btn;
+}
+
+.btn-create {
+  background-color: var(--btn-group--bg) !important;
+  color: var(--default-color) !important;
+
+  @include hover-btn;
+}
+
+.btn-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000000 !important;
+  padding: 0 ;
+  margin: 0 ;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 20px;
+  color: var(--group-link) ;
+
+  transition: color .2s linear;
+
+  &:hover {
+    color: #ff0000 !important;
+  }
+
+  &:active {
+    color: #a80101 !important;
+  }
+
+
+  &-icon {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+  }
+}
+
+.timer {
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  width: 50px;
+  border: 1px dashed var(--default-color);
+}

@@ -1,0 +1,24 @@
+<div class="delete-group">
+  <h1
+    class="delete-group--title"
+    mat-dialog-title>
+    Are you sure you want to delete the <span>{{ title }}</span> group?
+  </h1>
+
+  <div class="delete-group--btns">
+    <button
+      mat-raised-button
+      class="btn-close"
+      type="button"
+      (click)="onNoClick()">
+      Close
+    </button>
+    <button
+      mat-raised-button
+      class="btn-delete"
+      type="button"
+      (click)="removeGroup()">
+      Remove
+    </button>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<h1 mat-dialog-title>Create Group</h1>
+
+<form
+  mat-dialog-content
+  class="form"
+  [formGroup]="createGroup"
+  (submit)="onSubmit()">
+  <mat-form-field
+    class="form-input"
+    color="accent"
+    class="form-input">
+    <mat-label>Favorite Animal</mat-label>
+    <input
+      matInput
+      formControlName="title" />
+    @if (createGroup.get('title')!.hasError('required')) {
+      <mat-error>Please enter your name!</mat-error>
+    }
+    @if (
+      createGroup.get('title')?.hasError('minlength') &&
+      createGroup.get('title')?.touched
+    ) {
+      <mat-error
+        >Min name len -
+        {{
+          createGroup.get('title')?.errors?.['minlength']?.['requiredLength'] ||
+            '2'
+        }}, name now -
+        {{
+          createGroup.get('title')?.errors?.['minlength']?.['actualLength'] ||
+            '0'
+        }}</mat-error
+      >
+    }
+    @if (
+      createGroup.get('title')?.hasError('maxlength') &&
+      createGroup.get('title')?.touched
+    ) {
+      <mat-error
+        >Max name len -
+        {{
+          createGroup.get('title')?.errors?.['maxlength']?.['requiredLength']
+        }}, name len now -
+        {{
+          createGroup.get('title')?.errors?.['maxlength']?.['actualLength']
+        }}</mat-error
+      >
+    }
+    @if (createGroup.get('title')?.hasError('invalidTitle')) {
+      <mat-error>Name cannot contain special signs.</mat-error>
+    }
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+    <button
+      mat-raised-button
+      class="btn-close"
+      type="button"
+      (click)="onNoClick()">
+      Close
+    </button>
+    <button
+      mat-raised-button
+      class="btn-create"
+      type="submit"
+      [disabled]="!createGroup.valid">
+      Create
+    </button>
+  </div>
+</form>

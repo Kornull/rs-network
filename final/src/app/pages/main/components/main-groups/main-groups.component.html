@@ -1,0 +1,54 @@
+<div class="group">
+  <h1>Groups: {{ groupsCount }}</h1>
+  <div class="group-btn">
+    <div class="group-btn--update">
+      <button
+        class="update-btn"
+        mat-raised-button
+        color="primary"
+        (click)="updateList()"
+        [disabled]="disabledBtn$ | async">
+        Update list
+      </button>
+      @if (disabledBtn$ | async) {
+        <div class="timer">{{ timeNow$ | async }} s</div>
+      }
+    </div>
+
+    <button
+      class="btn-create"
+      mat-raised-button
+      color="primary"
+      (click)="createGroup()">
+      Create group
+    </button>
+  </div>
+  <ul class="group-list">
+    @for (item of groups; track item.name) {
+      <li
+        class="group-item"
+        [ngClass]="{ own: loginInfo?.uid === item.createdBy.S }">
+        <div class="group-item--info">
+          <span class="group-item--icon">
+            <mat-icon>group</mat-icon>
+          </span>
+
+          <a
+            class="group-item--link"
+            [routerLink]="'/group/' + item.id.S">
+            {{ item.name.S }}</a
+          >
+        </div>
+        @if (loginInfo?.uid === item.createdBy.S) {
+          <button
+            class="btn-delete"
+            (click)="deleteGroup(item.id.S, item.name.S)">
+            <mat-icon class="btn-delete--icon">delete</mat-icon>
+          </button>
+        }
+      </li>
+    } @empty {
+      <li class="group-item">There are no groups.</li>
+    }
+  </ul>
+</div>
