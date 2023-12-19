@@ -22,7 +22,10 @@ import {
   SnackBarService,
 } from '../../../../core/services';
 import { ConversationActions } from '../../../../core/store/redux';
-import { UserRegisterData } from '../../../../core/store/models';
+import {
+  GroupMessagesDataType,
+  UserRegisterData,
+} from '../../../../core/store/models';
 
 @Component({
   selector: 'app-dialog-form',
@@ -49,6 +52,8 @@ export class DialogFormComponent implements OnInit {
 
   @Input() lastTimeSent!: string;
 
+  @Input() messages: GroupMessagesDataType[] = [];
+
   messageForm!: FormGroup;
 
   localData!: UserRegisterData | null;
@@ -59,9 +64,7 @@ export class DialogFormComponent implements OnInit {
     private localStore: LocalStorageService,
     private request: RequestsService,
     private toast: SnackBarService
-  ) {
-    this.localData = this.localStore.getLoginInfo();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.messageForm = this.fb.group({
@@ -71,16 +74,6 @@ export class DialogFormComponent implements OnInit {
 
   onSubmit() {
     if (this.messageForm.valid) {
-      // this.store.dispatch(
-      //   ConversationActions.sendGroupMessage({
-      //     dialog: {
-      //       userId: this.localData?.uid || '',
-      //       createAt: `${new Date().getTime()}`,
-      //       message: this.messageForm.controls['message'].value,
-      //       groupId: this.groupId,
-      //     },
-      //   })
-      // );
       this.request
         .sendMessageToGroup(
           this.messageForm.controls['message'].value,
@@ -93,7 +86,7 @@ export class DialogFormComponent implements OnInit {
               ConversationActions.getGroupMessages({
                 dialog: {
                   groupId: this.groupId,
-                  since: this.lastTimeSent,
+                  since: this.messages[this.messages.length - 1].time,
                 },
               })
             );

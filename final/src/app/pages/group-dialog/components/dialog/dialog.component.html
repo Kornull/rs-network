@@ -1,7 +1,9 @@
 <div class="dialog">
   <div class="dialog-header">
     <div class="dialog-link--block">
-      <a class="dialog-link" [routerLink]="['']">
+      <a
+        class="dialog-link"
+        [routerLink]="['']">
         <mat-icon>arrow_back</mat-icon>
       </a>
     </div>
@@ -57,5 +59,6 @@
   <app-dialog-form
     class="dialog-form"
     [groupId]="groupId"
-    [lastTimeSent]="lastSentTime"></app-dialog-form>
+    [lastTimeSent]="lastSentTime"
+    [messages]="messages"></app-dialog-form>
 </div>
