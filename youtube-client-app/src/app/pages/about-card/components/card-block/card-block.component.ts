@@ -2,15 +2,16 @@ import { SearchValueService } from 'src/app/core/services/search-value/search-va
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
+import { Subject, takeUntil, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import {
   FilterActivateService,
   FilterOpenedService,
-  SearchResultService,
   SortResultService,
 } from 'src/app/core/services';
-import { DefaultDataCustomBtn, SearchItemDetails } from 'src/app/core/store';
-import { Subject, takeUntil } from 'rxjs';
+import { DefaultDataCustomBtn, CardDataType } from 'src/app/core/store';
+import { selectGetOpenedCard } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-card-block',
@@ -20,17 +21,19 @@ import { Subject, takeUntil } from 'rxjs';
 export class CardBlockComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  cardDetails: SearchItemDetails | null;
+  cardDetails: CardDataType | null;
+
+  cardDetails$: Observable<CardDataType | undefined>;
 
   goBackBtnStyle: string = DefaultDataCustomBtn.GO_BACK;
 
   constructor(
+    private store: Store,
     private route: ActivatedRoute,
     private location: Location,
     private filterActivateService: FilterActivateService,
     private filterOpenedService: FilterOpenedService,
     private sortResultService: SortResultService,
-    private searchResultService: SearchResultService,
     private searchValueService: SearchValueService
   ) {}
 
@@ -39,10 +42,13 @@ export class CardBlockComponent implements OnInit, OnDestroy {
     this.filterActivateService.turnOffBtn();
     this.sortResultService.resetSort();
     this.route.params.subscribe((params: Params) => {
-      this.searchResultService
-        .getCard(params['id'])
-        .subscribe(card => (this.cardDetails = card));
+      this.cardDetails$ = this.store.select(
+        selectGetOpenedCard({
+          id: params['id'],
+        })
+      );
     });
+
     takeUntil(this.destroy$);
     this.searchValueService.setValue('');
   }

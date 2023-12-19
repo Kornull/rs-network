@@ -1,6 +1,7 @@
 @import 'src/scss/variables';
+@import 'src/scss/mixins';
 
-.item{
+.item {
   position: relative;
   width: 264px;
   height: 327px;
@@ -36,7 +37,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 240px;
+    width: 100%;
+    max-width: 240px;
+    text-wrap: wrap;
     padding: 0;
     margin: 0 auto;
   }
@@ -69,6 +72,9 @@
     padding-left: 8px;
     text-align: left;
     word-wrap: break-word;
+    width: 100%;
+    max-width: 240px;
+    text-wrap: wrap;
   }
 
   &__button {
@@ -82,7 +88,14 @@
       position: absolute;
       bottom: 10px;
       left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
       width: 100%;
+    }
+
+    &-icon {
+      @include card-icon-style;
     }
 
     &:hover {

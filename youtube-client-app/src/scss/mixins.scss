@@ -4,3 +4,13 @@
   justify-content: center;
   margin: 0 !important;
 }
+
+
+@mixin card-icon-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  width: 36px;
+  height: 36px;
+}

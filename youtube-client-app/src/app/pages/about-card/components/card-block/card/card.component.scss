@@ -1,4 +1,5 @@
 @import 'src/scss/variables';
+@import 'src/scss/mixins';
 
 .details {
   position: relative;
@@ -15,7 +16,19 @@
     flex-direction: column;
     height: auto;
   }
+  &__video {
+    font-size: 18px;
+    text-decoration: none;
+    color: $primary-color;
+    transition:
+      color 0.2s linear,
+      text-decoration 0.2s linear;
 
+    &:hover {
+      color: $btn-hover-color;
+      text-decoration: underline;
+    }
+  }
   &__image {
     border-bottom-left-radius: 8px;
     width: 60%;
@@ -56,6 +69,7 @@
 
   &__description {
     height: 80%;
+
     &-title {
       font-size: 14px;
       font-weight: 500;
@@ -100,6 +114,21 @@
       &--logo {
         transform: scale(0.6);
       }
+    }
+  }
+  &__button {
+    &-block {
+      position: absolute;
+      bottom: 20px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+    }
+
+    &-icon {
+      @include card-icon-style;
     }
   }
 }

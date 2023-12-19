@@ -1,49 +1,83 @@
 <div class="details">
   <img
     class="details__image"
-    src="{{ card.snippet.thumbnails.high.url }}"
-    alt="{{ card.snippet.localized.title }}" />
+    src="{{ card.value.imageLink }}"
+    alt="{{ card.value.title }}" />
 
   <div class="details__block">
     <div class="details__title-block">
-      <h2>#{{ card.snippet.channelTitle }}</h2>
+      <h2>#{{ card.value.title }}</h2>
       <p class="details__title-date">
-        {{ card.snippet.publishedAt | date: 'EEE-dd-MMM-YYYY' }}
+        {{ card.value.date | date: 'EEE-dd-MMM-YYYY' }}
       </p>
     </div>
 
     <div class="details__description">
       <h4 class="details__description-title">Description:</h4>
       <p class="details__description-text">
-        {{ getShortedDescription(card.snippet.localized.title) }}
+        {{ getShortedDescription(card.value.description) }}
       </p>
     </div>
-
-    <mat-card-content class="details__statistics">
+    <p *ngIf="card.value.videoLink">
+      <a class="details__video"
+        href="{{ card.value.videoLink }}"
+        target="_blank"
+        >Video link</a
+      >
+    </p>
+    <mat-card-content
+      class="details__statistics"
+      *ngIf="card.value.statistics !== null">
       <span class="details__statistics-info">
         <mat-icon class="details__statistics-info--logo"
           >remove_red_eye</mat-icon
         >
-        {{ card.statistics.viewCount }}
+        {{ card.value.statistics.viewCount }}
       </span>
 
       <span class="details__statistics-info">
         <mat-icon class="details__statistics-info--logo">thumb_up</mat-icon>
-        {{ card.statistics.likeCount }}
+        {{ card.value.statistics.likeCount }}
       </span>
 
       <span class="details__statistics-info">
         <mat-icon class="details__statistics-info--logo">thumb_down</mat-icon>
-        {{ card.statistics.dislikeCount || 0 }}
+        {{ card.value.statistics.dislikeCount || 0 }}
       </span>
 
       <span class="details__statistics-info">
         <mat-icon class="details__statistics-info--logo">forum</mat-icon>
-        {{ card.statistics.commentCount }}
+        {{ card.value.statistics.commentCount }}
       </span>
     </mat-card-content>
+
+    <div class="details__button-block">
+      <mat-card-actions *ngIf="card.liked !== null">
+        <button
+          mat-icon-button
+          color="primary"
+          class="details__button-icon"
+          (click)="onLikedCard()">
+          <mat-icon *ngIf="card.liked; else notLiked">favorite</mat-icon>
+          <ng-template #notLiked>
+            <mat-icon>favorite_border</mat-icon>
+          </ng-template>
+        </button>
+      </mat-card-actions>
+
+      <mat-card-actions *ngIf="card.deleteBtn">
+        <button
+          mat-icon-button
+          color="primary"
+          class="details__button-icon"
+          (click)="removeCustomCard()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </div>
+
     <div
       class="details__color"
-      [appDefaultColorCard]="card.snippet.publishedAt"></div>
+      [appDefaultColorCard]="card.value.date"></div>
   </div>
 </div>

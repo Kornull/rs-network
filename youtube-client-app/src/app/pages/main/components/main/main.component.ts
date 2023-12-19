@@ -1,20 +1,24 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
+  Observable,
   Subject,
   debounceTime,
   distinctUntilChanged,
   filter,
-  takeUntil,
-  tap,
+  switchMap,
 } from 'rxjs';
 
 import {
+  FilterOpenedService,
   SearchResultService,
   SearchValueService,
   SortResultService,
+  UpdateStoreService,
 } from 'src/app/core/services';
 
-import { SearchItemDetails, SortingTitle } from 'src/app/core/store';
+import { CardDataType, SortingTitle } from 'src/app/core/store';
+import { selectGetCardsOnPage } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-main',
@@ -24,29 +28,37 @@ import { SearchItemDetails, SortingTitle } from 'src/app/core/store';
 export class MainComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  cardsResult: SearchItemDetails[] = [];
+  cardsResult: CardDataType[] = [];
+
+  cardsResult$: Observable<CardDataType[]>;
 
   constructor(
     private searchResultService: SearchResultService,
     private searchValueService: SearchValueService,
-    private sortResultService: SortResultService
-  ) {}
+    private sortResultService: SortResultService,
+    private updateStore: UpdateStoreService,
+    private openedFilter: FilterOpenedService,
+    private store: Store
+  ) {
+    this.cardsResult$ = this.store.select(selectGetCardsOnPage);
+  }
 
   ngOnInit(): void {
+    this.sortResultService.resetSort();
+    this.openedFilter.closeFilter();
     this.searchValueService
       .getSearchValue()
       .pipe(
         debounceTime(1000),
         distinctUntilChanged(),
-        filter(searchData => searchData.length > 2),
-        tap((searchData: string) => {
-          this.searchResultService
-            .fetchCards(searchData)
-            .subscribe(cards => (this.cardsResult = [...cards]));
-        }),
-        takeUntil(this.destroy$)
+        filter(search => search.length > 2),
+        switchMap(data => {
+          return this.searchResultService.fetchCards(data);
+        })
       )
-      .subscribe();
+      .subscribe(data => {
+        this.updateStore.addYoutubeCardToStore(data);
+      });
   }
 
   ngOnDestroy() {

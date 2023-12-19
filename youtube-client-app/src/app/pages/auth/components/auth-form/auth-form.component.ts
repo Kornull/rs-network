@@ -30,20 +30,22 @@ export class AuthFormComponent implements OnInit {
     });
   }
 
-  onShowPassword(): boolean {
+  togglePasswordVisibility(): boolean {
     this.isHiddenPassword = !this.isHiddenPassword;
     return this.isHiddenPassword;
   }
 
   onSignIn(): void {
-    this.loginService.createUser({
-      email: this.signInForm.controls['email'].value,
-      password: this.signInForm.controls['password'].value,
-    });
-    this.localStorageService.addUserLocalStore({
-      email: this.signInForm.controls['email'].value,
-      password: this.signInForm.controls['password'].value,
-    });
-    this.signInForm.reset();
+    if (this.signInForm.valid) {
+      this.loginService.createUser({
+        email: this.signInForm.controls['email'].value,
+        password: this.signInForm.controls['password'].value,
+      });
+      this.localStorageService.addUserLocalStore({
+        email: this.signInForm.controls['email'].value,
+        password: this.signInForm.controls['password'].value,
+      });
+      this.signInForm.reset();
+    }
   }
 }

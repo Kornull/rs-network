@@ -1,0 +1,10 @@
+<div class="container">
+    <app-favorite-result
+      [favoriteCards]="
+        favoriteResult
+          | filterTitleCards: onFilterByTitle()
+          | sortDate: onSortingByDate()
+          | sortView: onSortingByView()
+      "
+      ></app-favorite-result>
+</div>

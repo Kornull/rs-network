@@ -7,21 +7,18 @@ import { MainRoutingModule } from './main-routing.module';
 import { AboutCardRoutingModule } from '../about-card';
 import { AdminRoutingModule } from '../admin';
 
-import {
-  MainComponent,
-  ResultItemComponent,
-  ResultSearchComponent,
-} from './components';
+import { MainComponent, ResultSearchComponent } from './components';
+import { FavoriteRoutingModule } from '../favorite';
 
 @NgModule({
   declarations: [MainComponent],
   imports: [
     CommonModule,
     ResultSearchComponent,
-    ResultItemComponent,
     MainRoutingModule,
     AboutCardRoutingModule,
     AdminRoutingModule,
+    FavoriteRoutingModule,
     SharedModule,
   ],
   exports: [MainComponent],

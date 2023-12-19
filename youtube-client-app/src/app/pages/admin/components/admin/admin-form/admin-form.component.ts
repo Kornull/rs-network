@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
   FormGroup,
   FormBuilder,
@@ -8,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { dateValidator } from 'src/app/shared/validators';
+import { cardsVideoActions } from 'src/app/core/store/redux';
 
 @Component({
   selector: 'app-admin-form',
@@ -19,7 +21,8 @@ export class AdminFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +57,7 @@ export class AdminFormComponent implements OnInit {
     return tagsArray.controls;
   }
 
-  getTagsArrayLength(): boolean {
+  isTagsArrayFull(): boolean {
     const arr = this.createCardForm.get('tags.tagList') as FormArray;
     if (arr.controls.length < 5) return false;
     return true;
@@ -78,6 +81,27 @@ export class AdminFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const { info, tags } = this.createCardForm.value;
+    this.store.dispatch(
+      cardsVideoActions.addCustomCard({
+        customCard: {
+          key: `${Date.now()}`,
+          value: {
+            title: info.title,
+            subTitle: tags.tagList.join(', '),
+            imageLink: info.imageLink,
+            videoLink: info.videoLink,
+            date: info.date,
+            description: info.description,
+            tags: tags.tagList.join(', '),
+            statistics: null,
+          },
+          liked: null,
+          deleteBtn: true,
+        },
+      })
+    );
+    this.onResetForm();
     this.router.navigate(['./main']);
   }
 }

@@ -1,12 +1,20 @@
 <div class="user__block">
   <span class="user__name">{{ getUserName() }}</span>
-  <app-custom-button [buttonStyle]="userBtnStyle">
+  <app-custom-button
+    [buttonStyle]="userBtnStyle"
+    (click)="goAdminPage()">
     <mat-icon class="settings__icon">
       <img
         class="user__logo"
         src="./assets/user-logo.svg"
         alt="" />
     </mat-icon>
+  </app-custom-button>
+
+  <app-custom-button
+    [buttonStyle]="userBtnStyle"
+    (click)="goFavoritePage()">
+    <mat-icon class="settings__icon"> favorite </mat-icon>
   </app-custom-button>
 
   <app-custom-button

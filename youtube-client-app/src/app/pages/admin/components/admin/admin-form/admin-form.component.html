@@ -2,12 +2,10 @@
   class="example-form form"
   (submit)="onSubmit()"
   [formGroup]="createCardForm">
-
   <div
     class="form__info"
     formGroupName="info">
     <mat-form-field class="example-full-width">
-
       <mat-label>Title</mat-label>
       <input
         matInput
@@ -67,6 +65,8 @@
           createCardForm.get('info.description')?.touched
         "
         >The description is too long!
+        {{ createCardForm.get('info.description')?.value?.length || 0 }}
+        /255
       </mat-error>
     </mat-form-field>
 
@@ -116,7 +116,7 @@
         mat-raised-button
         class="btn__tags"
         (click)="onAddTag()"
-        [disabled]="getTagsArrayLength()">
+        [disabled]="isTagsArrayFull()">
         Add tag
       </button>
     </div>
