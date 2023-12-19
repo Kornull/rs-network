@@ -4,7 +4,7 @@ import {
 } from '../../../core/store/models';
 
 export const MESSAGES: GroupMessages = {
-  Count: 14,
+  Count: 20,
   Items: [
     {
       authorID: { S: 'q90jcm0mm7j' },
@@ -76,8 +76,42 @@ export const MESSAGES: GroupMessages = {
       createdAt: { S: '1702916502577' },
       message: { S: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww' },
     },
+    {
+      authorID: { S: '3ou9j5qhvde' },
+      createdAt: { S: '1702979508924' },
+      message: { S: 'BANANAS' },
+    },
+    {
+      authorID: { S: '3ou9j5qhvde' },
+      createdAt: { S: '1702979521340' },
+      message: {
+        S: 'BANANaaaaaaaaaaaa a a s d aaaaaaaaaaaaaaa adddddddddvg revfcdw csacsc AS',
+      },
+    },
+    {
+      authorID: { S: '3ou9j5qhvde' },
+      createdAt: { S: '1702979542540' },
+      message: { S: 'BANANaaaa AS' },
+    },
+    {
+      authorID: { S: 'skgadh52ope' },
+      createdAt: { S: '1702979498823' },
+      message: { S: 'buter1' },
+    },
+    {
+      authorID: { S: 'skgadh52ope' },
+      createdAt: { S: '1702979535315' },
+      message: {
+        S: 'dscjenefjo  ejf omcmwmxwdmcdevmefvmcmx cdmxkdcmefmroefcmdxkmc,wdx cxkx,pc,w',
+      },
+    },
+    {
+      authorID: { S: 'skgadh52ope' },
+      createdAt: { S: '1702979551467' },
+      message: { S: 'ff mdxkmc,wdx cxkx,pc,w' },
+    },
   ],
-  ScannedCount: 14,
+  ScannedCount: 20,
 };
 
 export const SCIENCE: GroupMessages = {
@@ -192,3 +226,50 @@ export const DEFMESS: GroupMessagesDataType[] = [
     id: 'om6ashyyhi',
   },
 ];
+
+const aaa = {
+  $metadata: {
+    httpStatusCode: 200,
+    requestId: '2AORRTQSAODA6AQ4J0M8F38ENBVV4KQNSO5AEMVJF66Q9ASUAAJG',
+    attempts: 1,
+    totalRetryDelay: 0,
+  },
+  Count: 6,
+  Items: [
+    {
+      authorID: { S: '3ou9j5qhvde' },
+      createdAt: { S: '1702979508924' },
+      message: { S: 'BANANAS' },
+    },
+    {
+      authorID: { S: '3ou9j5qhvde' },
+      createdAt: { S: '1702979521340' },
+      message: {
+        S: 'BANANaaaaaaaaaaaa a a s d aaaaaaaaaaaaaaa adddddddddvg revfcdw csacsc AS',
+      },
+    },
+    {
+      authorID: { S: '3ou9j5qhvde' },
+      createdAt: { S: '1702979542540' },
+      message: { S: 'BANANaaaa AS' },
+    },
+    {
+      authorID: { S: 'skgadh52ope' },
+      createdAt: { S: '1702979498823' },
+      message: { S: 'buter1' },
+    },
+    {
+      authorID: { S: 'skgadh52ope' },
+      createdAt: { S: '1702979535315' },
+      message: {
+        S: 'dscjenefjo  ejf omcmwmxwdmcdevmefvmcmx cdmxkdcmefmroefcmdxkmc,wdx cxkx,pc,w',
+      },
+    },
+    {
+      authorID: { S: 'skgadh52ope' },
+      createdAt: { S: '1702979551467' },
+      message: { S: 'ff mdxkmc,wdx cxkx,pc,w' },
+    },
+  ],
+  ScannedCount: 6,
+};

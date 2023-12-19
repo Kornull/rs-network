@@ -31,76 +31,40 @@ export const initialState: UserState = {
     [ErrorTypes.USER_EXIST]: [],
   },
   dialogs: {
-    uvye21qx42: [
+    he1jkujif0h: [
       {
-        authorID: { S: 'q90jcm0mm7j' },
-        createdAt: { S: '1702911051420' },
-        message: { S: 'hrhhrhrh' },
+        authorID: { S: '3ou9j5qhvde' },
+        createdAt: { S: '1702979508924' },
+        message: { S: 'BANANAS' },
       },
       {
-        authorID: { S: 'q90jcm0mm7j' },
-        createdAt: { S: '1702911058525' },
-        message: { S: 'Urrrrrh' },
+        authorID: { S: '3ou9j5qhvde' },
+        createdAt: { S: '1702979521340' },
+        message: {
+          S: 'BANANaaaaaaaaaaaa a a s d aaaaaaaaaaaaaaa adddddddddvg revfcdw csacsc AS',
+        },
       },
       {
-        authorID: { S: 'q90jcm0mm7j' },
-        createdAt: { S: '1702911062495' },
-        message: { S: 'Urrrddddddddddddddddddsdrrh' },
+        authorID: { S: '3ou9j5qhvde' },
+        createdAt: { S: '1702979542540' },
+        message: { S: 'BANANaaaa AS' },
       },
       {
-        authorID: { S: 'q90jcm0mm7j' },
-        createdAt: { S: '1702911086437' },
-        message: { S: 'ASd' },
+        authorID: { S: 'skgadh52ope' },
+        createdAt: { S: '1702979498823' },
+        message: { S: 'buter1' },
       },
       {
-        authorID: { S: 'q90jcm0mm7j' },
-        createdAt: { S: '1702911501760' },
-        message: { S: 'ASSSSSSSSSSSd' },
+        authorID: { S: 'skgadh52ope' },
+        createdAt: { S: '1702979535315' },
+        message: {
+          S: 'dscjenefjo  ejf omcmwmxwdmcdevmefvmcmx cdmxkdcmefmroefcmdxkmc,wdx cxkx,pc,w',
+        },
       },
       {
-        authorID: { S: 'q90jcm0mm7j' },
-        createdAt: { S: '1702911516950' },
-        message: { S: 'ABEERRRRSSSSd' },
-      },
-      {
-        authorID: { S: 'q90jcm0mm7j' },
-        createdAt: { S: '1702916489289' },
-        message: { S: 'A1RRSSSSd' },
-      },
-      {
-        authorID: { S: 'om6ashyyhi' },
-        createdAt: { S: '1702916475688' },
-        message: { S: 'DSDSd' },
-      },
-      {
-        authorID: { S: 'om6ashyyhi' },
-        createdAt: { S: '1702916508096' },
-        message: { S: 'DSssssDSd' },
-      },
-      {
-        authorID: { S: 'r1a83i0y7w' },
-        createdAt: { S: '1702910879953' },
-        message: { S: 'saGGAAAAG' },
-      },
-      {
-        authorID: { S: 'r1a83i0y7w' },
-        createdAt: { S: '1702911076524' },
-        message: { S: 'sSege' },
-      },
-      {
-        authorID: { S: 'r1a83i0y7w' },
-        createdAt: { S: '1702911098765' },
-        message: { S: 'BUPTERge' },
-      },
-      {
-        authorID: { S: 'r1a83i0y7w' },
-        createdAt: { S: '1702911505652' },
-        message: { S: 'BUPTsssERge' },
-      },
-      {
-        authorID: { S: 'r1a83i0y7w' },
-        createdAt: { S: '1702916502577' },
-        message: { S: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww' },
+        authorID: { S: 'skgadh52ope' },
+        createdAt: { S: '1702979551467' },
+        message: { S: 'ff mdxkmc,wdx cxkx,pc,w' },
       },
     ],
   },

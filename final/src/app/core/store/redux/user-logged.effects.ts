@@ -5,7 +5,7 @@ import { EMPTY, catchError, exhaustMap, forkJoin, map } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
-import { LoggedActions } from './action-types';
+import { ConversationActions, LoggedActions } from './action-types';
 import {
   LocalStorageService,
   RequestsService,
@@ -152,7 +152,7 @@ export class UserLoggedEffects {
 
   updateUsersAllLists = createEffect(() => {
     return this.actions$.pipe(
-      ofType(LoggedActions.getUsers),
+      ofType(LoggedActions.getUsers, ConversationActions.setGroupMessages),
       exhaustMap(() => {
         return forkJoin({
           users: this.request.getAllUsers(),
