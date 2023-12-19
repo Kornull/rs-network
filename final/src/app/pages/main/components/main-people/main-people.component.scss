@@ -70,20 +70,6 @@
       }
     }
   }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: 5px 5px 5px -5px #0091fffa inset;
-    background-color: var(--group-link);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--link-hover);
-    cursor: pointer;
-  }
 }
 
 .conversation {
