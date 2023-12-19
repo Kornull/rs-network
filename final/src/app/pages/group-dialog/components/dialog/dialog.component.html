@@ -1,7 +1,7 @@
 <div class="dialog">
   <h2 class="dialog-title">group-dialog works!</h2>
   <ul class="dialog-list">
-    @for (message of messages | sortingMessages; track message) {
+    @for (message of messages; track message) {
       <li
         [ngClass]="{
           'message-user': localData?.uid !== message.id,
@@ -26,6 +26,6 @@
     } @empty {
       <li>There are no items.</li>
     }
-    <li></li>
   </ul>
+  <app-dialog-form class="dialog-form" [groupId]="groupId"></app-dialog-form>
 </div>

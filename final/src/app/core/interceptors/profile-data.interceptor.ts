@@ -46,7 +46,6 @@ export class ProfileDataInterceptor implements HttpInterceptor {
         'rs-email': this.mail,
       },
     });
-
     return next.handle(requestUrl).pipe(retry(0));
   }
 }

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { EMPTY, catchError, exhaustMap, forkJoin, map } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConversationActions, LoggedActions } from './action-types';
@@ -20,8 +18,6 @@ export class UserLoggedEffects {
     private toast: SnackBarService,
     private request: RequestsService,
     private localStore: LocalStorageService,
-    private store: Store,
-    private router: Router,
     public modal: MatDialog
   ) {}
 
@@ -152,7 +148,7 @@ export class UserLoggedEffects {
 
   updateUsersAllLists = createEffect(() => {
     return this.actions$.pipe(
-      ofType(LoggedActions.getUsers, ConversationActions.setGroupMessages),
+      ofType(LoggedActions.getUsers, ConversationActions.updateDialogUsers),
       exhaustMap(() => {
         return forkJoin({
           users: this.request.getAllUsers(),

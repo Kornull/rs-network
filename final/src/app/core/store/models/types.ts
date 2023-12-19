@@ -20,6 +20,8 @@ export enum RequestsData {
   USER_CONVERSATION = '/conversations/list',
   CREATE_GROUP = '/groups/create',
   DELETE_GROUP = '/groups/delete?groupID=',
+  SEND_MESSAGE = '/groups/append',
+  GET_MESSAGE = '/groups/read?groupID=',
 }
 
 export enum ErrorTypes {

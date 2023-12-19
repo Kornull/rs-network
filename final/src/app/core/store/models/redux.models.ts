@@ -82,3 +82,8 @@ export interface GroupMessageData {
 export interface GroupMessages extends DefaultData {
   Items: GroupMessageData[];
 }
+
+export type InfoGroupMessagesType = {
+  messages: GroupMessageData[];
+  users: UserListPersonalData[];
+};

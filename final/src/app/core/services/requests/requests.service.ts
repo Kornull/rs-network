@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import {
   GetProfileInfoType,
+  GroupMessages,
   GroupsData,
   RequestsData,
   ResponseCreateGroup,
@@ -61,6 +62,25 @@ export class RequestsService {
   getAllUsersDialogs(): Observable<UsersConversationData> {
     return this.http.get<UsersConversationData>(
       `${RequestsData.URL}${RequestsData.USER_CONVERSATION}`
+    );
+  }
+
+  sendMessageToGroup(message: string, groupId: string) {
+    return this.http.post(`${RequestsData.URL}${RequestsData.SEND_MESSAGE}`, {
+      groupID: groupId,
+      message,
+    });
+  }
+
+  getMessagesToGroup(
+    groupId: string,
+    since: string = ''
+  ): Observable<GroupMessages> {
+    const sinceLink = `&since=${since}`;
+    return this.http.get<GroupMessages>(
+      `${RequestsData.URL}${RequestsData.GET_MESSAGE}${groupId}${
+        since ? sinceLink : ''
+      }`
     );
   }
 }

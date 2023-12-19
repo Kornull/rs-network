@@ -30,44 +30,7 @@ export const initialState: UserState = {
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },
-  dialogs: {
-    he1jkujif0h: [
-      {
-        authorID: { S: '3ou9j5qhvde' },
-        createdAt: { S: '1702979508924' },
-        message: { S: 'BANANAS' },
-      },
-      {
-        authorID: { S: '3ou9j5qhvde' },
-        createdAt: { S: '1702979521340' },
-        message: {
-          S: 'BANANaaaaaaaaaaaa a a s d aaaaaaaaaaaaaaa adddddddddvg revfcdw csacsc AS',
-        },
-      },
-      {
-        authorID: { S: '3ou9j5qhvde' },
-        createdAt: { S: '1702979542540' },
-        message: { S: 'BANANaaaa AS' },
-      },
-      {
-        authorID: { S: 'skgadh52ope' },
-        createdAt: { S: '1702979498823' },
-        message: { S: 'buter1' },
-      },
-      {
-        authorID: { S: 'skgadh52ope' },
-        createdAt: { S: '1702979535315' },
-        message: {
-          S: 'dscjenefjo  ejf omcmwmxwdmcdevmefvmcmx cdmxkdcmefmroefcmdxkmc,wdx cxkx,pc,w',
-        },
-      },
-      {
-        authorID: { S: 'skgadh52ope' },
-        createdAt: { S: '1702979551467' },
-        message: { S: 'ff mdxkmc,wdx cxkx,pc,w' },
-      },
-    ],
-  },
+  dialogs: {},
 };
 
 export const UserReducer = createReducer(
@@ -166,13 +129,40 @@ export const UserReducer = createReducer(
         ...state.dialogs,
         [actions.dialog.groupId]: state.dialogs[actions.dialog.groupId]
           ? [
-              ...state.dialogs[actions.dialog.groupId],
+              ...state.dialogs[actions.dialog.groupId].slice(0, -1),
               ...actions.dialog.messageList,
             ]
           : [...actions.dialog.messageList],
       },
     };
   }),
+  on(
+    ConversationActions.addOwnMessageToLocalGroupData,
+    (state, actions): UserState => {
+      return {
+        ...state,
+        dialogs: {
+          ...state.dialogs,
+          [actions.dialog.groupId]: state.dialogs[actions.dialog.groupId]
+            ? [
+                ...state.dialogs[actions.dialog.groupId],
+                {
+                  authorID: { S: actions.dialog.userId },
+                  createdAt: { S: actions.dialog.createAt },
+                  message: { S: actions.dialog.message },
+                },
+              ]
+            : [
+                {
+                  authorID: { S: actions.dialog.userId },
+                  createdAt: { S: actions.dialog.createAt },
+                  message: { S: actions.dialog.message },
+                },
+              ],
+        },
+      };
+    }
+  ),
   on(LoggedActions.isUserNotFound, (): UserState => {
     return {
       ...initialState,
