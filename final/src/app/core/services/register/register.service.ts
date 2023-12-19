@@ -10,6 +10,9 @@ export class RegisterService {
   constructor(private http: HttpClient) {}
 
   userSignUp(data: UserRegister) {
-    return this.http.post(`${RequestsData.URL}${RequestsData.REGISTER}`, data);
+    return this.http.post<null>(
+      `${RequestsData.URL}${RequestsData.REGISTER}`,
+      data
+    );
   }
 }

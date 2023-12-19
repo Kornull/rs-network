@@ -1,30 +1,31 @@
 <div class="form-container">
-  <h2 class="form-title">Registration</h2>
   <form
     class="form"
     (submit)="onSubmit()"
     [formGroup]="registerForm">
+    <h2 class="form-title">Registration</h2>
     <mat-form-field
       color="accent"
       class="form-input">
-      <mat-label>Login</mat-label>
+      <mat-label>Name</mat-label>
       <input
         matInput
-        formControlName="name" />
+        formControlName="name"
+        autocomplete="off" />
       @if (registerForm.get('name')!.hasError('required')) {
-        <mat-error>Please enter your login!</mat-error>
+        <mat-error>Please enter your name!</mat-error>
       }
       @if (
         registerForm.get('name')?.hasError('minlength') &&
         registerForm.get('name')?.touched
       ) {
         <mat-error
-          >Min login len -
+          >Min name len -
           {{
             registerForm.get('name')?.errors?.['minlength']?.[
               'requiredLength'
             ] || '2'
-          }}, login len now -
+          }}, name now -
           {{
             registerForm.get('name')?.errors?.['minlength']?.['actualLength'] ||
               '0'
@@ -36,14 +37,17 @@
         registerForm.get('name')?.touched
       ) {
         <mat-error
-          >Max login len -
+          >Max name len -
           {{
             registerForm.get('name')?.errors?.['maxlength']?.['requiredLength']
-          }}, login len now -
+          }}, name len now -
           {{
             registerForm.get('name')?.errors?.['maxlength']?.['actualLength']
           }}</mat-error
         >
+      }
+      @if (registerForm.get('name')?.hasError('invalidName')) {
+        <mat-error>Name cannot contain numbers or special signs.</mat-error>
       }
     </mat-form-field>
 
@@ -53,7 +57,8 @@
       <mat-label>Email</mat-label>
       <input
         matInput
-        formControlName="email" />
+        formControlName="email"
+        autocomplete="off" />
       @if (
         !registerForm.get('email')?.valid &&
         !registerForm.get('email')?.hasError('required') &&
@@ -78,7 +83,8 @@
       <input
         matInput
         formControlName="password"
-        [type]="hide ? 'password' : 'text'" />
+        [type]="hide ? 'password' : 'text'"
+        autocomplete="new-password" />
       <button
         mat-icon-button
         matSuffix
@@ -126,13 +132,13 @@
       [disabled]="isDisabled ? !registerForm.valid : registerForm.valid">
       Register
     </button>
+    <h4 class="form-link">
+      Already have an account? &#8259;&#160;
+      <a
+        class="form-link--click"
+        routerLink="/signin"
+        >Login</a
+      >
+    </h4>
   </form>
-  <h4 class="form-link">
-    Already have an account? -
-    <a
-      class="form-link--click"
-      routerLink="/signin"
-      >Login</a
-    >
-  </h4>
 </div>

@@ -1,8 +1,20 @@
-<mat-toolbar class="header" color="primary">
-  <span>Rs-network</span>
+<mat-toolbar
+  class="header"
+  color="primary">
+  <a class="header-logo" routerLink="/main">Rs-network</a>
   <span class="example-spacer"></span>
-  <button  mat-icon-button (click)="onSwitchTheme()">
-    <mat-icon>brightness_medium</mat-icon>
-  </button>
+  <div class="">
+    @if (isUserLogged) {
+      <button
+        mat-icon-button
+        (click)="onRunToProfile()">
+        <mat-icon> person</mat-icon>
+      </button>
+    }
+    <button
+      mat-icon-button
+      (click)="onSwitchTheme()">
+      <mat-icon>brightness_medium</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
-

@@ -1,0 +1,16 @@
+.form {
+  background: #00000000;
+  &-container {
+    padding: 0;
+  }
+
+  &-input {
+    width: 100%;
+  }
+
+}
+
+::ng-deep.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #00800000 !important;
+  height: 50px !important;
+}

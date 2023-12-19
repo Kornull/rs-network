@@ -1,16 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { AuthActions } from './action-types';
+import { AuthActions, LoggedActions } from './action-types';
 
 import { ErrorTypes, UserState } from '../models';
 
 export const initialState: UserState = {
-  'theme-app': '',
-  'user-logged': {
-    email: '',
-    uid: '',
-    token: '',
-  },
+  'user-logged': false,
+  profile: null,
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },
@@ -40,10 +36,28 @@ export const UserReducer = createReducer(
       },
     };
   }),
-  on(AuthActions.installTheme, (state, actions): UserState => {
+  on(AuthActions.updateUserLogged, (state, actions): UserState => {
     return {
       ...state,
-      'theme-app': actions.theme,
+      'user-logged': actions.isLogged,
+    };
+  }),
+  on(LoggedActions.setUserInfo, (state, actions): UserState => {
+    return {
+      ...state,
+      profile: { ...actions.data },
+    };
+  }),
+  on(LoggedActions.changeProfileName, (state, actions): UserState => {
+    return {
+      ...state,
+      profile:
+        state.profile !== null
+          ? {
+              ...state.profile,
+              name: actions.name,
+            }
+          : null,
     };
   })
 );

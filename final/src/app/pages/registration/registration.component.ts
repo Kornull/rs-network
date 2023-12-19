@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, map } from 'rxjs';
+import { EMPTY, catchError, switchMap, take, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -15,10 +15,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
-import { emailValidator, passwordValidator } from '../../shared';
+import { emailValidator, nameValidator, passwordValidator } from '../../shared';
 import { RegisterService, SnackBarService } from '../../core/services';
 import { ErrorTypes, UserRegister } from '../../core/store/models';
-import { AuthActions } from '../../core/store/redux';
+import { AuthActions, selectIsUserLogged } from '../../core/store/redux';
 
 @Component({
   selector: 'app-registration',
@@ -46,19 +46,31 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private regService: RegisterService,
     private fb: FormBuilder,
-    private snack: SnackBarService,
+    private toast: SnackBarService,
     private store: Store,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.store
+      .select(selectIsUserLogged)
+      .pipe(
+        tap(res => {
+          if (res) {
+            this.router.navigate(['/']);
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
     this.registerForm = this.fb.group({
       name: [
         '',
         [
           Validators.minLength(2),
-          Validators.maxLength(12),
+          Validators.maxLength(40),
           Validators.required,
+          nameValidator(),
         ],
       ],
       email: ['', [Validators.email, Validators.required, emailValidator()]],
@@ -80,15 +92,20 @@ export class RegistrationComponent implements OnInit {
 
     http$
       .pipe(
-        map(() => {
-          this.snack.openSnack('Registration success', false);
+        switchMap(() => {
+          this.toast.openSnack('Registration success', false);
           this.router.navigate(['./signin']);
+          return EMPTY;
         }),
         catchError(err => {
           const { error } = err;
 
+          if (error === null) {
+            this.toast.openSnack(err.statusText, true);
+          }
+
           if (error.type === ErrorTypes.USER_EXIST) {
-            this.snack.openSnack(error.message, true);
+            this.toast.openSnack(error.message, true);
             this.registerForm.controls['email'].setErrors({
               emailExist: true,
             });
@@ -101,9 +118,9 @@ export class RegistrationComponent implements OnInit {
           }
 
           if (error.type === ErrorTypes.INVALID_REG_FORM) {
-            this.snack.openSnack(error.message, true);
+            this.toast.openSnack(error.message, true);
           }
-          throw new Error(`Registration Error - ${error.message}`);
+          return EMPTY;
         })
       )
       .subscribe();

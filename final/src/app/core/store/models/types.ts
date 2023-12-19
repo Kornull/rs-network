@@ -13,6 +13,8 @@ export enum RequestsData {
   URL = 'https://tasks.app.rs.school/angular',
   REGISTER = '/registration',
   LOGIN = '/login',
+  LOGOUT = '/logout',
+  PROFILE = '/profile',
 }
 
 export enum ErrorTypes {
@@ -28,6 +30,11 @@ export enum LocalStoreKeys {
   AUTH_USER = 'auth-user-data',
 }
 
+export enum AppTheme {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
+
 export type UserLoginSuccess = {
   token: string;
   uid: string;
@@ -35,4 +42,10 @@ export type UserLoginSuccess = {
 
 export type UserRegisterData = UserLoginSuccess & {
   email: string;
+};
+
+type UserProfileData = 'createdAt' | 'email' | 'name' | 'uid';
+
+export type ProfileInfoType = {
+  [T in UserProfileData]: string;
 };

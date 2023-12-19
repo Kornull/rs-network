@@ -1,11 +1,9 @@
+@import '../scss/constants';
+
 .main {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
   width: 100%;
   max-width: 1420px;
-  height: calc(100vh - 64px);
+  height: $default-height;
   margin: 0 auto;
   padding: 20px;
 }

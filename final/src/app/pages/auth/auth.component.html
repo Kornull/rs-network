@@ -1,16 +1,17 @@
 <div class="form-container">
-  <h2 class="form-title">Log In</h2>
   <form
     class="form"
     (submit)="onSubmit()"
     [formGroup]="authForm">
+    <h2 class="form-title">LogIn</h2>
     <mat-form-field
       color="accent"
       class="form-input">
       <mat-label>Email</mat-label>
       <input
         matInput
-        formControlName="email" />
+        formControlName="email"
+        autocomplete="off" />
       @if (
         !authForm.get('email')?.valid &&
         !authForm.get('email')?.hasError('required') &&
@@ -37,7 +38,8 @@
       <input
         matInput
         formControlName="password"
-        [type]="hide ? 'password' : 'text'" />
+        [type]="hide ? 'password' : 'text'"
+        autocomplete="new-password" />
       <button
         mat-icon-button
         matSuffix
@@ -84,15 +86,15 @@
       color="primary"
       type="submit"
       [disabled]="isDisabled ? !authForm.valid : authForm.valid">
-      Register
+      Login
     </button>
+    <h4 class="form-link">
+      Not yet registered? &#8259;&#160;
+      <a
+        class="form-link--click"
+        routerLink="/signup"
+        >Register</a
+      >
+    </h4>
   </form>
-  <h4 class="form-link">
-    Not yet registered? -
-    <a
-      class="form-link--click"
-      routerLink="/signup"
-      >Register</a
-    >
-  </h4>
 </div>

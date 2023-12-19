@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guard/auth.guard';
+import { authGuard } from './core/guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -20,5 +20,11 @@ export const routes: Routes = [
       import('./pages/registration/registration.module').then(
         m => m.RegistrationModule
       ),
+  },
+  {
+    path: 'profile',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then(m => m.RegistrationModule),
   },
 ];

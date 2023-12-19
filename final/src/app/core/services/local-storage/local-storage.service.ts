@@ -1,29 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-import { RequestsData, UserLogin } from '../../store/models';
+import { LocalStoreKeys, UserRegisterData } from '../../store/models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RegisterService {
-  constructor(private http: HttpClient) {}
+export class LocalStorageService {
+  loginSuccess(data: UserRegisterData) {
+    localStorage.setItem(LocalStoreKeys.AUTH_USER, JSON.stringify(data));
+  }
 
-  data: UserLogin = {
-    email: 'assaaaaaaaaaaafg@mai.rr',
-    password: '12!@WSsaddW',
-  };
+  getLoginInfo(): UserRegisterData | null {
+    const info = localStorage.getItem(LocalStoreKeys.AUTH_USER);
+    const result = info !== null ? JSON.parse(info) : null;
 
-  auth() {
-    return this.http
-      .post<UserLogin>(`${RequestsData.URL}${RequestsData.LOGIN}`, this.data)
-      .pipe(
-        catchError(err => {
-          return of(err.error);
-        })
-      );
+    return result;
+  }
+
+  getThemeApp(): string | null {
+    const info = localStorage.getItem(LocalStoreKeys.THEME) || null;
+    const result = info !== null ? JSON.parse(info) : null;
+
+    return result;
+  }
+
+  getInvalidEmails(): string[] | null {
+    const info = localStorage.getItem(LocalStoreKeys.INVALID_EMAIL);
+    const result = info !== null ? JSON.parse(info) : null;
+
+    return result;
+  }
+
+  setInvalidEmails(data: string[]) {
+    localStorage.setItem(LocalStoreKeys.INVALID_EMAIL, JSON.stringify(data));
+  }
+
+  setThemeApp(data: string) {
+    localStorage.setItem(LocalStoreKeys.THEME, JSON.stringify(data));
   }
 }
