@@ -1,5 +1,32 @@
 <div class="dialog">
-  <h2 class="dialog-title">group-dialog works!</h2>
+  <div class="dialog-header">
+    <div class="dialog-link--block">
+      <a class="dialog-link" [routerLink]="['']">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+    </div>
+    <h3 class="dialog-title">
+      {{ title }}
+    </h3>
+    <div class="dialog-btns">
+      <button
+        mat-icon-button
+        [disabled]="disabledBtn$ | async"
+        (click)="runUpdateMessage()">
+        <mat-icon>cached</mat-icon>
+      </button>
+      @if (disabledBtn$ | async) {
+        <div class="timer">{{ timeNow$ | async }} s</div>
+      }
+      @if (localData?.uid === groupCreatorId) {
+        <button
+          mat-icon-button
+          (click)="deleteGroup()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      }
+    </div>
+  </div>
   <ul class="dialog-list">
     @for (message of messages; track message) {
       <li

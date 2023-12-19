@@ -6,3 +6,4 @@ export * from './requests/requests.service';
 export * from './timer/group-timer.service';
 export * from './timer/user-timer.service';
 export * from './add-user-name/add-user-name.service';
+export * from './timer/dialog-timer.service';

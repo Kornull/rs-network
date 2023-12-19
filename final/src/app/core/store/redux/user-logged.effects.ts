@@ -59,7 +59,10 @@ export class UserLoggedEffects {
 
   updateGroups = createEffect(() => {
     return this.actions$.pipe(
-      ofType(LoggedActions.getGroupsList),
+      ofType(
+        LoggedActions.getGroupsList,
+        ConversationActions.updateDialogUsers
+      ),
       exhaustMap(() => {
         return this.request.getUsersGroups().pipe(
           map(groups => {
