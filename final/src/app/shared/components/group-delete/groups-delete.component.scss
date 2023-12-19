@@ -1,0 +1,38 @@
+@import '../../../../scss/mixins';
+
+.delete-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+  height: 100%;
+
+  &--title {
+    font-size: 16px;
+
+    & span {
+      text-decoration: underline
+    }
+  }
+
+  &--btns{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+  }
+}
+
+.btn-close {
+  @include hover-btn;
+}
+
+.btn-delete {
+  background-color: #ff0000 !important;
+  color: #fff !important;
+
+  @include hover-btn;
+}

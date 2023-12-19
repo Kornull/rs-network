@@ -129,40 +129,13 @@ export const UserReducer = createReducer(
         ...state.dialogs,
         [actions.dialog.groupId]: state.dialogs[actions.dialog.groupId]
           ? [
-              ...state.dialogs[actions.dialog.groupId].slice(0, -1),
+              ...state.dialogs[actions.dialog.groupId],
               ...actions.dialog.messageList,
             ]
           : [...actions.dialog.messageList],
       },
     };
   }),
-  on(
-    ConversationActions.addOwnMessageToLocalGroupData,
-    (state, actions): UserState => {
-      return {
-        ...state,
-        dialogs: {
-          ...state.dialogs,
-          [actions.dialog.groupId]: state.dialogs[actions.dialog.groupId]
-            ? [
-                ...state.dialogs[actions.dialog.groupId],
-                {
-                  authorID: { S: actions.dialog.userId },
-                  createdAt: { S: actions.dialog.createAt },
-                  message: { S: actions.dialog.message },
-                },
-              ]
-            : [
-                {
-                  authorID: { S: actions.dialog.userId },
-                  createdAt: { S: actions.dialog.createAt },
-                  message: { S: actions.dialog.message },
-                },
-              ],
-        },
-      };
-    }
-  ),
   on(LoggedActions.isUserNotFound, (): UserState => {
     return {
       ...initialState,

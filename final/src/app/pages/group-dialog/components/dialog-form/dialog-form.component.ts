@@ -4,6 +4,7 @@ import {
   MatFormFieldModule,
 } from '@angular/material/form-field';
 import { Store } from '@ngrx/store';
+import { EMPTY, catchError, map } from 'rxjs';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +16,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { LocalStorageService } from '../../../../core/services';
+import {
+  LocalStorageService,
+  RequestsService,
+  SnackBarService,
+} from '../../../../core/services';
 import { ConversationActions } from '../../../../core/store/redux';
 import { UserRegisterData } from '../../../../core/store/models';
 
@@ -42,6 +47,8 @@ import { UserRegisterData } from '../../../../core/store/models';
 export class DialogFormComponent implements OnInit {
   @Input() groupId!: string;
 
+  @Input() lastTimeSent!: string;
+
   messageForm!: FormGroup;
 
   localData!: UserRegisterData | null;
@@ -49,7 +56,9 @@ export class DialogFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private localStore: LocalStorageService
+    private localStore: LocalStorageService,
+    private request: RequestsService,
+    private toast: SnackBarService
   ) {
     this.localData = this.localStore.getLoginInfo();
   }
@@ -61,18 +70,45 @@ export class DialogFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const date = new Date();
     if (this.messageForm.valid) {
-      this.store.dispatch(
-        ConversationActions.sendGroupMessage({
-          dialog: {
-            userId: this.localData?.uid || '',
-            createAt: `${date.getTime()}`,
-            message: this.messageForm.controls['message'].value,
-            groupId: this.groupId,
-          },
-        })
-      );
+      // this.store.dispatch(
+      //   ConversationActions.sendGroupMessage({
+      //     dialog: {
+      //       userId: this.localData?.uid || '',
+      //       createAt: `${new Date().getTime()}`,
+      //       message: this.messageForm.controls['message'].value,
+      //       groupId: this.groupId,
+      //     },
+      //   })
+      // );
+      this.request
+        .sendMessageToGroup(
+          this.messageForm.controls['message'].value,
+          this.groupId
+        )
+        .pipe(
+          map(() => {
+            this.toast.openSnack('Message sent', false);
+            this.store.dispatch(
+              ConversationActions.getGroupMessages({
+                dialog: {
+                  groupId: this.groupId,
+                  since: this.lastTimeSent,
+                },
+              })
+            );
+          }),
+          catchError(err => {
+            const { error } = err;
+            if (error === null) {
+              this.toast.openSnack(err.statusText, true);
+            } else {
+              this.toast.openSnack(error.message, true);
+            }
+            return EMPTY;
+          })
+        )
+        .subscribe();
       this.messageForm.reset();
     }
   }

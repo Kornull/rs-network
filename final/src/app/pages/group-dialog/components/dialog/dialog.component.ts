@@ -46,6 +46,8 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   updateDialogsSubscribe$!: Subscription;
 
+  lastSentTime!: string;
+
   groupId: string = '';
 
   constructor(
@@ -78,11 +80,10 @@ export class DialogComponent implements OnInit, OnDestroy {
       .pipe(
         map(data => {
           if (data.messages) {
-            this.messages = [
-              ...new Set(
-                this.addNameService.changeIdToName(data.messages, data.users)
-              ),
-            ];
+            this.messages = this.addNameService.changeIdToName(
+              data.messages,
+              data.users
+            );
           } else {
             this.store.dispatch(
               ConversationActions.getGroupMessages({
@@ -96,11 +97,12 @@ export class DialogComponent implements OnInit, OnDestroy {
       .subscribe();
 
     if (this.messages.length) {
+      this.lastSentTime = this.messages[this.messages.length - 1].time;
       this.store.dispatch(
         ConversationActions.getGroupMessages({
           dialog: {
             groupId: this.groupId,
-            since: this.messages[this.messages.length - 1].time,
+            since: this.lastSentTime,
           },
         })
       );

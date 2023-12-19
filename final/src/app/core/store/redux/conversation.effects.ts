@@ -15,38 +15,6 @@ export class ConversationEffects {
     public modal: MatDialog
   ) {}
 
-  sendMessage = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(ConversationActions.sendGroupMessage),
-      exhaustMap(data => {
-        return this.request
-          .sendMessageToGroup(data.dialog.message, data.dialog.groupId)
-          .pipe(
-            map(() => {
-              this.toast.openSnack('Message sent', false);
-              return ConversationActions.addOwnMessageToLocalGroupData({
-                dialog: {
-                  message: data.dialog.message,
-                  createAt: data.dialog.createAt,
-                  userId: data.dialog.userId,
-                  groupId: data.dialog.groupId,
-                },
-              });
-            }),
-            catchError(err => {
-              const { error } = err;
-              if (error === null) {
-                this.toast.openSnack(err.statusText, true);
-              } else {
-                this.toast.openSnack(error.message, true);
-              }
-              return EMPTY;
-            })
-          );
-      })
-    );
-  });
-
   getGroupAllMessages = createEffect(() => {
     return this.actions$.pipe(
       ofType(ConversationActions.getGroupMessages),
