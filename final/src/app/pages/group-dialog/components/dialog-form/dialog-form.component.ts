@@ -86,7 +86,9 @@ export class DialogFormComponent implements OnInit {
               ConversationActions.getGroupMessages({
                 dialog: {
                   groupId: this.groupId,
-                  since: this.messages[this.messages.length - 1].time,
+                  since: this.messages.length
+                    ? this.messages[this.messages.length - 1].time
+                    : '',
                 },
               })
             );
