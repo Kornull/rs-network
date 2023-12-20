@@ -2,7 +2,8 @@
   <h1
     class="delete-group--title"
     mat-dialog-title>
-    Are you sure you want to delete the <span>{{ title }}</span> group?
+    Are you sure you want to delete the <span>{{ title }}</span>
+    {{ isPersonalMesg ? 'conversation' : 'group' }}?
   </h1>
 
   <div class="delete-group--btns">

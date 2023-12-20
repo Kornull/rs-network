@@ -48,3 +48,33 @@ export const addOwnMessageToLocalGroupData = createAction(
 export const updateDialogUsers = createAction(
   '[Group dialog] Update dialog users'
 );
+
+export const setUsersMessages = createAction(
+  '[Personal dialog] Update personal messages',
+  props<{
+    dialog: {
+      userId: string;
+      messageList: GroupMessageData[];
+    };
+  }>()
+);
+
+export const getUserMessages = createAction(
+  '[Personal dialog] Get personal messages',
+  props<{
+    dialog: {
+      userId: string;
+      since?: string;
+    };
+  }>()
+);
+
+export const removeDialog = createAction(
+  '[Personal dialog] Remove conversation',
+  props<{ userId: string }>()
+);
+
+export const delistConversation = createAction(
+  '[Main Page: Groups] Delist conversation',
+  props<{ userId: string }>()
+);

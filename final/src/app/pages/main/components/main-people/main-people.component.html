@@ -19,17 +19,17 @@
     @for (item of users; track item.name) {
       <li
         class="people-item"
-        [ngClass]="{conversation: item.isConversation }">
+        [ngClass]="{ conversation: item.isConversation }">
         <div class="people-item--info">
           <span class="people-item--icon">
             <mat-icon>person_outline</mat-icon>
           </span>
 
-          <a
+          <button
             class="people-item--link"
-            href="#">
-            {{ item.name.S }}</a
-          >
+            (click)="createPersonalDialog(item.uid.S)">
+            {{ item.name.S }}
+          </button>
         </div>
 
         @if (item.isConversation) {

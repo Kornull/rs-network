@@ -82,7 +82,7 @@ export class MainGroupsComponent implements OnInit, OnDestroy {
     this.dialog.open(GroupDeleteComponent, {
       data: {
         groupTitle: title,
-        groupId: id,
+        id,
       },
       minHeight: '200px',
       width: '400px',

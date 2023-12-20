@@ -1,0 +1,30 @@
+.form {
+  position: relative;
+  display: flex;
+  align-items: last baseline;
+  width: 100%;
+  justify-content: center;
+  padding: 0;
+  background: var(--profile);
+
+  &-input {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    &--text {
+      width: 90%;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+  }
+
+  &-btn {
+    position: absolute;
+    right: 10px;
+    top: 4px;
+    background: none !important;
+  }
+}

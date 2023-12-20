@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import {
+  ConversationId,
   GetProfileInfoType,
   GroupMessages,
   GroupsData,
@@ -81,6 +82,41 @@ export class RequestsService {
       `${RequestsData.URL}${RequestsData.GET_MESSAGE}${groupId}${
         since ? sinceLink : ''
       }`
+    );
+  }
+
+  createConversation(userId: string): Observable<ConversationId> {
+    return this.http.post<ConversationId>(
+      `${RequestsData.URL}${RequestsData.CREATE_CONVERSATION}`,
+      { companion: userId }
+    );
+  }
+
+  getPersonalMessages(
+    userID: string,
+    since: string = ''
+  ): Observable<GroupMessages> {
+    const sinceLink = `&since=${since}`;
+    return this.http.get<GroupMessages>(
+      `${RequestsData.URL}${RequestsData.GET_CONVERSATION_MSG}${userID}${
+        since ? sinceLink : ''
+      }`
+    );
+  }
+
+  sendPersonalMessage(message: string, userId: string) {
+    return this.http.post(
+      `${RequestsData.URL}${RequestsData.SEND_CONVERSATION_MSG}`,
+      {
+        conversationID: userId,
+        message,
+      }
+    );
+  }
+
+  deleteConversation(userId: string) {
+    return this.http.delete(
+      `${RequestsData.URL}${RequestsData.DEL_CONVERSATION}${userId}`
     );
   }
 }

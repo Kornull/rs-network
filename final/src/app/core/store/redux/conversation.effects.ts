@@ -44,4 +44,60 @@ export class ConversationEffects {
       })
     );
   });
+
+  getPersonalAllMessages = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ConversationActions.getUserMessages),
+      exhaustMap(data => {
+        return this.request
+          .getPersonalMessages(data.dialog.userId, data.dialog.since)
+          .pipe(
+            map(messageData => {
+              this.toast.openSnack('Messages updated', false);
+              return ConversationActions.setGroupMessages({
+                dialog: {
+                  groupId: data.dialog.userId,
+                  messageList: messageData.Items,
+                },
+              });
+            }),
+            catchError(err => {
+              const { error } = err;
+              if (error === null) {
+                this.toast.openSnack(err.statusText, true);
+              } else {
+                this.toast.openSnack(error.message, true);
+              }
+              return EMPTY;
+            })
+          );
+      })
+    );
+  });
+
+  removePersonalConversation = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ConversationActions.removeDialog),
+      exhaustMap(data => {
+        return this.request.deleteConversation(data.userId).pipe(
+          map(() => {
+            this.toast.openSnack('Conversation has been deleted', false);
+            this.modal.closeAll();
+            return ConversationActions.delistConversation({
+              userId: data.userId,
+            });
+          }),
+          catchError(err => {
+            const { error } = err;
+            if (error === null) {
+              this.toast.openSnack(err.statusText, true);
+            } else {
+              this.toast.openSnack(error.message, true);
+            }
+            return EMPTY;
+          })
+        );
+      })
+    );
+  });
 }

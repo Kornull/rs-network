@@ -27,6 +27,7 @@ export const initialState: UserState = {
     Items: [],
     ScannedCount: 0,
   },
+  personalMessage: {},
   invalidEmails: {
     [ErrorTypes.USER_EXIST]: [],
   },
@@ -133,6 +134,33 @@ export const UserReducer = createReducer(
               ...actions.dialog.messageList,
             ]
           : [...actions.dialog.messageList],
+      },
+    };
+  }),
+  on(ConversationActions.setUsersMessages, (state, actions): UserState => {
+    return {
+      ...state,
+      personalMessage: {
+        ...state.personalMessage,
+        [actions.dialog.userId]: state.dialogs[actions.dialog.userId]
+          ? [
+              ...state.dialogs[actions.dialog.userId],
+              ...actions.dialog.messageList,
+            ]
+          : [...actions.dialog.messageList],
+      },
+    };
+  }),
+  on(ConversationActions.delistConversation, (state, actions): UserState => {
+    return {
+      ...state,
+      conversations: {
+        ...state.conversations,
+        Items: [
+          ...state.conversations.Items.filter(
+            conv => conv.companionID.S !== actions.userId
+          ),
+        ],
       },
     };
   }),

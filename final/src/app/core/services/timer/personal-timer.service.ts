@@ -11,7 +11,7 @@ import {
 @Injectable({
   providedIn: 'any',
 })
-export class DialogTimerService {
+export class PersonalTimerService {
   private subscribeTimer$!: Subscription;
 
   private runTimer = false;

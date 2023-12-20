@@ -20,6 +20,7 @@ export interface UserState {
   groups: GroupsData;
   users: UsersData;
   conversations: UsersConversationData;
+  personalMessage: DialogData;
   dialogs: DialogData;
 }
 export interface UserListPersonalData {
@@ -87,3 +88,7 @@ export type InfoGroupMessagesType = {
   messages: GroupMessageData[];
   users: UserListPersonalData[];
 };
+
+export interface UsersMessages extends DefaultData {
+  Items: GroupMessageData[];
+}

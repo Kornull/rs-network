@@ -1,0 +1,62 @@
+<div class="conversation">
+  <div class="conversation-header">
+    <div class="conversation-link--block">
+      <a
+        class="conversation-link"
+        [routerLink]="['']">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+    </div>
+    <h3 class="conversation-title">
+      {{ title }}
+    </h3>
+    <div class="conversation-btns">
+      <button
+        mat-icon-button
+        [disabled]="disabledBtn$ | async"
+        (click)="runUpdateMessage()">
+        <mat-icon>cached</mat-icon>
+      </button>
+      @if (disabledBtn$ | async) {
+        <div class="timer">{{ timeNow$ | async }} s</div>
+      }
+      <button
+        mat-icon-button
+        (click)="deleteGroup()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  <ul class="conversation-list">
+    @for (message of messages; track message) {
+      <li
+        [ngClass]="{
+          'message-user': localData?.uid !== message.id,
+          'message-own': localData?.uid === message.id
+        }">
+        <div
+          [ngClass]="{
+            'message-left': localData?.uid !== message.id,
+            'message-right': localData?.uid === message.id
+          }">
+          <div class="message-info">
+            <h4 class="message-info--name">
+              {{ localData?.uid !== message.id ? message.name : 'My' }}
+            </h4>
+            <p class="message-info--time">
+              {{ message.time | date: "M/dd/ yyyy 'at' hh:mm a" }}
+            </p>
+          </div>
+          <p class="message-text">{{ message.message }}</p>
+        </div>
+      </li>
+    } @empty {
+      <li>There are no items.</li>
+    }
+  </ul>
+  <app-conversation-form
+    class="conversation-form"
+    [userId]="userId"
+    [lastTimeSent]="lastSentTime"
+    [messages]="messages"></app-conversation-form>
+</div>

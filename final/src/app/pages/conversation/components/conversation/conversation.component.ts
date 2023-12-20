@@ -10,18 +10,17 @@ import { MatIconModule } from '@angular/material/icon';
 
 import {
   ConversationActions,
+  selectGetPersonalConversations,
   selectGetUsers,
-  selectGroupMessages,
   selectGroupsInfo,
 } from '../../../../core/store/redux';
 
 import {
   AddUserNameService,
-  DialogTimerService,
   LocalStorageService,
 } from '../../../../core/services';
 
-import { DialogFormComponent } from '../dialog-form/dialog-form.component';
+import { ConversationFormComponent } from '../conversation-form/conversation-form.component';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
 
 import {
@@ -30,21 +29,22 @@ import {
   UserListPersonalData,
   UserRegisterData,
 } from '../../../../core/store/models';
+import { PersonalTimerService } from '../../../../core/services/timer/personal-timer.service';
 
 @Component({
-  selector: 'app-group-dialog',
+  selector: 'app-conversation',
   standalone: true,
   imports: [
     CommonModule,
-    DialogFormComponent,
+    ConversationFormComponent,
     MatButtonModule,
     MatIconModule,
     RouterLink,
   ],
-  templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss',
+  templateUrl: './conversation.component.html',
+  styleUrl: './conversation.component.scss',
 })
-export class DialogComponent implements OnInit, OnDestroy {
+export class ConversationComponent implements OnInit, OnDestroy {
   messages: GroupMessagesDataType[] = [];
 
   localData: UserRegisterData | null;
@@ -59,7 +59,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   disabledBtn$!: Observable<boolean>;
 
-  getGroupMessagesSubscribe$!: Subscription;
+  getPersonMessagesSubscribe$!: Subscription;
 
   updateMessagesSubscribe$!: Subscription;
 
@@ -69,7 +69,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   lastSentTime!: string;
 
-  groupId: string = '';
+  userId: string = '';
 
   groupCreatorId: string = '';
 
@@ -78,7 +78,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private localStore: LocalStorageService,
     private addNameService: AddUserNameService,
-    private timer: DialogTimerService,
+    private timer: PersonalTimerService,
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
@@ -97,11 +97,11 @@ export class DialogComponent implements OnInit, OnDestroy {
       .subscribe();
 
     this.route.params.subscribe((params: Params) => {
-      this.groupId = params['id'];
+      this.userId = params['id'];
     });
 
-    this.getGroupMessagesSubscribe$ = this.store
-      .select(selectGroupMessages({ groupId: this.groupId }))
+    this.getPersonMessagesSubscribe$ = this.store
+      .select(selectGetPersonalConversations({ userId: this.userId }))
       .pipe(
         map(data => {
           if (data.messages) {
@@ -111,8 +111,8 @@ export class DialogComponent implements OnInit, OnDestroy {
             );
           } else {
             this.store.dispatch(
-              ConversationActions.getGroupMessages({
-                dialog: { groupId: this.groupId },
+              ConversationActions.getUserMessages({
+                dialog: { userId: this.userId },
               })
             );
             this.messages = [];
@@ -124,9 +124,9 @@ export class DialogComponent implements OnInit, OnDestroy {
     if (this.messages.length) {
       this.lastSentTime = this.messages[this.messages.length - 1].time;
       this.store.dispatch(
-        ConversationActions.getGroupMessages({
+        ConversationActions.getUserMessages({
           dialog: {
-            groupId: this.groupId,
+            userId: this.userId,
             since: this.lastSentTime,
           },
         })
@@ -138,9 +138,9 @@ export class DialogComponent implements OnInit, OnDestroy {
       .pipe(
         tap(arr => {
           arr.Items.forEach(element => {
-            if (element.id.S === this.groupId) this.title = element.name.S;
+            if (element.id.S === this.userId) this.title = element.name.S;
             if (
-              element.id.S === this.groupId &&
+              element.id.S === this.userId &&
               element.createdBy.S === this.localData?.uid
             ) {
               this.groupCreatorId = element.createdBy.S;
@@ -155,7 +155,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.getGroupMessagesSubscribe$.unsubscribe();
+    this.getPersonMessagesSubscribe$.unsubscribe();
     this.updateDialogsSubscribe$.unsubscribe();
     this.updateTitleSubscribe$.unsubscribe();
   }
@@ -169,9 +169,9 @@ export class DialogComponent implements OnInit, OnDestroy {
     if (this.messages.length) {
       this.lastSentTime = this.messages[this.messages.length - 1].time;
       this.store.dispatch(
-        ConversationActions.getGroupMessages({
+        ConversationActions.getUserMessages({
           dialog: {
-            groupId: this.groupId,
+            userId: this.userId,
             since: this.lastSentTime,
           },
         })
@@ -183,8 +183,9 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.dialog.open(GroupDeleteComponent, {
       data: {
         groupTitle: this.title,
-        id: this.groupId,
+        id: this.userId,
         isOpenGroup: true,
+        isPersonal: true,
       },
       minHeight: '200px',
       width: '400px',

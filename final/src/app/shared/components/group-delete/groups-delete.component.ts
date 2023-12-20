@@ -12,7 +12,7 @@ import {
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ModalData } from '../..';
-import { LoggedActions } from '../../../core/store/redux';
+import { ConversationActions, LoggedActions } from '../../../core/store/redux';
 
 @Component({
   selector: 'app-modal',
@@ -30,6 +30,8 @@ import { LoggedActions } from '../../../core/store/redux';
 export class GroupDeleteComponent {
   title: string = '';
 
+  isPersonalMesg: boolean = false;
+
   constructor(
     public modal: MatDialog,
     private router: Router,
@@ -38,6 +40,7 @@ export class GroupDeleteComponent {
     public data: ModalData
   ) {
     this.title = data.groupTitle;
+    this.isPersonalMesg = data.isPersonal || false;
   }
 
   onNoClick(): void {
@@ -45,9 +48,15 @@ export class GroupDeleteComponent {
   }
 
   removeGroup() {
-    this.store.dispatch(
-      LoggedActions.removeOwnGroup({ groupId: this.data.groupId })
-    );
+    if (this.isPersonalMesg) {
+      this.store.dispatch(
+        ConversationActions.removeDialog({ userId: this.data.id })
+      );
+    } else {
+      this.store.dispatch(
+        LoggedActions.removeOwnGroup({ groupId: this.data.id })
+      );
+    }
     if (this.data.isOpenGroup) {
       this.router.navigate(['/']);
     }
