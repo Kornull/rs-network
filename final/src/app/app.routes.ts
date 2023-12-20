@@ -3,7 +3,8 @@ import { authGuard } from './core/guard';
 import { NotFoundComponent } from './shared';
 import {
   AuthComponent,
-  GroupDialogComponent,
+  ConversationComponent,
+  DialogComponent,
   MainComponent,
   ProfileComponent,
   RegistrationComponent,
@@ -32,7 +33,12 @@ export const routes: Routes = [
   {
     path: 'group/:id',
     canActivate: [authGuard],
-    component: GroupDialogComponent,
+    component: DialogComponent,
+  },
+  {
+    path: 'conversation/:id',
+    canActivate: [authGuard],
+    component: ConversationComponent,
   },
   {
     path: '**',

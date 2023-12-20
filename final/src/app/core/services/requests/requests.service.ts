@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import {
+  ConversationId,
   GetProfileInfoType,
+  GroupMessages,
   GroupsData,
   RequestsData,
   ResponseCreateGroup,
@@ -61,6 +63,60 @@ export class RequestsService {
   getAllUsersDialogs(): Observable<UsersConversationData> {
     return this.http.get<UsersConversationData>(
       `${RequestsData.URL}${RequestsData.USER_CONVERSATION}`
+    );
+  }
+
+  sendMessageToGroup(message: string, groupId: string) {
+    return this.http.post(`${RequestsData.URL}${RequestsData.SEND_MESSAGE}`, {
+      groupID: groupId,
+      message,
+    });
+  }
+
+  getMessagesToGroup(
+    groupId: string,
+    since: string = ''
+  ): Observable<GroupMessages> {
+    const sinceLink = `&since=${since}`;
+    return this.http.get<GroupMessages>(
+      `${RequestsData.URL}${RequestsData.GET_MESSAGE}${groupId}${
+        since ? sinceLink : ''
+      }`
+    );
+  }
+
+  createConversation(userId: string): Observable<ConversationId> {
+    return this.http.post<ConversationId>(
+      `${RequestsData.URL}${RequestsData.CREATE_CONVERSATION}`,
+      { companion: userId }
+    );
+  }
+
+  getPersonalMessages(
+    userID: string,
+    since: string = ''
+  ): Observable<GroupMessages> {
+    const sinceLink = `&since=${since}`;
+    return this.http.get<GroupMessages>(
+      `${RequestsData.URL}${RequestsData.GET_CONVERSATION_MSG}${userID}${
+        since ? sinceLink : ''
+      }`
+    );
+  }
+
+  sendPersonalMessage(message: string, userId: string) {
+    return this.http.post(
+      `${RequestsData.URL}${RequestsData.SEND_CONVERSATION_MSG}`,
+      {
+        conversationID: userId,
+        message,
+      }
+    );
+  }
+
+  deleteConversation(userId: string) {
+    return this.http.delete(
+      `${RequestsData.URL}${RequestsData.DEL_CONVERSATION}${userId}`
     );
   }
 }

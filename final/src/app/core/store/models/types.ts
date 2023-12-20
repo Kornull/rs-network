@@ -18,10 +18,15 @@ export enum RequestsData {
   GROUP_LIST = '/groups/list',
   USER_LIST = '/users',
   USER_CONVERSATION = '/conversations/list',
+  CREATE_CONVERSATION = '/conversations/create',
+  SEND_CONVERSATION_MSG = '/conversations/append',
+  GET_CONVERSATION_MSG = '/conversations/read?conversationID=',
+  DEL_CONVERSATION = '/conversations/delete?conversationID=',
   CREATE_GROUP = '/groups/create',
   DELETE_GROUP = '/groups/delete?groupID=',
+  SEND_MESSAGE = '/groups/append',
+  GET_MESSAGE = '/groups/read?groupID=',
 }
-
 export enum ErrorTypes {
   USER_EXIST = 'PrimaryDuplicationException',
   INVALID_REG_FORM = 'InvalidFormDataException',
@@ -60,3 +65,5 @@ export type GroupMessagesDataType = {
   message: string;
   id: string;
 };
+
+export type ConversationId = { conversationID: 'string' };

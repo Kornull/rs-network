@@ -9,7 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 import { GroupsFormComponent } from './groups-form/groups-form.component';
-import { GroupDeleteComponent } from './group-delete/groups-delete.component';
 
 import { LoggedActions, selectGroupsInfo } from '../../../../core/store/redux';
 import { GroupInfo, UserRegisterData } from '../../../../core/store/models';
@@ -17,6 +16,7 @@ import {
   GroupTimerService,
   LocalStorageService,
 } from '../../../../core/services';
+import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
 
 @Component({
   selector: 'app-main-groups',
@@ -82,7 +82,7 @@ export class MainGroupsComponent implements OnInit, OnDestroy {
     this.dialog.open(GroupDeleteComponent, {
       data: {
         groupTitle: title,
-        groupId: id,
+        id,
       },
       minHeight: '200px',
       width: '400px',

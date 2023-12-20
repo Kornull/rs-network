@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 import {
   MatDialogTitle,
@@ -10,8 +11,8 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { ModalData } from '../../../../../shared';
-import { LoggedActions } from '../../../../../core/store/redux';
+import { ModalData } from '../..';
+import { ConversationActions, LoggedActions } from '../../../core/store/redux';
 
 @Component({
   selector: 'app-modal',
@@ -29,13 +30,17 @@ import { LoggedActions } from '../../../../../core/store/redux';
 export class GroupDeleteComponent {
   title: string = '';
 
+  isPersonalMesg: boolean = false;
+
   constructor(
     public modal: MatDialog,
+    private router: Router,
     private store: Store,
     @Inject(MAT_DIALOG_DATA)
     public data: ModalData
   ) {
     this.title = data.groupTitle;
+    this.isPersonalMesg = data.isPersonal || false;
   }
 
   onNoClick(): void {
@@ -43,8 +48,17 @@ export class GroupDeleteComponent {
   }
 
   removeGroup() {
-    this.store.dispatch(
-      LoggedActions.removeOwnGroup({ groupId: this.data.groupId })
-    );
+    if (this.isPersonalMesg) {
+      this.store.dispatch(
+        ConversationActions.removeDialog({ userId: this.data.id })
+      );
+    } else {
+      this.store.dispatch(
+        LoggedActions.removeOwnGroup({ groupId: this.data.id })
+      );
+    }
+    if (this.data.isOpenGroup) {
+      this.router.navigate(['/']);
+    }
   }
 }

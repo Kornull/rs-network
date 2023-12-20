@@ -10,7 +10,7 @@ export type ProfileInfoType = {
   [T in UserProfileData]: string;
 };
 
-export type DialogData = Record<string, GroupMessage[]>;
+export type DialogData = Record<string, GroupMessageData[]>;
 
 export interface UserState {
   'user-logged': boolean;
@@ -20,6 +20,7 @@ export interface UserState {
   groups: GroupsData;
   users: UsersData;
   conversations: UsersConversationData;
+  personalMessage: DialogData;
   dialogs: DialogData;
 }
 export interface UserListPersonalData {
@@ -73,12 +74,21 @@ export interface UserDataInfo {
   users: UserDataAddConversation[];
 }
 
-export interface GroupMessage {
+export interface GroupMessageData {
   authorID: { [T in DataResponseType]: string };
   createdAt: { [T in DataResponseType]: string };
   message: { [T in DataResponseType]: string };
 }
 
 export interface GroupMessages extends DefaultData {
-  Items: GroupMessage[];
+  Items: GroupMessageData[];
+}
+
+export type InfoGroupMessagesType = {
+  messages: GroupMessageData[];
+  users: UserListPersonalData[];
+};
+
+export interface UsersMessages extends DefaultData {
+  Items: GroupMessageData[];
 }
