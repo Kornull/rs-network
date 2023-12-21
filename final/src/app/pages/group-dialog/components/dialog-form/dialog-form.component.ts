@@ -16,16 +16,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {
-  LocalStorageService,
-  RequestsService,
-  SnackBarService,
-} from '../../../../core/services';
+
 import { ConversationActions } from '../../../../core/store/redux';
 import {
   GroupMessagesDataType,
   UserRegisterData,
 } from '../../../../core/store/models';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import RequestsService from '../../../../core/services/requests/requests.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-dialog-form',

@@ -4,12 +4,12 @@ import { EMPTY, catchError, exhaustMap, forkJoin, map } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConversationActions, LoggedActions } from './action-types';
-import {
-  LocalStorageService,
-  RequestsService,
-  SnackBarService,
-} from '../../services';
 import { UserRegisterData } from '../models';
+
+import SnackBarService from '../../services/snack-bar/snack-bar.service';
+import RequestsService from '../../services/requests/requests.service';
+import LocalStorageService from '../../services/local-storage/local-storage.service';
+import ClearStoreService from '../../services/clear-store/clear.service';
 
 @Injectable()
 export class UserLoggedEffects {
@@ -18,6 +18,7 @@ export class UserLoggedEffects {
     private toast: SnackBarService,
     private request: RequestsService,
     private localStore: LocalStorageService,
+    private clear: ClearStoreService,
     public modal: MatDialog
   ) {}
 
@@ -38,15 +39,11 @@ export class UserLoggedEffects {
           }),
           catchError(err => {
             const { error } = err;
-
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+            if (error.type === 'error') {
+              this.toast.openSnack(err.message, true);
             } else {
               if (error.message.includes('was not')) {
-                localStorage.clear();
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1800);
+                this.clear.clearUserStorage();
               }
               this.toast.openSnack(error.message, true);
             }
@@ -77,9 +74,12 @@ export class UserLoggedEffects {
           }),
           catchError(err => {
             const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+            if (error.type === 'error') {
+              this.toast.openSnack(err.message, true);
             } else {
+              if (error.message.includes('was not')) {
+                this.clear.clearUserStorage();
+              }
               this.toast.openSnack(error.message, true);
             }
             return EMPTY;
@@ -111,9 +111,12 @@ export class UserLoggedEffects {
           }),
           catchError(err => {
             const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+            if (error.type === 'error') {
+              this.toast.openSnack(err.message, true);
             } else {
+              if (error.message.includes('was not')) {
+                this.clear.clearUserStorage();
+              }
               this.toast.openSnack(error.message, true);
             }
             return EMPTY;
@@ -137,9 +140,12 @@ export class UserLoggedEffects {
           }),
           catchError(err => {
             const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+            if (error.type === 'error') {
+              this.toast.openSnack(err.message, true);
             } else {
+              if (error.message.includes('was not')) {
+                this.clear.clearUserStorage();
+              }
               this.toast.openSnack(error.message, true);
             }
             return EMPTY;
@@ -166,9 +172,12 @@ export class UserLoggedEffects {
           }),
           catchError(err => {
             const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+            if (error.type === 'error') {
+              this.toast.openSnack(err.message, true);
             } else {
+              if (error.message.includes('was not')) {
+                this.clear.clearUserStorage();
+              }
               this.toast.openSnack(error.message, true);
             }
             return EMPTY;

@@ -16,7 +16,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class RequestsService {
+export default class RequestsService {
   constructor(private http: HttpClient) {}
 
   getUserInfo(): Observable<GetProfileInfoType> {

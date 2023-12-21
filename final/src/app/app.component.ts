@@ -8,13 +8,13 @@ import { HeaderComponent } from './core/components';
 import { SnackbarComponent } from './shared';
 
 import { AuthActions } from './core/store/redux';
-import {
-  AuthService,
-  LocalStorageService,
-  RegisterService,
-  SnackBarService,
-} from './core/services';
+
 import { AppTheme } from './core/store/models';
+
+import AuthService from './core/services/auth/auth.service';
+import LocalStorageService from './core/services/local-storage/local-storage.service';
+import RegisterService from './core/services/register/register.service';
+import SnackBarService from './core/services/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-root',

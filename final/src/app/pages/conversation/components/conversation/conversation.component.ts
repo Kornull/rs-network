@@ -13,12 +13,8 @@ import {
   selectGetPersonalConversations,
   selectGetUsers,
   selectGroupsInfo,
+  selectIsUserLogged,
 } from '../../../../core/store/redux';
-
-import {
-  AddUserNameService,
-  LocalStorageService,
-} from '../../../../core/services';
 
 import { ConversationFormComponent } from '../conversation-form/conversation-form.component';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
@@ -29,7 +25,9 @@ import {
   UserListPersonalData,
   UserRegisterData,
 } from '../../../../core/store/models';
-import { PersonalTimerService } from '../../../../core/services/timer/personal-timer.service';
+import { PersonalTimerService } from '../../../../core/services/timer';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
 
 @Component({
   selector: 'app-conversation',
@@ -67,11 +65,15 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   updateTitleSubscribe$!: Subscription;
 
+  isUserLogged$!: Subscription;
+
   lastSentTime!: string;
 
   userId: string = '';
 
   groupCreatorId: string = '';
+
+  isUserLogged: boolean = false;
 
   constructor(
     private store: Store,
@@ -85,11 +87,16 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isUserLogged$ = this.store
+      .select(selectIsUserLogged)
+      .pipe(tap(res => (this.isUserLogged = res)))
+      .subscribe();
+
     this.updateDialogsSubscribe$ = this.store
       .select(selectGetUsers)
       .pipe(
         tap(data => {
-          if (!data.length) {
+          if (!data.length && this.isUserLogged) {
             this.store.dispatch(ConversationActions.updateDialogUsers());
           }
         })
@@ -110,11 +117,13 @@ export class ConversationComponent implements OnInit, OnDestroy {
               data.users
             );
           } else {
-            this.store.dispatch(
-              ConversationActions.getUserMessages({
-                dialog: { userId: this.userId },
-              })
-            );
+            if (this.isUserLogged) {
+              this.store.dispatch(
+                ConversationActions.getUserMessages({
+                  dialog: { userId: this.userId },
+                })
+              );
+            }
             this.messages = [];
           }
         })

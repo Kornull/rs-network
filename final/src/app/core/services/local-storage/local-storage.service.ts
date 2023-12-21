@@ -4,7 +4,7 @@ import { LocalStoreKeys, UserRegisterData } from '../../store/models';
 @Injectable({
   providedIn: 'root',
 })
-export class LocalStorageService {
+export default class LocalStorageService {
   loginSuccess(data: UserRegisterData) {
     localStorage.setItem(LocalStoreKeys.AUTH_USER, JSON.stringify(data));
   }

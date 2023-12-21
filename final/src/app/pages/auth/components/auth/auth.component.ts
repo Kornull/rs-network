@@ -16,11 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
 import { passwordValidator } from '../../../../shared';
-import {
-  AuthService,
-  LocalStorageService,
-  SnackBarService,
-} from '../../../../core/services';
 
 import {
   ErrorTypes,
@@ -28,6 +23,10 @@ import {
   UserLoginSuccess,
 } from '../../../../core/store/models';
 import { AuthActions, selectIsUserLogged } from '../../../../core/store/redux';
+
+import AuthService from '../../../../core/services/auth/auth.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-auth',

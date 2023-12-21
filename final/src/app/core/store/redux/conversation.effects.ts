@@ -4,7 +4,10 @@ import { EMPTY, catchError, exhaustMap, map } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConversationActions } from './action-types';
-import { RequestsService, SnackBarService } from '../../services';
+
+import SnackBarService from '../../services/snack-bar/snack-bar.service';
+import RequestsService from '../../services/requests/requests.service';
+import ClearStoreService from '../../services/clear-store/clear.service';
 
 @Injectable()
 export class ConversationEffects {
@@ -12,6 +15,7 @@ export class ConversationEffects {
     private actions$: Actions,
     private toast: SnackBarService,
     private request: RequestsService,
+    private clear: ClearStoreService,
     public modal: MatDialog
   ) {}
 
@@ -33,9 +37,12 @@ export class ConversationEffects {
             }),
             catchError(err => {
               const { error } = err;
-              if (error === null) {
-                this.toast.openSnack(err.statusText, true);
+              if (err.type === 'error') {
+                this.toast.openSnack(err.message, true);
               } else {
+                if (error.message.includes('was not')) {
+                  this.clear.clearUserStorage();
+                }
                 this.toast.openSnack(error.message, true);
               }
               return EMPTY;
@@ -63,9 +70,12 @@ export class ConversationEffects {
             }),
             catchError(err => {
               const { error } = err;
-              if (error === null) {
-                this.toast.openSnack(err.statusText, true);
+              if (err.type === 'error') {
+                this.toast.openSnack(err.message, true);
               } else {
+                if (error.message.includes('was not')) {
+                  this.clear.clearUserStorage();
+                }
                 this.toast.openSnack(error.message, true);
               }
               return EMPTY;
@@ -89,9 +99,12 @@ export class ConversationEffects {
           }),
           catchError(err => {
             const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+            if (err.type === 'error') {
+              this.toast.openSnack(err.message, true);
             } else {
+              if (error.message.includes('was not')) {
+                this.clear.clearUserStorage();
+              }
               this.toast.openSnack(error.message, true);
             }
             return EMPTY;

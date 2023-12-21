@@ -20,12 +20,10 @@ import {
   UserRegisterData,
 } from '../../../../core/store/models';
 
-import {
-  LocalStorageService,
-  RequestsService,
-  SnackBarService,
-  UserTimerService,
-} from '../../../../core/services';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import RequestsService from '../../../../core/services/requests/requests.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
+import { UserTimerService } from '../../../../core/services/timer';
 
 @Component({
   selector: 'app-main-people',

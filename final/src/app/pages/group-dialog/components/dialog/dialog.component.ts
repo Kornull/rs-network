@@ -13,13 +13,8 @@ import {
   selectGetUsers,
   selectGroupMessages,
   selectGroupsInfo,
+  selectIsUserLogged,
 } from '../../../../core/store/redux';
-
-import {
-  AddUserNameService,
-  DialogTimerService,
-  LocalStorageService,
-} from '../../../../core/services';
 
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
@@ -30,6 +25,9 @@ import {
   UserListPersonalData,
   UserRegisterData,
 } from '../../../../core/store/models';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
+import { DialogTimerService } from '../../../../core/services/timer';
 
 @Component({
   selector: 'app-group-dialog',
@@ -47,6 +45,8 @@ import {
 export class DialogComponent implements OnInit, OnDestroy {
   messages: GroupMessagesDataType[] = [];
 
+  isUserLogged: boolean = false;
+
   localData: UserRegisterData | null;
 
   title: string = '';
@@ -60,6 +60,8 @@ export class DialogComponent implements OnInit, OnDestroy {
   disabledBtn$!: Observable<boolean>;
 
   getGroupMessagesSubscribe$!: Subscription;
+
+  isUserLogged$!: Subscription;
 
   updateMessagesSubscribe$!: Subscription;
 
@@ -85,11 +87,16 @@ export class DialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isUserLogged$ = this.store
+      .select(selectIsUserLogged)
+      .pipe(tap(res => (this.isUserLogged = res)))
+      .subscribe();
+
     this.updateDialogsSubscribe$ = this.store
       .select(selectGetUsers)
       .pipe(
         tap(data => {
-          if (!data.length) {
+          if (!data.length && this.isUserLogged) {
             this.store.dispatch(ConversationActions.updateDialogUsers());
           }
         })
@@ -110,11 +117,13 @@ export class DialogComponent implements OnInit, OnDestroy {
               data.users
             );
           } else {
-            this.store.dispatch(
-              ConversationActions.getGroupMessages({
-                dialog: { groupId: this.groupId },
-              })
-            );
+            if (this.isUserLogged) {
+              this.store.dispatch(
+                ConversationActions.getGroupMessages({
+                  dialog: { groupId: this.groupId },
+                })
+              );
+            }
             this.messages = [];
           }
         })
@@ -158,6 +167,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.getGroupMessagesSubscribe$.unsubscribe();
     this.updateDialogsSubscribe$.unsubscribe();
     this.updateTitleSubscribe$.unsubscribe();
+    this.isUserLogged$.unsubscribe();
   }
 
   runUpdateMessage() {

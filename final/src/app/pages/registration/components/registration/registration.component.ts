@@ -20,9 +20,10 @@ import {
   nameValidator,
   passwordValidator,
 } from '../../../../shared';
-import { RegisterService, SnackBarService } from '../../../../core/services';
 import { ErrorTypes, UserRegister } from '../../../../core/store/models';
 import { AuthActions, selectIsUserLogged } from '../../../../core/store/redux';
+import RegisterService from '../../../../core/services/register/register.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-registration',
