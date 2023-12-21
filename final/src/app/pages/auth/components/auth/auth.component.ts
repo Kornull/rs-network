@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { EMPTY, Subscription, catchError, tap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router, RouterLink } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { EMPTY, Subscription, catchError, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -117,11 +118,15 @@ export class AuthComponent implements OnInit {
           this.router.navigate(['/']);
           this.store.dispatch(AuthActions.checkUserLogin());
         }),
-        catchError(err => {
+        catchError((err: HttpErrorResponse) => {
           const { error } = err;
 
           if (error === null) {
             this.toast.openSnack(err.statusText, true);
+          }
+
+          if (error.type === 'error') {
+            this.toast.openSnack(err.message, true);
           }
 
           if (error.type === ErrorTypes.USER_ERROR_LOGIN) {

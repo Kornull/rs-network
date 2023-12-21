@@ -56,9 +56,10 @@
       <li>There are no items.</li>
     }
   </ul>
-  <app-dialog-form
+  <app-conversation-form
     class="dialog-form"
-    [groupId]="groupId"
+    [id]="groupId"
+    [dialogKey]="dialogKey"
     [lastTimeSent]="lastSentTime"
-    [messages]="messages"></app-dialog-form>
+    [messages]="messages"></app-conversation-form>
 </div>

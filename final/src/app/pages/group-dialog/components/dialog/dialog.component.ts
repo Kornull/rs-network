@@ -16,10 +16,10 @@ import {
   selectIsUserLogged,
 } from '../../../../core/store/redux';
 
-import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
 
 import {
+  DialogPageKey,
   GroupMessageData,
   GroupMessagesDataType,
   UserListPersonalData,
@@ -28,14 +28,15 @@ import {
 import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
 import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
 import { DialogTimerService } from '../../../../core/services/timer';
+import { ConversationFormComponent } from '../../../../shared';
 
 @Component({
   selector: 'app-group-dialog',
   standalone: true,
   imports: [
     CommonModule,
-    DialogFormComponent,
     MatButtonModule,
+    ConversationFormComponent,
     MatIconModule,
     RouterLink,
   ],
@@ -75,6 +76,8 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   groupCreatorId: string = '';
 
+  dialogKey: string;
+
   constructor(
     private store: Store,
     private route: ActivatedRoute,
@@ -84,6 +87,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
+    this.dialogKey = DialogPageKey.GROUP;
   }
 
   ngOnInit(): void {

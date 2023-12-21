@@ -15,10 +15,12 @@ import {
   selectIsUserLogged,
 } from '../../../../core/store/redux';
 
-import { ConversationFormComponent } from '../conversation-form/conversation-form.component';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
 
+import { ConversationFormComponent } from '../../../../shared';
+
 import {
+  DialogPageKey,
   GroupMessageData,
   GroupMessagesDataType,
   UserListPersonalData,
@@ -74,6 +76,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   isUserLogged: boolean = false;
 
+  dialogKey: string;
+
   constructor(
     private store: Store,
     private route: ActivatedRoute,
@@ -83,6 +87,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
+    this.dialogKey = DialogPageKey.PERSONAL;
   }
 
   ngOnInit(): void {

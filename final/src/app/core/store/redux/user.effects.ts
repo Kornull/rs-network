@@ -44,9 +44,9 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(init),
       switchMap(() => {
-        const invalidEmails: UserRegisterData | null =
+        const userLogData: UserRegisterData | null =
           this.localStore.getLoginInfo();
-        if (invalidEmails !== null) {
+        if (userLogData !== null) {
           return of(
             AuthActions.updateUserLogged({
               isLogged: true,

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe, NgClass } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EMPTY, Observable, Subscription, catchError, map, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -20,12 +21,10 @@ import {
   UserRegisterData,
 } from '../../../../core/store/models';
 
+import { UserTimerService } from '../../../../core/services/timer';
 import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
 import RequestsService from '../../../../core/services/requests/requests.service';
 import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
-import { UserTimerService } from '../../../../core/services/timer';
-import { HttpErrorResponse } from '@angular/common/http';
-import ClearStoreService from '../../../../core/services/clear-store/clear.service';
 import ErrorService from '../../../../core/services/error/error.service';
 
 @Component({
@@ -57,7 +56,6 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
     private localStore: LocalStorageService,
     private toast: SnackBarService,
     private request: RequestsService,
-    private clear: ClearStoreService,
     public dialog: MatDialog,
     public errorService: ErrorService
   ) {
