@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription, map, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {
   LoggedActions,
   selectCheckProfileInfo,
+  selectIsUserLogged,
 } from '../../../../core/store/redux';
 
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
@@ -18,6 +19,7 @@ import { ProfileInfoType } from '../../../../core/store/models';
 import { LoaderComponent } from '../../../../shared';
 import RequestsService from '../../../../core/services/requests/requests.service';
 import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
+import ClearStoreService from '../../../../core/services/clear-store/clear.service';
 
 @Component({
   selector: 'app-profile',
@@ -57,16 +59,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   uid: string = '';
 
+  isUserLogged$!: Subscription;
+
+  isUserLogged: boolean = false;
+
   constructor(
     private store: Store,
     private requestService: RequestsService,
-    private toast: SnackBarService
+    private toast: SnackBarService,
+    private clear: ClearStoreService
   ) {}
 
   ngOnInit(): void {
+    this.isUserLogged$ = this.store
+      .select(selectIsUserLogged)
+      .pipe(tap(res => (this.isUserLogged = res)))
+      .subscribe();
+
     this.userProfileInfo$ = this.store.select(selectCheckProfileInfo).pipe(
       map(info => {
-        if (info === null) {
+        if (info === null && this.isUserLogged) {
           this.store.dispatch(LoggedActions.getUserInfo());
           return null;
         }
@@ -111,9 +123,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
         },
         error: err => {
           const { error } = err;
-          if (err.statusText) {
-            this.toast.openSnack(err.statusText, true);
+          if (error.type === 'error') {
+            this.toast.openSnack(err.message, true);
           } else {
+            if (error.message.includes('was not')) {
+              this.clear.clearUserStorage();
+            }
             this.toast.openSnack(error.message, true);
           }
           this.validForm = true;

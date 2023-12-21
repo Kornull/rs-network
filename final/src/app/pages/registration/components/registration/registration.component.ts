@@ -109,6 +109,10 @@ export class RegistrationComponent implements OnInit {
             this.toast.openSnack(err.statusText, true);
           }
 
+          if (error.type === 'error') {
+            this.toast.openSnack(err.message, true);
+          }
+
           if (error.type === ErrorTypes.USER_EXIST) {
             this.toast.openSnack(error.message, true);
             this.registerForm.controls['email'].setErrors({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { EMPTY, catchError, map, take, tap } from 'rxjs';
+import { EMPTY, Subscription, catchError, tap } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -50,6 +50,8 @@ export class AuthComponent implements OnInit {
 
   authForm!: FormGroup;
 
+  httpSubscribe$!: Subscription;
+
   isErrorRequest: boolean = false;
 
   constructor(
@@ -69,8 +71,7 @@ export class AuthComponent implements OnInit {
           if (res) {
             this.router.navigate(['/']);
           }
-        }),
-        take(1)
+        })
       )
       .subscribe();
     this.authForm = this.fb.group({
@@ -104,21 +105,17 @@ export class AuthComponent implements OnInit {
 
     http$
       .pipe(
-        map((res: UserLoginSuccess) => {
+        tap((res: UserLoginSuccess) => {
           this.localStor.loginSuccess({
             email: this.authForm.controls['email'].value,
             uid: res.uid,
             token: res.token,
           });
-          this.store.dispatch(
-            AuthActions.updateUserLogged({
-              isLogged: true,
-            })
-          );
           this.toast.openSnack('Login success', false);
           this.isErrorRequest = false;
           this.isDisabled = true;
           this.router.navigate(['/']);
+          this.store.dispatch(AuthActions.checkUserLogin());
         }),
         catchError(err => {
           const { error } = err;

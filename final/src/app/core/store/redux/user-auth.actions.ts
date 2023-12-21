@@ -16,3 +16,5 @@ export const updateUserLogged = createAction(
   '[Login Page] Update User isLogin',
   props<{ isLogged: boolean }>()
 );
+
+export const checkUserLogin = createAction('[Login Page] Check user Login');

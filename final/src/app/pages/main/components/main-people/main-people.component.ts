@@ -24,6 +24,9 @@ import LocalStorageService from '../../../../core/services/local-storage/local-s
 import RequestsService from '../../../../core/services/requests/requests.service';
 import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
 import { UserTimerService } from '../../../../core/services/timer';
+import { HttpErrorResponse } from '@angular/common/http';
+import ClearStoreService from '../../../../core/services/clear-store/clear.service';
+import ErrorService from '../../../../core/services/error/error.service';
 
 @Component({
   selector: 'app-main-people',
@@ -54,7 +57,9 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
     private localStore: LocalStorageService,
     private toast: SnackBarService,
     private request: RequestsService,
-    public dialog: MatDialog
+    private clear: ClearStoreService,
+    public dialog: MatDialog,
+    public errorService: ErrorService
   ) {
     this.loginInfo = this.localStore.getLoginInfo();
   }
@@ -115,13 +120,8 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
             this.router.navigate([`/conversation/${res.conversationID}`]);
             this.toast.openSnack('Conversation create', false);
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
-            } else {
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         )

@@ -154,6 +154,10 @@ export class DialogComponent implements OnInit, OnDestroy {
             ) {
               this.groupCreatorId = element.createdBy.S;
             }
+
+            if (this.title.length > 24) {
+              this.title = `${this.title.slice(0, 23)}...`;
+            }
           });
         })
       )

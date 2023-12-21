@@ -1,22 +1,26 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import SnackBarService from '../snack-bar/snack-bar.service';
+import ClearStoreService from '../clear-store/clear.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export default class ErrorService {
-  // constructor() {}
-  // showError(err: any) {
-  //   const { error } = err;
-  //   if (err.statusText) {
-  //     this.toast.openSnack(err.statusText, true);
-  //   } else {
-  //     if (error.message.includes('was not')) {
-  //       localStorage.clear();
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 1800);
-  //     }
-  //     this.toast.openSnack(error.message, true);
-  //   }
-  // }
+  constructor(
+    private toast: SnackBarService,
+    private clear: ClearStoreService
+  ) {}
+
+  showError(err: HttpErrorResponse) {
+    const { error } = err;
+    if (error.type === 'error') {
+      this.toast.openSnack(err.message, true);
+    } else {
+      if (error.message.includes('was not')) {
+        this.clear.clearUserStorage();
+      }
+      this.toast.openSnack(error.message, true);
+    }
+  }
 }

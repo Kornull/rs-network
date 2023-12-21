@@ -95,7 +95,7 @@ export class ConversationFormComponent implements OnInit {
           catchError(err => {
             const { error } = err;
             if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+              this.toast.openSnack(err.message, true);
             } else {
               this.toast.openSnack(error.message, true);
             }

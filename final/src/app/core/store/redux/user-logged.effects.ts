@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { EMPTY, catchError, exhaustMap, forkJoin, map } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -9,7 +11,7 @@ import { UserRegisterData } from '../models';
 import SnackBarService from '../../services/snack-bar/snack-bar.service';
 import RequestsService from '../../services/requests/requests.service';
 import LocalStorageService from '../../services/local-storage/local-storage.service';
-import ClearStoreService from '../../services/clear-store/clear.service';
+import ErrorService from '../../services/error/error.service';
 
 @Injectable()
 export class UserLoggedEffects {
@@ -18,7 +20,7 @@ export class UserLoggedEffects {
     private toast: SnackBarService,
     private request: RequestsService,
     private localStore: LocalStorageService,
-    private clear: ClearStoreService,
+    private errorService: ErrorService,
     public modal: MatDialog
   ) {}
 
@@ -37,16 +39,8 @@ export class UserLoggedEffects {
               },
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error.type === 'error') {
-              this.toast.openSnack(err.message, true);
-            } else {
-              if (error.message.includes('was not')) {
-                this.clear.clearUserStorage();
-              }
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         )
@@ -72,16 +66,8 @@ export class UserLoggedEffects {
               },
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error.type === 'error') {
-              this.toast.openSnack(err.message, true);
-            } else {
-              if (error.message.includes('was not')) {
-                this.clear.clearUserStorage();
-              }
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );
@@ -109,16 +95,8 @@ export class UserLoggedEffects {
               },
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error.type === 'error') {
-              this.toast.openSnack(err.message, true);
-            } else {
-              if (error.message.includes('was not')) {
-                this.clear.clearUserStorage();
-              }
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );
@@ -138,16 +116,8 @@ export class UserLoggedEffects {
               groupId: data.groupId,
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error.type === 'error') {
-              this.toast.openSnack(err.message, true);
-            } else {
-              if (error.message.includes('was not')) {
-                this.clear.clearUserStorage();
-              }
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );
@@ -170,16 +140,8 @@ export class UserLoggedEffects {
               conversation: res.dialogs,
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error.type === 'error') {
-              this.toast.openSnack(err.message, true);
-            } else {
-              if (error.message.includes('was not')) {
-                this.clear.clearUserStorage();
-              }
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );

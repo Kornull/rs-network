@@ -74,4 +74,17 @@ export class AuthEffects {
     },
     { dispatch: false }
   );
+
+  updateUserLogging = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.checkUserLogin),
+      switchMap(() => {
+        return of(
+          AuthActions.updateUserLogged({
+            isLogged: true,
+          })
+        );
+      })
+    );
+  });
 }

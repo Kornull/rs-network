@@ -12,7 +12,6 @@ import {
   ConversationActions,
   selectGetPersonalConversations,
   selectGetUsers,
-  selectGroupsInfo,
   selectIsUserLogged,
 } from '../../../../core/store/redux';
 
@@ -47,7 +46,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   localData: UserRegisterData | null;
 
-  title: string = '';
+  title: string = 'Personal dialog';
 
   groupMessages: GroupMessageData[] = [];
 
@@ -142,23 +141,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.updateTitleSubscribe$ = this.store
-      .select(selectGroupsInfo)
-      .pipe(
-        tap(arr => {
-          arr.Items.forEach(element => {
-            if (element.id.S === this.userId) this.title = element.name.S;
-            if (
-              element.id.S === this.userId &&
-              element.createdBy.S === this.localData?.uid
-            ) {
-              this.groupCreatorId = element.createdBy.S;
-            }
-          });
-        })
-      )
-      .subscribe();
-
     this.timeNow$ = this.timer.getCountdown();
     this.disabledBtn$ = this.timer.getRunTimer();
   }
@@ -166,7 +148,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getPersonMessagesSubscribe$.unsubscribe();
     this.updateDialogsSubscribe$.unsubscribe();
-    this.updateTitleSubscribe$.unsubscribe();
   }
 
   runUpdateMessage() {
