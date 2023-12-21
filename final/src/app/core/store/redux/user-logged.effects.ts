@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -16,6 +17,7 @@ import ErrorService from '../../services/error/error.service';
 @Injectable()
 export class UserLoggedEffects {
   constructor(
+    private router: Router,
     private actions$: Actions,
     private toast: SnackBarService,
     private request: RequestsService,
@@ -112,6 +114,7 @@ export class UserLoggedEffects {
           map(() => {
             this.toast.openSnack('Group has been deleted', false);
             this.modal.closeAll();
+            this.router.navigate(['/']);
             return LoggedActions.delistOwnGroup({
               groupId: data.groupId,
             });

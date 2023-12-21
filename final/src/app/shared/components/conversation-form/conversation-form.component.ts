@@ -84,7 +84,6 @@ export class ConversationFormComponent implements OnInit {
       .sendPersonalMessage(this.messageForm.controls['message'].value, this.id)
       .pipe(
         map(() => {
-          this.toast.openSnack('Message sent', false);
           this.store.dispatch(
             ConversationActions.getUserMessages({
               dialog: {
@@ -115,7 +114,6 @@ export class ConversationFormComponent implements OnInit {
       .sendMessageToGroup(this.messageForm.controls['message'].value, this.id)
       .pipe(
         map(() => {
-          this.toast.openSnack('Message sent', false);
           this.store.dispatch(
             ConversationActions.getGroupMessages({
               dialog: {

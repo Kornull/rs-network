@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, catchError, exhaustMap, map } from 'rxjs';
 
@@ -17,6 +18,7 @@ export class ConversationEffects {
     private actions$: Actions,
     private toast: SnackBarService,
     private request: RequestsService,
+    private router: Router,
     private clear: ClearStoreService,
     private errorService: ErrorService,
 
@@ -81,6 +83,7 @@ export class ConversationEffects {
           map(() => {
             this.toast.openSnack('Conversation has been deleted', false);
             this.modal.closeAll();
+            this.router.navigate(['/']);
             return ConversationActions.delistConversation({
               userId: data.userId,
             });
