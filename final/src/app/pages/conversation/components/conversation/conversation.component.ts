@@ -115,7 +115,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
       .select(selectGetPersonalConversations({ userId: this.userId }))
       .pipe(
         map(data => {
-          if (data.messages) {
+          if (data.messages !== undefined && data.messages.length) {
             this.messages = this.addNameService.changeIdToName(
               data.messages,
               data.users
@@ -153,6 +153,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getPersonMessagesSubscribe$.unsubscribe();
     this.updateDialogsSubscribe$.unsubscribe();
+    this.isUserLogged$.unsubscribe();
   }
 
   runUpdateMessage() {

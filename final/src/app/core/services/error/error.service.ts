@@ -17,10 +17,16 @@ export default class ErrorService {
     if (error.type === 'error') {
       this.toast.openSnack(err.message, true);
     } else {
-      if (error.message.includes('was not')) {
+      if (error.message !== undefined && error.message.includes('was not')) {
         this.clear.clearUserStorage();
+        this.toast.openSnack(error.message, true);
+        return;
       }
-      this.toast.openSnack(error.message, true);
+      if (error.message !== undefined) {
+        this.toast.openSnack(error.message, true);
+        return;
+      }
+      this.toast.openSnack(err.message, true);
     }
   }
 }

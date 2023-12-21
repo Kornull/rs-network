@@ -12,6 +12,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { ModalData } from '../..';
 import { ConversationActions, LoggedActions } from '../../../core/store/redux';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -33,6 +34,7 @@ export class GroupDeleteComponent {
 
   constructor(
     public modal: MatDialog,
+    public router: Router,
     private store: Store,
     @Inject(MAT_DIALOG_DATA)
     public data: ModalData
@@ -55,5 +57,7 @@ export class GroupDeleteComponent {
         LoggedActions.removeOwnGroup({ groupId: this.data.id })
       );
     }
+    this.router.navigate(['/']);
   }
+
 }

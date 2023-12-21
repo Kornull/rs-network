@@ -114,7 +114,6 @@ export class UserLoggedEffects {
           map(() => {
             this.toast.openSnack('Group has been deleted', false);
             this.modal.closeAll();
-            this.router.navigate(['/']);
             return LoggedActions.delistOwnGroup({
               groupId: data.groupId,
             });

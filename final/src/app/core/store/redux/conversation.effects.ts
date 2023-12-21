@@ -83,7 +83,6 @@ export class ConversationEffects {
           map(() => {
             this.toast.openSnack('Conversation has been deleted', false);
             this.modal.closeAll();
-            this.router.navigate(['/']);
             return ConversationActions.delistConversation({
               userId: data.userId,
             });

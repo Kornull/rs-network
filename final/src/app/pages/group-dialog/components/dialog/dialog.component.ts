@@ -115,7 +115,7 @@ export class DialogComponent implements OnInit, OnDestroy {
       .select(selectGroupMessages({ groupId: this.groupId }))
       .pipe(
         map(data => {
-          if (data.messages) {
+          if (data.messages !== undefined && data.messages.length) {
             this.messages = this.addNameService.changeIdToName(
               data.messages,
               data.users
