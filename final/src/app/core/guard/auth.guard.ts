@@ -1,17 +1,17 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { LocalStoreKeys } from '../store/models';
+import AuthService from '../services/auth/auth.service';
 
 export const authGuard: CanActivateFn = () => {
   const route: Router = inject(Router);
 
-  const dataUser = localStorage.getItem(LocalStoreKeys.AUTH_USER);
-  const result = dataUser !== null ? JSON.parse(dataUser) : null;
+  const auth = inject(AuthService);
 
-  if (result !== null) {
-    return true;
+  const res = auth.isLoggedUser();
+  if (!res) {
+    route.navigate(['/signin']);
+    return res;
   }
 
-  route.navigate(['/signin']);
-  return false;
+  return res;
 };

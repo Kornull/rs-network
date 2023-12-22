@@ -13,31 +13,30 @@ import {
   selectGetUsers,
   selectGroupMessages,
   selectGroupsInfo,
+  selectIsUserLogged,
 } from '../../../../core/store/redux';
 
-import {
-  AddUserNameService,
-  DialogTimerService,
-  LocalStorageService,
-} from '../../../../core/services';
-
-import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
 
 import {
+  DialogPageKey,
   GroupMessageData,
   GroupMessagesDataType,
   UserListPersonalData,
   UserRegisterData,
 } from '../../../../core/store/models';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
+import { DialogTimerService } from '../../../../core/services/timer';
+import { ConversationFormComponent } from '../../../../shared';
 
 @Component({
   selector: 'app-group-dialog',
   standalone: true,
   imports: [
     CommonModule,
-    DialogFormComponent,
     MatButtonModule,
+    ConversationFormComponent,
     MatIconModule,
     RouterLink,
   ],
@@ -46,6 +45,8 @@ import {
 })
 export class DialogComponent implements OnInit, OnDestroy {
   messages: GroupMessagesDataType[] = [];
+
+  isUserLogged: boolean = false;
 
   localData: UserRegisterData | null;
 
@@ -61,6 +62,8 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   getGroupMessagesSubscribe$!: Subscription;
 
+  isUserLogged$!: Subscription;
+
   updateMessagesSubscribe$!: Subscription;
 
   updateDialogsSubscribe$!: Subscription;
@@ -73,6 +76,8 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   groupCreatorId: string = '';
 
+  dialogKey: string;
+
   constructor(
     private store: Store,
     private route: ActivatedRoute,
@@ -82,14 +87,20 @@ export class DialogComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
+    this.dialogKey = DialogPageKey.GROUP;
   }
 
   ngOnInit(): void {
+    this.isUserLogged$ = this.store
+      .select(selectIsUserLogged)
+      .pipe(tap(res => (this.isUserLogged = res)))
+      .subscribe();
+
     this.updateDialogsSubscribe$ = this.store
       .select(selectGetUsers)
       .pipe(
         tap(data => {
-          if (!data.length) {
+          if (!data.length && this.isUserLogged) {
             this.store.dispatch(ConversationActions.updateDialogUsers());
           }
         })
@@ -104,17 +115,19 @@ export class DialogComponent implements OnInit, OnDestroy {
       .select(selectGroupMessages({ groupId: this.groupId }))
       .pipe(
         map(data => {
-          if (data.messages) {
+          if (data.messages !== undefined && data.messages.length) {
             this.messages = this.addNameService.changeIdToName(
               data.messages,
               data.users
             );
           } else {
-            this.store.dispatch(
-              ConversationActions.getGroupMessages({
-                dialog: { groupId: this.groupId },
-              })
-            );
+            if (this.isUserLogged) {
+              this.store.dispatch(
+                ConversationActions.getGroupMessages({
+                  dialog: { groupId: this.groupId },
+                })
+              );
+            }
             this.messages = [];
           }
         })
@@ -145,6 +158,10 @@ export class DialogComponent implements OnInit, OnDestroy {
             ) {
               this.groupCreatorId = element.createdBy.S;
             }
+
+            if (this.title.length > 24) {
+              this.title = `${this.title.slice(0, 23)}...`;
+            }
           });
         })
       )
@@ -158,6 +175,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.getGroupMessagesSubscribe$.unsubscribe();
     this.updateDialogsSubscribe$.unsubscribe();
     this.updateTitleSubscribe$.unsubscribe();
+    this.isUserLogged$.unsubscribe();
   }
 
   runUpdateMessage() {

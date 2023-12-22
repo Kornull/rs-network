@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { EMPTY, catchError, map, take, tap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router, RouterLink } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { EMPTY, Subscription, catchError, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,11 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 
 import { passwordValidator } from '../../../../shared';
-import {
-  AuthService,
-  LocalStorageService,
-  SnackBarService,
-} from '../../../../core/services';
 
 import {
   ErrorTypes,
@@ -28,6 +24,10 @@ import {
   UserLoginSuccess,
 } from '../../../../core/store/models';
 import { AuthActions, selectIsUserLogged } from '../../../../core/store/redux';
+
+import AuthService from '../../../../core/services/auth/auth.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-auth',
@@ -51,6 +51,8 @@ export class AuthComponent implements OnInit {
 
   authForm!: FormGroup;
 
+  httpSubscribe$!: Subscription;
+
   isErrorRequest: boolean = false;
 
   constructor(
@@ -70,8 +72,7 @@ export class AuthComponent implements OnInit {
           if (res) {
             this.router.navigate(['/']);
           }
-        }),
-        take(1)
+        })
       )
       .subscribe();
     this.authForm = this.fb.group({
@@ -105,27 +106,25 @@ export class AuthComponent implements OnInit {
 
     http$
       .pipe(
-        map((res: UserLoginSuccess) => {
+        tap((res: UserLoginSuccess) => {
           this.localStor.loginSuccess({
             email: this.authForm.controls['email'].value,
             uid: res.uid,
             token: res.token,
           });
-          this.store.dispatch(
-            AuthActions.updateUserLogged({
-              isLogged: true,
-            })
-          );
           this.toast.openSnack('Login success', false);
           this.isErrorRequest = false;
           this.isDisabled = true;
           this.router.navigate(['/']);
+          this.store.dispatch(AuthActions.checkUserLogin());
         }),
-        catchError(err => {
+        catchError((err: HttpErrorResponse) => {
           const { error } = err;
 
-          if (error === null) {
+          if (error === null || error.type === 'error') {
             this.toast.openSnack(err.statusText, true);
+            this.isDisabled = true;
+            return EMPTY;
           }
 
           if (error.type === ErrorTypes.USER_ERROR_LOGIN) {
@@ -142,6 +141,7 @@ export class AuthComponent implements OnInit {
           if (error.type === ErrorTypes.INVALID_LOGIN_FORM) {
             this.toast.openSnack(error.message, true);
           }
+
           return EMPTY;
         })
       )

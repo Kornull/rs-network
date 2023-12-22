@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, retry } from 'rxjs';
 import { RequestsData, UserRegisterData } from '../store/models';
-import { LocalStorageService } from '../services';
+import LocalStorageService from '../services/local-storage/local-storage.service';
 
 @Injectable()
 export class ProfileDataInterceptor implements HttpInterceptor {

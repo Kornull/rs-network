@@ -12,11 +12,11 @@ import { GroupsFormComponent } from './groups-form/groups-form.component';
 
 import { LoggedActions, selectGroupsInfo } from '../../../../core/store/redux';
 import { GroupInfo, UserRegisterData } from '../../../../core/store/models';
-import {
-  GroupTimerService,
-  LocalStorageService,
-} from '../../../../core/services';
+
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
+
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import { GroupTimerService } from '../../../../core/services/timer';
 
 @Component({
   selector: 'app-main-groups',

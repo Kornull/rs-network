@@ -10,7 +10,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class AddUserNameService {
+export default class AddUserNameService {
   dialogs$!: Observable<GroupMessagesDataType[]>;
 
   constructor(private store: Store) {}

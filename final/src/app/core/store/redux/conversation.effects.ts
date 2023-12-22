@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, catchError, exhaustMap, map } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConversationActions } from './action-types';
-import { RequestsService, SnackBarService } from '../../services';
+
+import SnackBarService from '../../services/snack-bar/snack-bar.service';
+import RequestsService from '../../services/requests/requests.service';
+import ClearStoreService from '../../services/clear-store/clear.service';
+import ErrorService from '../../services/error/error.service';
 
 @Injectable()
 export class ConversationEffects {
@@ -12,6 +18,10 @@ export class ConversationEffects {
     private actions$: Actions,
     private toast: SnackBarService,
     private request: RequestsService,
+    private router: Router,
+    private clear: ClearStoreService,
+    private errorService: ErrorService,
+
     public modal: MatDialog
   ) {}
 
@@ -31,13 +41,8 @@ export class ConversationEffects {
                 },
               });
             }),
-            catchError(err => {
-              const { error } = err;
-              if (error === null) {
-                this.toast.openSnack(err.statusText, true);
-              } else {
-                this.toast.openSnack(error.message, true);
-              }
+            catchError((err: HttpErrorResponse) => {
+              this.errorService.showError(err);
               return EMPTY;
             })
           );
@@ -61,13 +66,8 @@ export class ConversationEffects {
                 },
               });
             }),
-            catchError(err => {
-              const { error } = err;
-              if (error === null) {
-                this.toast.openSnack(err.statusText, true);
-              } else {
-                this.toast.openSnack(error.message, true);
-              }
+            catchError((err: HttpErrorResponse) => {
+              this.errorService.showError(err);
               return EMPTY;
             })
           );
@@ -87,11 +87,14 @@ export class ConversationEffects {
               userId: data.userId,
             });
           }),
-          catchError(err => {
+          catchError((err: HttpErrorResponse) => {
             const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
+            if (error.type === 'error') {
+              this.toast.openSnack(err.message, true);
             } else {
+              if (error.message.includes('was not')) {
+                this.clear.clearUserStorage();
+              }
               this.toast.openSnack(error.message, true);
             }
             return EMPTY;

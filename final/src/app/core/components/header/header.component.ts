@@ -5,9 +5,9 @@ import { Router, RouterLink } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { LocalStorageService } from '../../services';
 import { selectIsUserLogged } from '../../store/redux';
 import { AppTheme } from '../../store/models';
+import LocalStorageService from '../../services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-header',

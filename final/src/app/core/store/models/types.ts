@@ -67,3 +67,8 @@ export type GroupMessagesDataType = {
 };
 
 export type ConversationId = { conversationID: 'string' };
+
+export enum DialogPageKey {
+  PERSONAL = 'personal',
+  GROUP = 'group',
+}

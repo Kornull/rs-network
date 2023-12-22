@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {
   GroupInfo,
-  GroupMessageData,
   GroupsData,
   ProfileInfoType,
   UsersConversationData,
@@ -54,11 +53,4 @@ export const setUserAllLists = createAction(
   props<{ users: UsersData; conversation: UsersConversationData }>()
 );
 
-export const isUserNotFound = createAction(
-  '[Profile] If user not found - logout'
-);
-
-export const setGroupMessages = createAction(
-  '[Group dialog] Update group messages',
-  props<{ messages: GroupMessageData[] }>()
-);
+export const isUserNotFound = createAction('[Profile] Logout - clear store');

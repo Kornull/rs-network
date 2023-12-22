@@ -7,7 +7,7 @@ import { init } from './user-auth.actions';
 import { selectGetErrorEmails } from './user.selectors';
 import { AuthActions } from './action-types';
 
-import { LocalStorageService } from '../../services';
+import LocalStorageService from '../../services/local-storage/local-storage.service';
 import { UserRegisterData } from '../models';
 
 @Injectable()
@@ -44,9 +44,9 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(init),
       switchMap(() => {
-        const invalidEmails: UserRegisterData | null =
+        const userLogData: UserRegisterData | null =
           this.localStore.getLoginInfo();
-        if (invalidEmails !== null) {
+        if (userLogData !== null) {
           return of(
             AuthActions.updateUserLogged({
               isLogged: true,
@@ -74,4 +74,17 @@ export class AuthEffects {
     },
     { dispatch: false }
   );
+
+  updateUserLogging = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.checkUserLogin),
+      switchMap(() => {
+        return of(
+          AuthActions.updateUserLogged({
+            isLogged: true,
+          })
+        );
+      })
+    );
+  });
 }

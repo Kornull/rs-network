@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { EMPTY, catchError, exhaustMap, forkJoin, map } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConversationActions, LoggedActions } from './action-types';
-import {
-  LocalStorageService,
-  RequestsService,
-  SnackBarService,
-} from '../../services';
 import { UserRegisterData } from '../models';
+
+import SnackBarService from '../../services/snack-bar/snack-bar.service';
+import RequestsService from '../../services/requests/requests.service';
+import LocalStorageService from '../../services/local-storage/local-storage.service';
+import ErrorService from '../../services/error/error.service';
 
 @Injectable()
 export class UserLoggedEffects {
   constructor(
+    private router: Router,
     private actions$: Actions,
     private toast: SnackBarService,
     private request: RequestsService,
     private localStore: LocalStorageService,
+    private errorService: ErrorService,
     public modal: MatDialog
   ) {}
 
@@ -36,20 +41,8 @@ export class UserLoggedEffects {
               },
             });
           }),
-          catchError(err => {
-            const { error } = err;
-
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
-            } else {
-              if (error.message.includes('was not')) {
-                localStorage.clear();
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1800);
-              }
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         )
@@ -75,13 +68,8 @@ export class UserLoggedEffects {
               },
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
-            } else {
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );
@@ -109,13 +97,8 @@ export class UserLoggedEffects {
               },
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
-            } else {
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );
@@ -135,13 +118,8 @@ export class UserLoggedEffects {
               groupId: data.groupId,
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
-            } else {
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );
@@ -164,13 +142,8 @@ export class UserLoggedEffects {
               conversation: res.dialogs,
             });
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
-            } else {
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         );

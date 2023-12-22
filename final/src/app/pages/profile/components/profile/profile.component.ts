@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -9,14 +9,17 @@ import { MatIconModule } from '@angular/material/icon';
 import {
   LoggedActions,
   selectCheckProfileInfo,
+  selectIsUserLogged,
 } from '../../../../core/store/redux';
 
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileLogoutBtnComponent } from '../profile-logout-btn/profile-logout-btn.component';
 
 import { ProfileInfoType } from '../../../../core/store/models';
-import { RequestsService, SnackBarService } from '../../../../core/services';
 import { LoaderComponent } from '../../../../shared';
+import RequestsService from '../../../../core/services/requests/requests.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
+import ClearStoreService from '../../../../core/services/clear-store/clear.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,8 +36,10 @@ import { LoaderComponent } from '../../../../shared';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   private userProfileInfo$!: Observable<ProfileInfoType | null>;
+
+  private userProfileInfoSubscribe$!: Subscription;
 
   newName: string = '';
 
@@ -54,23 +59,33 @@ export class ProfileComponent implements OnInit {
 
   uid: string = '';
 
+  isUserLogged$!: Subscription;
+
+  isUserLogged: boolean = false;
+
   constructor(
     private store: Store,
     private requestService: RequestsService,
-    private toast: SnackBarService
+    private toast: SnackBarService,
+    private clear: ClearStoreService
   ) {}
 
   ngOnInit(): void {
+    this.isUserLogged$ = this.store
+      .select(selectIsUserLogged)
+      .pipe(tap(res => (this.isUserLogged = res)))
+      .subscribe();
+
     this.userProfileInfo$ = this.store.select(selectCheckProfileInfo).pipe(
       map(info => {
-        if (info === null) {
+        if (info === null && this.isUserLogged) {
           this.store.dispatch(LoggedActions.getUserInfo());
           return null;
         }
         return info;
       })
     );
-    this.userProfileInfo$.subscribe(res => {
+    this.userProfileInfoSubscribe$ = this.userProfileInfo$.subscribe(res => {
       if (res !== null) {
         this.name = res.name;
         this.email = res.email;
@@ -78,6 +93,10 @@ export class ProfileComponent implements OnInit {
         this.createAt = res.createdAt;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userProfileInfoSubscribe$.unsubscribe();
   }
 
   onChangeUserInfo() {
@@ -104,9 +123,12 @@ export class ProfileComponent implements OnInit {
         },
         error: err => {
           const { error } = err;
-          if (error === null) {
-            this.toast.openSnack(err.statusText, true);
+          if (error.type === 'error') {
+            this.toast.openSnack(err.message, true);
           } else {
+            if (error.message.includes('was not')) {
+              this.clear.clearUserStorage();
+            }
             this.toast.openSnack(error.message, true);
           }
           this.validForm = true;

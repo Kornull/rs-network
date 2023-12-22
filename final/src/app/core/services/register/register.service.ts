@@ -6,7 +6,7 @@ import { RequestsData, UserRegister } from '../../store/models';
 @Injectable({
   providedIn: 'root',
 })
-export class RegisterService {
+export default class RegisterService {
   constructor(private http: HttpClient) {}
 
   userSignUp(data: UserRegister) {

@@ -13,6 +13,8 @@ export const updateInvalidEmails = createAction(
 );
 
 export const updateUserLogged = createAction(
-  '[Login Page] Update Used isLogin',
+  '[Login Page] Update User isLogin',
   props<{ isLogged: boolean }>()
 );
+
+export const checkUserLogin = createAction('[Login Page] Check user Login');

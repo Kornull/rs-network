@@ -12,24 +12,23 @@ import {
   ConversationActions,
   selectGetPersonalConversations,
   selectGetUsers,
-  selectGroupsInfo,
+  selectIsUserLogged,
 } from '../../../../core/store/redux';
 
-import {
-  AddUserNameService,
-  LocalStorageService,
-} from '../../../../core/services';
-
-import { ConversationFormComponent } from '../conversation-form/conversation-form.component';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
 
+import { ConversationFormComponent } from '../../../../shared';
+
 import {
+  DialogPageKey,
   GroupMessageData,
   GroupMessagesDataType,
   UserListPersonalData,
   UserRegisterData,
 } from '../../../../core/store/models';
-import { PersonalTimerService } from '../../../../core/services/timer/personal-timer.service';
+import { PersonalTimerService } from '../../../../core/services/timer';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
 
 @Component({
   selector: 'app-conversation',
@@ -49,7 +48,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   localData: UserRegisterData | null;
 
-  title: string = '';
+  title: string = 'Personal dialog';
 
   groupMessages: GroupMessageData[] = [];
 
@@ -67,11 +66,17 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   updateTitleSubscribe$!: Subscription;
 
+  isUserLogged$!: Subscription;
+
   lastSentTime!: string;
 
   userId: string = '';
 
   groupCreatorId: string = '';
+
+  isUserLogged: boolean = false;
+
+  dialogKey: string;
 
   constructor(
     private store: Store,
@@ -82,14 +87,20 @@ export class ConversationComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
+    this.dialogKey = DialogPageKey.PERSONAL;
   }
 
   ngOnInit(): void {
+    this.isUserLogged$ = this.store
+      .select(selectIsUserLogged)
+      .pipe(tap(res => (this.isUserLogged = res)))
+      .subscribe();
+
     this.updateDialogsSubscribe$ = this.store
       .select(selectGetUsers)
       .pipe(
         tap(data => {
-          if (!data.length) {
+          if (!data.length && this.isUserLogged) {
             this.store.dispatch(ConversationActions.updateDialogUsers());
           }
         })
@@ -104,17 +115,19 @@ export class ConversationComponent implements OnInit, OnDestroy {
       .select(selectGetPersonalConversations({ userId: this.userId }))
       .pipe(
         map(data => {
-          if (data.messages) {
+          if (data.messages !== undefined && data.messages.length) {
             this.messages = this.addNameService.changeIdToName(
               data.messages,
               data.users
             );
           } else {
-            this.store.dispatch(
-              ConversationActions.getUserMessages({
-                dialog: { userId: this.userId },
-              })
-            );
+            if (this.isUserLogged) {
+              this.store.dispatch(
+                ConversationActions.getUserMessages({
+                  dialog: { userId: this.userId },
+                })
+              );
+            }
             this.messages = [];
           }
         })
@@ -133,23 +146,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.updateTitleSubscribe$ = this.store
-      .select(selectGroupsInfo)
-      .pipe(
-        tap(arr => {
-          arr.Items.forEach(element => {
-            if (element.id.S === this.userId) this.title = element.name.S;
-            if (
-              element.id.S === this.userId &&
-              element.createdBy.S === this.localData?.uid
-            ) {
-              this.groupCreatorId = element.createdBy.S;
-            }
-          });
-        })
-      )
-      .subscribe();
-
     this.timeNow$ = this.timer.getCountdown();
     this.disabledBtn$ = this.timer.getRunTimer();
   }
@@ -157,7 +153,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getPersonMessagesSubscribe$.unsubscribe();
     this.updateDialogsSubscribe$.unsubscribe();
-    this.updateTitleSubscribe$.unsubscribe();
+    this.isUserLogged$.unsubscribe();
   }
 
   runUpdateMessage() {

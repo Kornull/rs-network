@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import {
   MatDialogTitle,
@@ -34,7 +34,7 @@ export class GroupDeleteComponent {
 
   constructor(
     public modal: MatDialog,
-    private router: Router,
+    public router: Router,
     private store: Store,
     @Inject(MAT_DIALOG_DATA)
     public data: ModalData
@@ -57,8 +57,6 @@ export class GroupDeleteComponent {
         LoggedActions.removeOwnGroup({ groupId: this.data.id })
       );
     }
-    if (this.data.isOpenGroup) {
-      this.router.navigate(['/']);
-    }
+    this.router.navigate(['/']);
   }
 }

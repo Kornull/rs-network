@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe, NgClass } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EMPTY, Observable, Subscription, catchError, map, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -20,12 +21,11 @@ import {
   UserRegisterData,
 } from '../../../../core/store/models';
 
-import {
-  LocalStorageService,
-  RequestsService,
-  SnackBarService,
-  UserTimerService,
-} from '../../../../core/services';
+import { UserTimerService } from '../../../../core/services/timer';
+import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
+import RequestsService from '../../../../core/services/requests/requests.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
+import ErrorService from '../../../../core/services/error/error.service';
 
 @Component({
   selector: 'app-main-people',
@@ -56,7 +56,8 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
     private localStore: LocalStorageService,
     private toast: SnackBarService,
     private request: RequestsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public errorService: ErrorService
   ) {
     this.loginInfo = this.localStore.getLoginInfo();
   }
@@ -117,13 +118,8 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
             this.router.navigate([`/conversation/${res.conversationID}`]);
             this.toast.openSnack('Conversation create', false);
           }),
-          catchError(err => {
-            const { error } = err;
-            if (error === null) {
-              this.toast.openSnack(err.statusText, true);
-            } else {
-              this.toast.openSnack(error.message, true);
-            }
+          catchError((err: HttpErrorResponse) => {
+            this.errorService.showError(err);
             return EMPTY;
           })
         )
