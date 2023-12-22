@@ -105,12 +105,8 @@ export class RegistrationComponent implements OnInit {
         catchError(err => {
           const { error } = err;
 
-          if (error === null) {
+          if (error === null || error.type === 'error') {
             this.toast.openSnack(err.statusText, true);
-          }
-
-          if (error.type === 'error') {
-            this.toast.openSnack(err.message, true);
           }
 
           if (error.type === ErrorTypes.USER_EXIST) {

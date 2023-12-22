@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import {
@@ -12,7 +13,6 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { ModalData } from '../..';
 import { ConversationActions, LoggedActions } from '../../../core/store/redux';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -59,5 +59,4 @@ export class GroupDeleteComponent {
     }
     this.router.navigate(['/']);
   }
-
 }

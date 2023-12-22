@@ -14,8 +14,8 @@ export default class ErrorService {
 
   showError(err: HttpErrorResponse) {
     const { error } = err;
-    if (error.type === 'error') {
-      this.toast.openSnack(err.message, true);
+    if (error === null || error.type === 'error') {
+      this.toast.openSnack(err.statusText, true);
     } else {
       if (error.message !== undefined && error.message.includes('was not')) {
         this.clear.clearUserStorage();
@@ -26,7 +26,7 @@ export default class ErrorService {
         this.toast.openSnack(error.message, true);
         return;
       }
-      this.toast.openSnack(err.message, true);
+      this.toast.openSnack(err.statusText, true);
     }
   }
 }

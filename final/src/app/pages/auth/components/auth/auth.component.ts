@@ -121,12 +121,10 @@ export class AuthComponent implements OnInit {
         catchError((err: HttpErrorResponse) => {
           const { error } = err;
 
-          if (error === null) {
+          if (error === null || error.type === 'error') {
             this.toast.openSnack(err.statusText, true);
-          }
-
-          if (error.type === 'error') {
-            this.toast.openSnack(err.message, true);
+            this.isDisabled = true;
+            return EMPTY;
           }
 
           if (error.type === ErrorTypes.USER_ERROR_LOGIN) {
@@ -143,6 +141,7 @@ export class AuthComponent implements OnInit {
           if (error.type === ErrorTypes.INVALID_LOGIN_FORM) {
             this.toast.openSnack(error.message, true);
           }
+
           return EMPTY;
         })
       )
