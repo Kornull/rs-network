@@ -26,7 +26,7 @@ import {
   UserListPersonalData,
   UserRegisterData,
 } from '../../../../core/store/models';
-import { PersonalTimerService } from '../../../../core/services/timer';
+import { TimerService } from '../../../../core/services/timer';
 import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
 import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
 
@@ -83,7 +83,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private localStore: LocalStorageService,
     private addNameService: AddUserNameService,
-    private timer: PersonalTimerService,
+    private timer: TimerService,
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
@@ -109,6 +109,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe((params: Params) => {
       this.userId = params['id'];
+      this.timer.createTimer(params['id']);
     });
 
     this.getPersonMessagesSubscribe$ = this.store
@@ -146,8 +147,12 @@ export class ConversationComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.timeNow$ = this.timer.getCountdown();
-    this.disabledBtn$ = this.timer.getRunTimer();
+    this.getTimerData();
+  }
+
+  getTimerData() {
+    this.timeNow$ = this.timer.getCountdown(this.userId);
+    this.disabledBtn$ = this.timer.getRunTimer(this.userId);
   }
 
   ngOnDestroy(): void {
@@ -157,7 +162,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   runUpdateMessage() {
-    this.timer.startCountdown();
+    this.timer.startCountdown(this.userId);
+    this.getTimerData();
     this.updateMessage();
   }
 

@@ -16,7 +16,7 @@ import { GroupInfo, UserRegisterData } from '../../../../core/store/models';
 import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
 
 import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
-import { GroupTimerService } from '../../../../core/services/timer';
+import { TimerService } from '../../../../core/services/timer';
 
 @Component({
   selector: 'app-main-groups',
@@ -39,7 +39,7 @@ export class MainGroupsComponent implements OnInit, OnDestroy {
   disabledBtn$!: Observable<boolean>;
 
   constructor(
-    private timer: GroupTimerService,
+    private timer: TimerService,
     private store: Store,
     private localStore: LocalStorageService,
     public dialog: MatDialog
@@ -48,6 +48,7 @@ export class MainGroupsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.timer.createTimer('group');
     this.groups$ = this.store
       .select(selectGroupsInfo)
       .pipe(
@@ -61,16 +62,23 @@ export class MainGroupsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-    this.timeNow$ = this.timer.getCountdown();
-    this.disabledBtn$ = this.timer.getRunTimer();
+
+    this.getTimerdata();
   }
 
   ngOnDestroy(): void {
     this.groups$.unsubscribe();
   }
 
+  getTimerdata() {
+    this.timeNow$ = this.timer.getCountdown('group');
+    this.disabledBtn$ = this.timer.getRunTimer('group');
+  }
+
   updateList() {
-    this.timer.startCountdown();
+    this.timer.startCountdown('group');
+    this.getTimerdata();
+
     this.store.dispatch(LoggedActions.getGroupsList());
   }
 

@@ -1,3 +1,5 @@
+import { Observable, Subscription } from 'rxjs';
+
 export type UserRegister = {
   name: string;
   email: string;
@@ -72,3 +74,9 @@ export enum DialogPageKey {
   PERSONAL = 'personal',
   GROUP = 'group',
 }
+
+export type TimersData = {
+  timerCount: Observable<number>;
+  timerBtnIsDisabled: Observable<boolean>;
+  timer: Subscription;
+};

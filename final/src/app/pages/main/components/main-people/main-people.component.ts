@@ -21,7 +21,7 @@ import {
   UserRegisterData,
 } from '../../../../core/store/models';
 
-import { UserTimerService } from '../../../../core/services/timer';
+import { TimerService } from '../../../../core/services/timer';
 import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
 import RequestsService from '../../../../core/services/requests/requests.service';
 import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
@@ -50,7 +50,7 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
   disabledBtn$!: Observable<boolean>;
 
   constructor(
-    private timer: UserTimerService,
+    private timer: TimerService,
     private store: Store,
     private router: Router,
     private localStore: LocalStorageService,
@@ -63,6 +63,8 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.timer.createTimer('people');
+
     this.users$ = this.store
       .select(selectAllUsersInfo)
       .pipe(
@@ -88,16 +90,21 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    this.timeNow$ = this.timer.getCountdown();
-    this.disabledBtn$ = this.timer.getRunTimer();
+    this.getTimerData();
   }
 
   ngOnDestroy(): void {
     this.users$.unsubscribe();
   }
 
+  getTimerData() {
+    this.timeNow$ = this.timer.getCountdown('people');
+    this.disabledBtn$ = this.timer.getRunTimer('people');
+  }
+
   updateList() {
-    this.timer.startCountdown();
+    this.timer.startCountdown('people');
+    this.getTimerData();
     this.store.dispatch(LoggedActions.getUsers());
   }
 

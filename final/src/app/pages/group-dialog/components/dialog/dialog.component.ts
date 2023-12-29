@@ -27,7 +27,7 @@ import {
 } from '../../../../core/store/models';
 import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
 import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
-import { DialogTimerService } from '../../../../core/services/timer';
+import { TimerService } from '../../../../core/services/timer';
 import { ConversationFormComponent } from '../../../../shared';
 
 @Component({
@@ -83,7 +83,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private localStore: LocalStorageService,
     private addNameService: AddUserNameService,
-    private timer: DialogTimerService,
+    private timer: TimerService,
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
@@ -109,6 +109,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe((params: Params) => {
       this.groupId = params['id'];
+      this.timer.createTimer(params['id']);
     });
 
     this.getGroupMessagesSubscribe$ = this.store
@@ -167,8 +168,7 @@ export class DialogComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    this.timeNow$ = this.timer.getCountdown();
-    this.disabledBtn$ = this.timer.getRunTimer();
+    this.getTimerData();
   }
 
   ngOnDestroy(): void {
@@ -178,8 +178,14 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.isUserLogged$.unsubscribe();
   }
 
+  getTimerData() {
+    this.timeNow$ = this.timer.getCountdown(this.groupId);
+    this.disabledBtn$ = this.timer.getRunTimer(this.groupId);
+  }
+
   runUpdateMessage() {
-    this.timer.startCountdown();
+    this.timer.startCountdown(this.groupId);
+    this.getTimerData();
     this.updateMessage();
   }
 
