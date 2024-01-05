@@ -1,4 +1,6 @@
 @import '../../../../../scss/mixins';
+@import '../../../../../scss/constants';
+
 
 .group {
   background: var(--profile);
@@ -6,6 +8,7 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  height:$lists-height;
   border: 1px solid var(--border-main);
   box-shadow: 0 0 4px var(--hover);
   border-radius: 6px;
@@ -27,7 +30,7 @@
   }
 
   &-list {
-    height: 700px;
+    height: inherit;
     border: 1px solid var(--border-main);
     border-radius: 4px;
     overflow-y: auto;
