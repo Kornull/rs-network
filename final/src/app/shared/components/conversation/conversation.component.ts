@@ -22,6 +22,7 @@ import {
   ConversationActions,
   selectGetPersonalConversations,
   selectGroupsInfo,
+  selectGroupMessages,
 } from '../../../core/store/redux';
 import LocalStorageService from '../../../core/services/local-storage/local-storage.service';
 import AddUserNameService from '../../../core/services/add-user-name/add-user-name.service';
@@ -63,6 +64,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
   updateDialogsSubscribe$!: Subscription;
 
   updateTitleSubscribe$!: Subscription;
+
+  getGroupMessagesSubscribe$!: Subscription;
 
   isUserLogged$!: Subscription;
 
@@ -110,38 +113,25 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.timer.createTimer(params['id']);
     });
 
-    this.getPersonMessagesSubscribe$ = this.store
-      .select(selectGetPersonalConversations({ userId: this.ID }))
-      .pipe(
-        map(data => {
-          if (data.messages !== undefined && data.messages.length) {
-            this.messages = this.addNameService.changeIdToName(
-              data.messages,
-              data.users
-            );
-          } else {
-            if (this.isUserLogged) {
-              if (this.dialogKey === DialogPageKey.PERSONAL)
-                this.updateUserMessages();
-              if (this.dialogKey === DialogPageKey.GROUP)
-                this.updateGroupMessages();
-            }
-            this.messages = [];
-          }
-        })
-      )
-      .subscribe();
+    if (this.dialogKey === DialogPageKey.PERSONAL) this.updateUserMessages();
+    if (this.dialogKey === DialogPageKey.GROUP) {
+      this.updateDialogTitle();
+      this.updateGroupMessages();
+    }
 
     this.getTimerData();
     this.updateMessage();
-    if (this.dialogKey === DialogPageKey.GROUP) this.updateDialogTitle();
   }
 
   ngOnDestroy(): void {
-    this.getPersonMessagesSubscribe$.unsubscribe();
+    if (this.dialogKey === DialogPageKey.GROUP) {
+      this.getGroupMessagesSubscribe$.unsubscribe();
+      this.updateTitleSubscribe$.unsubscribe();
+    } else {
+      this.getPersonMessagesSubscribe$.unsubscribe();
+    }
     this.updateDialogsSubscribe$.unsubscribe();
     this.isUserLogged$.unsubscribe();
-    this.updateTitleSubscribe$.unsubscribe();
   }
 
   getPersonalMessages() {
@@ -167,19 +157,53 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   updateUserMessages() {
-    this.store.dispatch(
-      ConversationActions.getUserMessages({
-        dialog: { userId: this.ID },
-      })
-    );
+    this.getPersonMessagesSubscribe$ = this.store
+      .select(selectGetPersonalConversations({ userId: this.ID }))
+      .pipe(
+        map(data => {
+          if (data.messages !== undefined && data.messages.length) {
+            this.messages = this.addNameService.changeIdToName(
+              data.messages,
+              data.users
+            );
+          } else {
+            if (this.isUserLogged) {
+              this.store.dispatch(
+                ConversationActions.getUserMessages({
+                  dialog: { userId: this.ID },
+                })
+              );
+            }
+            this.messages = [];
+          }
+        })
+      )
+      .subscribe();
   }
 
   updateGroupMessages() {
-    this.store.dispatch(
-      ConversationActions.getGroupMessages({
-        dialog: { groupId: this.ID },
-      })
-    );
+    this.getGroupMessagesSubscribe$ = this.store
+      .select(selectGroupMessages({ groupId: this.ID }))
+      .pipe(
+        map(data => {
+          if (data.messages !== undefined && data.messages.length) {
+            this.messages = this.addNameService.changeIdToName(
+              data.messages,
+              data.users
+            );
+          } else {
+            if (this.isUserLogged) {
+              this.store.dispatch(
+                ConversationActions.getGroupMessages({
+                  dialog: { groupId: this.ID },
+                })
+              );
+            }
+            this.messages = [];
+          }
+        })
+      )
+      .subscribe();
   }
 
   getTimerData() {
