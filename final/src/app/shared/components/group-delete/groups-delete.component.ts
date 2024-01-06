@@ -11,8 +11,8 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { ModalData } from '../..';
 import { ConversationActions, LoggedActions } from '../../../core/store/redux';
+import { ModalData } from '../modal/modal.component';
 
 @Component({
   selector: 'app-modal',

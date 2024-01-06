@@ -17,14 +17,14 @@ import {
 } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { ConversationActions } from '../../../core/store/redux';
+import { ConversationActions } from '../../../../core/store/redux';
 import {
   DialogPageKey,
   GroupMessagesDataType,
   UserRegisterData,
-} from '../../../core/store/models';
-import RequestsService from '../../../core/services/requests/requests.service';
-import SnackBarService from '../../../core/services/snack-bar/snack-bar.service';
+} from '../../../../core/store/models';
+import RequestsService from '../../../../core/services/requests/requests.service';
+import SnackBarService from '../../../../core/services/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-conversation-form',

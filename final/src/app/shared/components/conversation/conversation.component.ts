@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 import { Observable, Subscription, map, tap } from 'rxjs';
@@ -8,27 +8,25 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { TimerService } from '../../../core/services/timer';
 import {
+  GroupMessagesDataType,
+  UserRegisterData,
+  GroupMessageData,
+  UserListPersonalData,
+  DialogPageKey,
+} from '../../../core/store/models';
+import {
+  selectIsUserLogged,
+  selectGetUsers,
   ConversationActions,
   selectGetPersonalConversations,
-  selectGetUsers,
-  selectIsUserLogged,
-} from '../../../../core/store/redux';
-
-import { GroupDeleteComponent } from '../../../../shared/components/group-delete/groups-delete.component';
-
-import { ConversationFormComponent } from '../../../../shared';
-
-import {
-  DialogPageKey,
-  GroupMessageData,
-  GroupMessagesDataType,
-  UserListPersonalData,
-  UserRegisterData,
-} from '../../../../core/store/models';
-import { TimerService } from '../../../../core/services/timer';
-import LocalStorageService from '../../../../core/services/local-storage/local-storage.service';
-import AddUserNameService from '../../../../core/services/add-user-name/add-user-name.service';
+  selectGroupsInfo,
+} from '../../../core/store/redux';
+import LocalStorageService from '../../../core/services/local-storage/local-storage.service';
+import AddUserNameService from '../../../core/services/add-user-name/add-user-name.service';
+import { ConversationFormComponent } from './conversation-form/conversation-form.component';
+import { GroupDeleteComponent } from '../group-delete/groups-delete.component';
 
 @Component({
   selector: 'app-conversation',
@@ -44,11 +42,11 @@ import AddUserNameService from '../../../../core/services/add-user-name/add-user
   styleUrl: './conversation.component.scss',
 })
 export class ConversationComponent implements OnInit, OnDestroy {
+  @Input() dialogKey: string = '';
+
   messages: GroupMessagesDataType[] = [];
 
   localData: UserRegisterData | null;
-
-  title: string = 'Personal dialog';
 
   groupMessages: GroupMessageData[] = [];
 
@@ -70,13 +68,14 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   lastSentTime!: string;
 
-  userId: string = '';
-
   groupCreatorId: string = '';
 
   isUserLogged: boolean = false;
 
-  dialogKey: string;
+  title: string =
+    this.dialogKey === DialogPageKey.PERSONAL ? 'Personal dialog' : '';
+
+  ID: string = '';
 
   constructor(
     private store: Store,
@@ -87,7 +86,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {
     this.localData = this.localStore.getLoginInfo();
-    this.dialogKey = DialogPageKey.PERSONAL;
   }
 
   ngOnInit(): void {
@@ -108,12 +106,12 @@ export class ConversationComponent implements OnInit, OnDestroy {
       .subscribe();
 
     this.route.params.subscribe((params: Params) => {
-      this.userId = params['id'];
+      this.ID = params['id'];
       this.timer.createTimer(params['id']);
     });
 
     this.getPersonMessagesSubscribe$ = this.store
-      .select(selectGetPersonalConversations({ userId: this.userId }))
+      .select(selectGetPersonalConversations({ userId: this.ID }))
       .pipe(
         map(data => {
           if (data.messages !== undefined && data.messages.length) {
@@ -123,11 +121,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
             );
           } else {
             if (this.isUserLogged) {
-              this.store.dispatch(
-                ConversationActions.getUserMessages({
-                  dialog: { userId: this.userId },
-                })
-              );
+              if (this.dialogKey === DialogPageKey.PERSONAL)
+                this.updateUserMessages();
+              if (this.dialogKey === DialogPageKey.GROUP)
+                this.updateGroupMessages();
             }
             this.messages = [];
           }
@@ -135,34 +132,63 @@ export class ConversationComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    if (this.messages.length) {
-      this.lastSentTime = this.messages[this.messages.length - 1].time;
-      this.store.dispatch(
-        ConversationActions.getUserMessages({
-          dialog: {
-            userId: this.userId,
-            since: this.lastSentTime,
-          },
-        })
-      );
-    }
-
     this.getTimerData();
-  }
-
-  getTimerData() {
-    this.timeNow$ = this.timer.getCountdown(this.userId);
-    this.disabledBtn$ = this.timer.getRunTimer(this.userId);
+    this.updateMessage();
+    if (this.dialogKey === DialogPageKey.GROUP) this.updateDialogTitle();
   }
 
   ngOnDestroy(): void {
     this.getPersonMessagesSubscribe$.unsubscribe();
     this.updateDialogsSubscribe$.unsubscribe();
     this.isUserLogged$.unsubscribe();
+    this.updateTitleSubscribe$.unsubscribe();
+  }
+
+  getPersonalMessages() {
+    this.store.dispatch(
+      ConversationActions.getUserMessages({
+        dialog: {
+          userId: this.ID,
+          since: this.lastSentTime,
+        },
+      })
+    );
+  }
+
+  getGroupConversatonMessages() {
+    this.store.dispatch(
+      ConversationActions.getGroupMessages({
+        dialog: {
+          groupId: this.ID,
+          since: this.lastSentTime,
+        },
+      })
+    );
+  }
+
+  updateUserMessages() {
+    this.store.dispatch(
+      ConversationActions.getUserMessages({
+        dialog: { userId: this.ID },
+      })
+    );
+  }
+
+  updateGroupMessages() {
+    this.store.dispatch(
+      ConversationActions.getGroupMessages({
+        dialog: { groupId: this.ID },
+      })
+    );
+  }
+
+  getTimerData() {
+    this.timeNow$ = this.timer.getCountdown(this.ID);
+    this.disabledBtn$ = this.timer.getRunTimer(this.ID);
   }
 
   runUpdateMessage() {
-    this.timer.startCountdown(this.userId);
+    this.timer.startCountdown(this.ID);
     this.getTimerData();
     this.updateMessage();
   }
@@ -170,22 +196,40 @@ export class ConversationComponent implements OnInit, OnDestroy {
   updateMessage() {
     if (this.messages.length) {
       this.lastSentTime = this.messages[this.messages.length - 1].time;
-      this.store.dispatch(
-        ConversationActions.getUserMessages({
-          dialog: {
-            userId: this.userId,
-            since: this.lastSentTime,
-          },
-        })
-      );
+      if (this.dialogKey === DialogPageKey.PERSONAL) this.getPersonalMessages();
+      if (this.dialogKey === DialogPageKey.GROUP)
+        this.getGroupConversatonMessages();
     }
   }
 
-  deleteGroup() {
+  updateDialogTitle() {
+    this.updateTitleSubscribe$ = this.store
+      .select(selectGroupsInfo)
+      .pipe(
+        tap(arr => {
+          arr.Items.forEach(element => {
+            if (element.id.S === this.ID) this.title = element.name.S;
+            if (
+              element.id.S === this.ID &&
+              element.createdBy.S === this.localData?.uid
+            ) {
+              this.groupCreatorId = element.createdBy.S;
+            }
+
+            if (this.title.length > 30) {
+              this.title = `${this.title.slice(0, 30)}...`;
+            }
+          });
+        })
+      )
+      .subscribe();
+  }
+
+  deleteDialog() {
     this.dialog.open(GroupDeleteComponent, {
       data: {
         groupTitle: this.title,
-        id: this.userId,
+        id: this.ID,
         isOpenGroup: true,
         isPersonal: true,
       },

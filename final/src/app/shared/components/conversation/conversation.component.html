@@ -22,7 +22,7 @@
       }
       <button
         mat-icon-button
-        (click)="deleteGroup()">
+        (click)="deleteDialog()">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
@@ -44,7 +44,7 @@
               {{ localData?.uid !== message.id ? message.name : 'My' }}
             </h4>
             <p class="message-info--time">
-              {{ message.time | date: "M/dd/ yyyy 'at' hh:mm a" }}
+              {{ message.time | date: "MM/dd/yyyy 'at' hh:mm a" }}
             </p>
           </div>
           <p class="message-text">{{ message.message }}</p>
@@ -56,7 +56,7 @@
   </ul>
   <app-conversation-form
     class="conversation-form"
-    [id]="userId"
+    [id]="ID"
     [dialogKey]="dialogKey"
     [lastTimeSent]="lastSentTime"
     [messages]="messages"></app-conversation-form>
