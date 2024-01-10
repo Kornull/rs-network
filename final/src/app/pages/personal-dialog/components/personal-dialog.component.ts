@@ -13,6 +13,12 @@ import { ConversationComponent } from '../../../shared';
 export class PersonalDialogComponent {
   conversationKey: string;
 
+  isGroup: boolean = false;
+
+  isGroupOpen: boolean = false;
+
+  isConversationOpen: boolean = true;
+
   constructor() {
     this.conversationKey = DialogPageKey.PERSONAL;
   }

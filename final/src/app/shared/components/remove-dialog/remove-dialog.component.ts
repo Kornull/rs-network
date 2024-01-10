@@ -16,7 +16,7 @@ import { ModalData } from '../modal/modal.component';
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './groups-delete.component.html',
+  templateUrl: './remove-dialog.component.html',
   standalone: true,
   imports: [
     MatButtonModule,
@@ -25,9 +25,9 @@ import { ModalData } from '../modal/modal.component';
     MatDialogActions,
     MatDialogClose,
   ],
-  styleUrl: './groups-delete.component.scss',
+  styleUrl: './remove-dialog.component.scss',
 })
-export class GroupDeleteComponent {
+export class RemoveDialogComponent {
   title: string = '';
 
   isPersonalMesg: boolean = false;
@@ -39,7 +39,7 @@ export class GroupDeleteComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: ModalData
   ) {
-    this.title = data.groupTitle;
+    this.title = data.title;
     this.isPersonalMesg = data.isPersonal || false;
   }
 

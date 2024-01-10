@@ -8,7 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { TimerService } from '../../../core/services/timer';
+import { ConversationFormComponent } from './conversation-form/conversation-form.component';
+import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component';
+
 import {
   GroupMessagesDataType,
   UserRegisterData,
@@ -24,10 +26,10 @@ import {
   selectGroupsInfo,
   selectGroupMessages,
 } from '../../../core/store/redux';
+
 import LocalStorageService from '../../../core/services/local-storage/local-storage.service';
 import AddUserNameService from '../../../core/services/add-user-name/add-user-name.service';
-import { ConversationFormComponent } from './conversation-form/conversation-form.component';
-import { GroupDeleteComponent } from '../group-delete/groups-delete.component';
+import { TimerService } from '../../../core/services/timer';
 
 @Component({
   selector: 'app-conversation',
@@ -44,6 +46,12 @@ import { GroupDeleteComponent } from '../group-delete/groups-delete.component';
 })
 export class ConversationComponent implements OnInit, OnDestroy {
   @Input() dialogKey: string = '';
+
+  @Input() isGroup: boolean = false;
+
+  @Input() isGroupOpened: boolean = false;
+
+  @Input() isConversationOpened: boolean = false;
 
   messages: GroupMessagesDataType[] = [];
 
@@ -250,12 +258,13 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   deleteDialog() {
-    this.dialog.open(GroupDeleteComponent, {
+    this.dialog.open(RemoveDialogComponent, {
       data: {
-        groupTitle: this.title,
+        title: this.title,
         id: this.ID,
-        isOpenGroup: true,
-        isPersonal: true,
+        isGroup: this.isGroup,
+        isOpenGroup: this.isGroupOpened,
+        isPersonal: this.isConversationOpened,
       },
       minHeight: '200px',
       width: '400px',

@@ -13,8 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 export type ModalData = {
-  groupTitle: string;
+  title: string;
   id: string;
+  isGroup: boolean;
   isOpenGroup?: boolean;
   isPersonal?: boolean;
 };
