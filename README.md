@@ -1,14 +1,23 @@
 # Connections project with real backend
 
-## [Deploy](https://kornull-final-angular.netlify.app/)
+### Please use a fake e-mail!
 
-Welcome to the last level of the education journey. We hope this training lesson will enhance and
-strengthen your knowledge and skills to design application structure and use entire framework power
-solving the issues.
+## [Deploy](https://kornull-rs-network.netlify.app/)
+
 
 This project is intended for individual performance using the real one-for-all server. You can check
 out your colleagues with their progress and be faster and more productive, because everyone should
 have the same functionality.
+
+## Stack
+- Angular 17
+- RxJs
+- NgRx
+- ESLint
+- Prettier
+- SCSS
+- Angular Material
+
 ## General point
 
 Single server provides sharing data and all students can interact with it reading and writing other
