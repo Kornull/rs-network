@@ -1,5 +1,9 @@
-<app-conversation
-  [dialogKey]="conversationKey"
-  [isConversationOpened]="isConversationOpen"
-  [isGroupOpened]="isGroupOpen"
-  [isGroup]="isGroup"></app-conversation>
+@defer {
+  <app-conversation
+    [dialogKey]="conversationKey"
+    [isConversationOpened]="isConversationOpen"
+    [isGroupOpened]="isGroupOpen"
+    [isGroup]="isGroup"></app-conversation>
+} @placeholder(minimum 2s) {
+  <app-loader />
+}

@@ -80,7 +80,7 @@ export default class RequestsService {
     const sinceLink = `&since=${since}`;
     return this.http.get<GroupMessages>(
       `${RequestsData.URL}${RequestsData.GET_MESSAGE}${groupId}${
-        since ? sinceLink : ''
+        since ? sinceLink : since
       }`
     );
   }

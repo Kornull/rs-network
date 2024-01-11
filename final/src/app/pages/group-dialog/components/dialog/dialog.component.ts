@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 import { DialogPageKey } from '../../../../core/store/models';
-import { ConversationComponent } from '../../../../shared';
+import { ConversationComponent, LoaderComponent } from '../../../../shared';
 
 @Component({
   selector: 'app-group-dialog',
   standalone: true,
-  imports: [ConversationComponent],
+  imports: [ConversationComponent, LoaderComponent],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss',
 })

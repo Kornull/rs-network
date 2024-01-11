@@ -4,7 +4,7 @@ import {
   MatFormFieldModule,
 } from '@angular/material/form-field';
 import { Store } from '@ngrx/store';
-import { EMPTY, catchError, map } from 'rxjs';
+import { EMPTY, Subscription, catchError, interval, map, tap } from 'rxjs';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -55,6 +55,10 @@ export class ConversationFormComponent implements OnInit {
 
   @Input() messages: GroupMessagesDataType[] = [];
 
+  interval$!: Subscription;
+
+  request$!: Subscription;
+
   messageForm!: FormGroup;
 
   localData!: UserRegisterData | null;
@@ -80,20 +84,11 @@ export class ConversationFormComponent implements OnInit {
   }
 
   personalSubmit() {
-    this.request
+    this.request$ = this.request
       .sendPersonalMessage(this.messageForm.controls['message'].value, this.id)
       .pipe(
-        map(() => {
-          this.store.dispatch(
-            ConversationActions.getUserMessages({
-              dialog: {
-                userId: this.id,
-                since: this.messages.length
-                  ? this.messages[this.messages.length - 1].time
-                  : '',
-              },
-            })
-          );
+        tap(() => {
+          this.updatePersonalMessage();
         }),
         catchError(err => {
           const { error } = err;
@@ -110,20 +105,11 @@ export class ConversationFormComponent implements OnInit {
   }
 
   groupSubmit() {
-    this.request
+    this.request$ = this.request
       .sendMessageToGroup(this.messageForm.controls['message'].value, this.id)
       .pipe(
-        map(() => {
-          this.store.dispatch(
-            ConversationActions.getGroupMessages({
-              dialog: {
-                groupId: this.id,
-                since: this.messages.length
-                  ? this.messages[this.messages.length - 1].time
-                  : '',
-              },
-            })
-          );
+        tap(() => {
+          this.updateGroupMessage();
         }),
         catchError(err => {
           const { error } = err;
@@ -137,5 +123,50 @@ export class ConversationFormComponent implements OnInit {
       )
       .subscribe();
     this.messageForm.reset();
+  }
+
+  updateGroupMessage() {
+    this.interval$ = interval(300)
+      .pipe(
+        map(() => {
+          this.store.dispatch(
+            ConversationActions.getGroupMessages({
+              dialog: {
+                groupId: this.id,
+                since: this.messages.length
+                  ? this.messages[this.messages.length - 1].time
+                  : '',
+              },
+            })
+          );
+          this.removeInterval();
+        })
+      )
+      .subscribe();
+  }
+
+  updatePersonalMessage() {
+    this.interval$ = interval(300)
+      .pipe(
+        map(() => {
+          this.store.dispatch(
+            ConversationActions.getUserMessages({
+              dialog: {
+                userId: this.id,
+                since: this.messages.length
+                  ? this.messages[this.messages.length - 1].time
+                  : '',
+              },
+            })
+          );
+          this.removeInterval();
+        })
+      )
+      .subscribe();
+  }
+
+  removeInterval() {
+    this.interval$.unsubscribe();
+    this.request$.unsubscribe();
   }
 }

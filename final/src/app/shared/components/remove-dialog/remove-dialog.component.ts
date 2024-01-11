@@ -49,14 +49,14 @@ export class RemoveDialogComponent {
     public data: ModalData
   ) {
     this.title = data.title;
-    this.isPersonalMesg = data.isPersonal || false;
+    this.isPersonalMesg = !data.isGroup;
   }
 
   onNoClick(): void {
     this.modal.closeAll();
   }
 
-  removeGroup() {
+  removeDialog() {
     this.btnDisabled = true;
     if (this.isPersonalMesg) {
       this.request
@@ -91,7 +91,7 @@ export class RemoveDialogComponent {
             );
             this.toast.openSnack('Group has been deleted', false);
             this.modal.closeAll();
-            this.router.navigate(['/']);
+            if (this.data.isOpenGroup) this.router.navigate(['/']);
           }),
           catchError((err: HttpErrorResponse) => {
             this.btnDisabled = false;

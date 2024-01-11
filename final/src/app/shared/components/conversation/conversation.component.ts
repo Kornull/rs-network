@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
-import { Observable, Subscription, map, tap } from 'rxjs';
+import { EMPTY, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -65,17 +65,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   disabledBtn$!: Observable<boolean>;
 
-  getPersonMessagesSubscribe$!: Subscription;
-
-  updateMessagesSubscribe$!: Subscription;
-
-  updateDialogsSubscribe$!: Subscription;
-
-  updateTitleSubscribe$!: Subscription;
-
-  getGroupMessagesSubscribe$!: Subscription;
-
-  isUserLogged$!: Subscription;
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   lastSentTime!: string;
 
@@ -88,7 +78,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   title: string =
     this.dialogKey === DialogPageKey.PERSONAL ? 'Personal dialog' : '';
 
-  ID: string = '';
+  idDialog: string = '';
 
   constructor(
     private store: Store,
@@ -102,24 +92,25 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isUserLogged$ = this.store
+    this.store
       .select(selectIsUserLogged)
       .pipe(tap(res => (this.isUserLogged = res)))
       .subscribe();
 
-    this.updateDialogsSubscribe$ = this.store
+    this.store
       .select(selectGetUsers)
       .pipe(
         tap(data => {
           if (!data.length && this.isUserLogged) {
             this.store.dispatch(ConversationActions.updateDialogUsers());
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
     this.route.params.subscribe((params: Params) => {
-      this.ID = params['id'];
+      this.idDialog = params['id'];
       this.timer.createTimer(params['id']);
     });
 
@@ -134,21 +125,24 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.dialogKey === DialogPageKey.GROUP) {
-      this.getGroupMessagesSubscribe$.unsubscribe();
-      this.updateTitleSubscribe$.unsubscribe();
-    } else {
-      this.getPersonMessagesSubscribe$.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  updateMessage() {
+    if (this.messages.length) {
+      this.lastSentTime = this.messages[this.messages.length - 1].time;
     }
-    this.updateDialogsSubscribe$.unsubscribe();
-    this.isUserLogged$.unsubscribe();
+    if (this.dialogKey === DialogPageKey.PERSONAL) this.getPersonalMessages();
+    if (this.dialogKey === DialogPageKey.GROUP)
+      this.getGroupConversatonMessages();
   }
 
   getPersonalMessages() {
     this.store.dispatch(
       ConversationActions.getUserMessages({
         dialog: {
-          userId: this.ID,
+          userId: this.idDialog,
           since: this.lastSentTime,
         },
       })
@@ -159,7 +153,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       ConversationActions.getGroupMessages({
         dialog: {
-          groupId: this.ID,
+          groupId: this.idDialog,
           since: this.lastSentTime,
         },
       })
@@ -167,84 +161,87 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   updateUserMessages() {
-    this.getPersonMessagesSubscribe$ = this.store
-      .select(selectGetPersonalConversations({ userId: this.ID }))
+    this.store
+      .select(selectGetPersonalConversations({ userId: this.idDialog }))
       .pipe(
-        map(data => {
+        tap(data => {
           if (data.messages !== undefined && data.messages.length) {
             this.messages = this.addNameService.changeIdToName(
               data.messages,
               data.users
             );
           } else {
-            if (this.isUserLogged && !this.openModal) {
+            if (
+              this.isUserLogged &&
+              !this.openModal &&
+              data.messages === undefined
+            ) {
               this.store.dispatch(
                 ConversationActions.getUserMessages({
-                  dialog: { userId: this.ID },
+                  dialog: { userId: this.idDialog },
                 })
               );
             }
             this.messages = [];
           }
-        })
+          return EMPTY;
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
 
   updateGroupMessages() {
-    this.getGroupMessagesSubscribe$ = this.store
-      .select(selectGroupMessages({ groupId: this.ID }))
+    this.store
+      .select(selectGroupMessages({ groupId: this.idDialog }))
       .pipe(
-        map(data => {
+        tap(data => {
           if (data.messages !== undefined && data.messages.length) {
             this.messages = this.addNameService.changeIdToName(
               data.messages,
               data.users
             );
           } else {
-            if (this.isUserLogged && !this.openModal) {
+            if (
+              this.isUserLogged &&
+              !this.openModal &&
+              (data.messages === undefined || !data.messages.length)
+            ) {
               this.store.dispatch(
                 ConversationActions.getGroupMessages({
-                  dialog: { groupId: this.ID },
+                  dialog: { groupId: this.idDialog },
                 })
               );
             }
             this.messages = [];
           }
-        })
+          return EMPTY;
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
 
   getTimerData() {
-    this.timeNow$ = this.timer.getCountdown(this.ID);
-    this.disabledBtn$ = this.timer.getRunTimer(this.ID);
+    this.timeNow$ = this.timer.getCountdown(this.idDialog);
+    this.disabledBtn$ = this.timer.getRunTimer(this.idDialog);
   }
 
   runUpdateMessage() {
-    this.timer.startCountdown(this.ID);
+    this.timer.startCountdown(this.idDialog);
     this.getTimerData();
     this.updateMessage();
   }
 
-  updateMessage() {
-    if (this.messages.length) {
-      this.lastSentTime = this.messages[this.messages.length - 1].time;
-      if (this.dialogKey === DialogPageKey.PERSONAL) this.getPersonalMessages();
-      if (this.dialogKey === DialogPageKey.GROUP)
-        this.getGroupConversatonMessages();
-    }
-  }
-
   updateDialogTitle() {
-    this.updateTitleSubscribe$ = this.store
+    this.store
       .select(selectGroupsInfo)
       .pipe(
         tap(arr => {
           arr.Items.forEach(element => {
-            if (element.id.S === this.ID) this.title = element.name.S;
+            if (element.id.S === this.idDialog) this.title = element.name.S;
             if (
-              element.id.S === this.ID &&
+              element.id.S === this.idDialog &&
               element.createdBy.S === this.localData?.uid
             ) {
               this.groupCreatorId = element.createdBy.S;
@@ -254,7 +251,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
               this.title = `${this.title.slice(0, 30)}...`;
             }
           });
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
@@ -264,7 +262,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.dialog.open(RemoveDialogComponent, {
       data: {
         title: this.title,
-        id: this.ID,
+        id: this.idDialog,
         isGroup: this.isGroup,
         isOpenGroup: this.isGroupOpened,
         isPersonal: this.isConversationOpened,

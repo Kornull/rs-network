@@ -76,5 +76,6 @@ export class GroupsFormComponent implements OnInit {
         titleGroup: this.createGroup.controls['title'].value,
       })
     );
+    this.createGroup.reset();
   }
 }

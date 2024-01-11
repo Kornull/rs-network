@@ -9,12 +9,12 @@
     class="form-input"
     color="accent"
     class="form-input">
-    <mat-label>Favorite Animal</mat-label>
+    <mat-label>Group title</mat-label>
     <input
       matInput
       formControlName="title" />
     @if (createGroup.get('title')!.hasError('required')) {
-      <mat-error>Please enter your name!</mat-error>
+      <mat-error>Please enter group title!</mat-error>
     }
     @if (
       createGroup.get('title')?.hasError('minlength') &&

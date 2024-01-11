@@ -20,11 +20,20 @@
       @if (disabledBtn$ | async) {
         <div class="timer">{{ timeNow$ | async }} s</div>
       }
-      <button
-        mat-icon-button
-        (click)="deleteDialog()">
-        <mat-icon>delete</mat-icon>
-      </button>
+      @if (dialogKey === 'group' && localData?.uid === groupCreatorId) {
+        <button
+          mat-icon-button
+          (click)="deleteDialog()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      }
+      @if (dialogKey === 'personal') {
+        <button
+          mat-icon-button
+          (click)="deleteDialog()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      }
     </div>
   </div>
   <ul class="conversation-list">
@@ -56,7 +65,7 @@
   </ul>
   <app-conversation-form
     class="conversation-form"
-    [id]="ID"
+    [id]="idDialog"
     [dialogKey]="dialogKey"
     [lastTimeSent]="lastSentTime"
     [messages]="messages"></app-conversation-form>
