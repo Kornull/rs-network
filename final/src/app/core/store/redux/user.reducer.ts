@@ -142,9 +142,9 @@ export const UserReducer = createReducer(
       ...state,
       personalMessage: {
         ...state.personalMessage,
-        [actions.dialog.userId]: state.dialogs[actions.dialog.userId]
+        [actions.dialog.userId]: state.personalMessage[actions.dialog.userId]
           ? [
-              ...state.dialogs[actions.dialog.userId],
+              ...state.personalMessage[actions.dialog.userId],
               ...actions.dialog.messageList,
             ]
           : [...actions.dialog.messageList],
@@ -158,7 +158,7 @@ export const UserReducer = createReducer(
         ...state.conversations,
         Items: [
           ...state.conversations.Items.filter(
-            conv => conv.companionID.S !== actions.userId
+            conv => conv.id.S !== actions.userId
           ),
         ],
       },

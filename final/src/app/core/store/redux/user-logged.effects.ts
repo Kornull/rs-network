@@ -106,27 +106,6 @@ export class UserLoggedEffects {
     );
   });
 
-  removeOwnDialogGroup = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(LoggedActions.removeOwnGroup),
-      exhaustMap(data => {
-        return this.request.deleteOwnGroup(data.groupId).pipe(
-          map(() => {
-            this.toast.openSnack('Group has been deleted', false);
-            this.modal.closeAll();
-            return LoggedActions.delistOwnGroup({
-              groupId: data.groupId,
-            });
-          }),
-          catchError((err: HttpErrorResponse) => {
-            this.errorService.showError(err);
-            return EMPTY;
-          })
-        );
-      })
-    );
-  });
-
   updateUsersAllLists = createEffect(() => {
     return this.actions$.pipe(
       ofType(LoggedActions.getUsers, ConversationActions.updateDialogUsers),

@@ -31,7 +31,7 @@ export const selectGetConversations = createSelector(
 export const selectGetPersonalConversations = (props: { userId: string }) =>
   createSelector(selectAuthState, (state): InfoGroupMessagesType => {
     return {
-      messages: state.dialogs[props.userId],
+      messages: state.personalMessage[props.userId],
       users: state.users.Items,
     };
   });

@@ -83,6 +83,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
   isUserLogged: boolean = false;
 
+  openModal: boolean = false;
+
   title: string =
     this.dialogKey === DialogPageKey.PERSONAL ? 'Personal dialog' : '';
 
@@ -175,7 +177,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
               data.users
             );
           } else {
-            if (this.isUserLogged) {
+            if (this.isUserLogged && !this.openModal) {
               this.store.dispatch(
                 ConversationActions.getUserMessages({
                   dialog: { userId: this.ID },
@@ -200,7 +202,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
               data.users
             );
           } else {
-            if (this.isUserLogged) {
+            if (this.isUserLogged && !this.openModal) {
               this.store.dispatch(
                 ConversationActions.getGroupMessages({
                   dialog: { groupId: this.ID },
@@ -258,6 +260,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   }
 
   deleteDialog() {
+    this.openModal = true;
     this.dialog.open(RemoveDialogComponent, {
       data: {
         title: this.title,

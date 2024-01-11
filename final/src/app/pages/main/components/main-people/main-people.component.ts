@@ -117,7 +117,7 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
       }
     });
 
-    if (create)
+    if (create) {
       this.request
         .createConversation(userId)
         .pipe(
@@ -126,10 +126,13 @@ export class MainPeopleComponent implements OnInit, OnDestroy {
             this.toast.openSnack('Conversation create', false);
           }),
           catchError((err: HttpErrorResponse) => {
+            this.router.navigate([`/`]);
+
             this.errorService.showError(err);
             return EMPTY;
           })
         )
         .subscribe();
+    }
   }
 }
