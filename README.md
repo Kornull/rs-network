@@ -1,9 +1,35 @@
 # Connections project with real backend
 
+![Screenshot at 2024-01-12 10-54-43](https://github.com/Kornull/rs-network/assets/96052707/34348fbd-95f5-465d-828b-852013a977df)
+## Milestones
+
+Application represents the platform to allow users to communicate via public text messages. Before
+starting to use the service a guest must register and sign in, after that all http-requests have to
+contain `rs-email`, `rs-uid` and `Authorization` headers.
+
+Authorized user can see vertically divided main page, where left side is a list of public group and
+right side is a list of people including personal conversations. Each user can create own public
+group and broadcast messages there or use existing group along with other participants.
+
+Personal information can be viewed on a special profile page, where it can be immediately edited.
+
+Detailed information about each part of the application is presented in the sections:
+
+1. [Registration](./milestone_1.registration.md)
+2. [Login](./milestone_2.login.md) 
+3. [Profile](./milestone_3.profile.md) 
+4. [Update profile](./milestone_4.profile_update.md) 
+5. [Logout](./milestone_5.logout.md) 
+6. [People and group sections](./milestone_6.people_groups.md) 
+7. [Group dialog](./milestone_7.group_dialog.md) 
+8. [People conversation](./milestone_8.conversation.md) 
+9. [404 page](./milestone_9.404_page.md) 
+10. Bonus: [Style theme](./milestone_10.theme.md)
+
+---
+
 ### Please use a fake e-mail!
-
 ## [Deploy](https://kornull-rs-network.netlify.app/)
-
 
 This project is intended for individual performance using the real one-for-all server. You can check
 out your colleagues with their progress and be faster and more productive, because everyone should
@@ -39,31 +65,6 @@ another student's project should have the same capabilities.
   for fun.
 
 ---
-
-## Milestones
-
-Application represents the platform to allow users to communicate via public text messages. Before
-starting to use the service a guest must register and sign in, after that all http-requests have to
-contain `rs-email`, `rs-uid` and `Authorization` headers.
-
-Authorized user can see vertically divided main page, where left side is a list of public group and
-right side is a list of people including personal conversations. Each user can create own public
-group and broadcast messages there or use existing group along with other participants.
-
-Personal information can be viewed on a special profile page, where it can be immediately edited.
-
-Detailed information about each part of the application is presented in the sections:
-
-1. [Registration](./milestone_1.registration.md)
-2. [Login](./milestone_2.login.md) 
-3. [Profile](./milestone_3.profile.md) 
-4. [Update profile](./milestone_4.profile_update.md) 
-5. [Logout](./milestone_5.logout.md) 
-6. [People and group sections](./milestone_6.people_groups.md) 
-7. [Group dialog](./milestone_7.group_dialog.md) 
-8. [People conversation](./milestone_8.conversation.md) 
-9. [404 page](./milestone_9.404_page.md) 
-10. Bonus: [Style theme](./milestone_10.theme.md) 
 
 #### Final conclusion
 
