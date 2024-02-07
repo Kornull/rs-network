@@ -2,6 +2,7 @@
 
 ![Screenshot at 2024-01-12 10-54-43](https://github.com/Kornull/rs-network/assets/96052707/34348fbd-95f5-465d-828b-852013a977df)
 ## Milestones
+### Full description [here](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/connections)
 
 Application represents the platform to allow users to communicate via public text messages. Before
 starting to use the service a guest must register and sign in, after that all http-requests have to
